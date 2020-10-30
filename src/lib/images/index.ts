@@ -6,6 +6,8 @@ import academi from "./academi.svg";
 import grid from "./grid.svg";
 import list from "./list.svg";
 import search from "./search.svg";
+import print from "./print.svg";
+
 const Image = {
     "questions": questions,
     "discussion": discussion,
@@ -15,6 +17,7 @@ const Image = {
 export const Icon = {
     "search": search,
     "grid": grid,
-    "list": list
+    "list": list,
+    "print": print
 }
 export default Image;

@@ -1,5 +1,5 @@
 const viewport = {
-    mobile: "480px",
+    mobile: "800px",
     desktop: "1440px",
 };
 

@@ -8,12 +8,14 @@ import { useHistory } from "react-router-dom";
 import viewport from "../constants/viewport";
 import colors from "../constants/colors";
 import Headding from "../components/UI/Headding";
+
 function MakeProblem() {
   const history = useHistory();
   const { register, handleSubmit, errors } = useForm();
   const [title, settitle] = useState("");
   const [subtitle, setsubtitle] = useState("");
   const [answer, setanswer] = useState("");
+  const [img, setimg] = useState("");
   const [answers, setanswers] = useState([
     { id: 1, text: "" },
     { id: 2, text: "" },
@@ -25,15 +27,15 @@ function MakeProblem() {
   useEffect(() => {
     problemtype
       ? setanswers(
-          answers.map((data) =>
-            data.text !== "" ? { id: data.id, text: "" } : data
-          )
+        answers.map((data) =>
+          data.text !== "" ? { id: data.id, text: "" } : data
         )
+      )
       : setanswer("");
   }, [problemtype]);
 
   function OnSubmit(data: any) {
-    history.replace("/");
+    // history.replace("/");
   }
   function Setimg() {
     const image: HTMLInputElement = document.getElementById(
@@ -48,6 +50,7 @@ function MakeProblem() {
       const reader = new FileReader();
       reader.onload = function (e?: any) {
         image_section.src = e.target.result;
+        setimg(btoa(e.target.result));//base64incoding
       };
       reader.readAsDataURL(image.files![0]);
     }
@@ -57,7 +60,7 @@ function MakeProblem() {
       <Wrap>
         <form onSubmit={handleSubmit(OnSubmit)}>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <WrapInput fieldName="과목">
+            <WrapInput fieldName="과목" None>
               <select>
                 <option value="국어">국어</option>
                 <option value="영어">영어</option>
@@ -66,7 +69,7 @@ function MakeProblem() {
               </select>
             </WrapInput>
 
-            <WrapInput fieldName="문제 유형">
+            <WrapInput fieldName="문제 유형" None>
               <select
                 onChange={(e) => setproblemtype(!(e.target.value === "객관식"))}
               >
@@ -77,22 +80,20 @@ function MakeProblem() {
             </WrapInput>
           </div>
 
-          <WrapInput fieldName="문제" error={errors.problemtitle}>
+          <WrapInput fieldName="문제" None>
             <Input
               type="text"
               name="problemtitle"
-              ref={register({
-                required: "문제명을 입력해주세요!",
-              })}
+              placeholder="문제명을 입력하세요"
               onChange={(e) => settitle(e.target.value)}
             />
           </WrapInput>
-          <WrapInput fieldName="이미지">
+          <WrapInput fieldName="이미지" None>
             <label>
               <input
                 type="file"
                 name="uploadImg"
-                accept="image/gif,image/jpeg,image/png" //파일 형식 지정
+                accept="image/jpeg,image/png" //파일 형식 지정
                 id="bin"
                 onChange={(e) => {
                   Setimg();
@@ -102,13 +103,14 @@ function MakeProblem() {
                 })}
                 style={{ display: "none" }}
               />
-              <div style={{ background: colors.border }}>이미지 선택하기</div>
+              <div style={{ background: colors.border, borderRadius: "50px", textAlign: "center" }}>{!img ? "이미지 선택하기" : "이미지 선택완료"}</div>
             </label>
           </WrapInput>
-          <WrapInput fieldName="부제목">
+          <WrapInput fieldName="부제목" None>
             <Input
               type="text"
               name="problemsubtitle"
+              placeholder="부제목을 입력하세요"
               ref={register({
                 required: false,
               })}
@@ -116,7 +118,7 @@ function MakeProblem() {
             />
           </WrapInput>
 
-          <WrapInput fieldName="답">
+          <WrapInput fieldName="답" None>
             {problemtype ? (
               <Input
                 type="text"
@@ -124,118 +126,119 @@ function MakeProblem() {
                 ref={register({
                   required: "답을 입력해주세요",
                 })}
+                placeholder="답을 입력하세요"
                 onChange={(e) => setanswer(e.target.value)}
               />
             ) : (
-              <MultipleChoice>
-                <ol>
-                  <li>
-                    <Input
-                      type="text"
-                      name="answer1"
-                      ref={register({
-                        required: true,
-                      })}
-                      onChange={(e) =>
-                        setanswers(
-                          answers.map((data) =>
-                            data.id === 1
-                              ? { id: data.id, text: e.target.value }
-                              : data
+                <MultipleChoice>
+                  <ol>
+                    <li>
+                      <Input
+                        type="text"
+                        name="answer1"
+                        ref={register({
+                          required: true,
+                        })}
+                        onChange={(e) =>
+                          setanswers(
+                            answers.map((data) =>
+                              data.id === 1
+                                ? { id: data.id, text: e.target.value }
+                                : data
+                            )
                           )
-                        )
-                      }
-                    />
-                  </li>
-                  <li>
-                    <Input
-                      type="text"
-                      name="answer2"
-                      ref={register({
-                        required: true,
-                      })}
-                      onChange={(e) =>
-                        setanswers(
-                          answers.map((data) =>
-                            data.id === 2
-                              ? { id: data.id, text: e.target.value }
-                              : data
+                        }
+                      />
+                    </li>
+                    <li>
+                      <Input
+                        type="text"
+                        name="answer2"
+                        ref={register({
+                          required: true,
+                        })}
+                        onChange={(e) =>
+                          setanswers(
+                            answers.map((data) =>
+                              data.id === 2
+                                ? { id: data.id, text: e.target.value }
+                                : data
+                            )
                           )
-                        )
-                      }
-                    />
-                  </li>
-                  <li>
-                    <Input
-                      type="text"
-                      name="answer3"
-                      ref={register({
-                        required: true,
-                      })}
-                      onChange={(e) =>
-                        setanswers(
-                          answers.map((data) =>
-                            data.id === 3
-                              ? { id: data.id, text: e.target.value }
-                              : data
+                        }
+                      />
+                    </li>
+                    <li>
+                      <Input
+                        type="text"
+                        name="answer3"
+                        ref={register({
+                          required: true,
+                        })}
+                        onChange={(e) =>
+                          setanswers(
+                            answers.map((data) =>
+                              data.id === 3
+                                ? { id: data.id, text: e.target.value }
+                                : data
+                            )
                           )
-                        )
-                      }
-                    />
-                  </li>
-                  <li>
-                    <Input
-                      type="text"
-                      name="answer4"
-                      ref={register({
-                        required: true,
-                      })}
-                      onChange={(e) =>
-                        setanswers(
-                          answers.map((data) =>
-                            data.id === 4
-                              ? { id: data.id, text: e.target.value }
-                              : data
+                        }
+                      />
+                    </li>
+                    <li>
+                      <Input
+                        type="text"
+                        name="answer4"
+                        ref={register({
+                          required: true,
+                        })}
+                        onChange={(e) =>
+                          setanswers(
+                            answers.map((data) =>
+                              data.id === 4
+                                ? { id: data.id, text: e.target.value }
+                                : data
+                            )
                           )
-                        )
-                      }
-                    />
-                  </li>
-                  <li>
-                    <Input
-                      type="text"
-                      name="answer5"
-                      ref={register({
-                        required: true,
-                      })}
-                      onChange={(e) =>
-                        setanswers(
-                          answers.map((data) =>
-                            data.id === 5
-                              ? { id: data.id, text: e.target.value }
-                              : data
+                        }
+                      />
+                    </li>
+                    <li>
+                      <Input
+                        type="text"
+                        name="answer5"
+                        ref={register({
+                          required: true,
+                        })}
+                        onChange={(e) =>
+                          setanswers(
+                            answers.map((data) =>
+                              data.id === 5
+                                ? { id: data.id, text: e.target.value }
+                                : data
+                            )
                           )
-                        )
-                      }
-                    />
-                  </li>
-                </ol>
-              </MultipleChoice>
-            )}
+                        }
+                      />
+                    </li>
+                  </ol>
+                </MultipleChoice>
+              )}
           </WrapInput>
           <Button>완성</Button>
         </form>
         <div>
           <Headding tag="h3" tagStyle="h4">
-            {title || "제목"}
+            {title || "문제명을 입력해 주세요."}
           </Headding>
           <img
-            style={{ maxWidth: "1000px", maxHeight: "500px" }}
+            style={{ maxWidth: "500px", maxHeight: "250px" }}
             id="image_section"
-            src="https://via.placeholder.com/1000x500.png/e5c7ff/ffffff/?text=maxsize"
+            src="https://via.placeholder.com/500x250.png/e5c7ff/ffffff/?text=grap Img"
           />
-          <div>{subtitle || "부제목"}</div>
-          <div>{answer || "답"}</div>
+          <div>{subtitle || "부제목을 입력해주세요"}</div>
+          <div>{answer || "답을 작성해주세요"}</div>
           <AnswerWrap>
             {answers.map((data) =>
               data.text !== "" ? (
@@ -243,8 +246,8 @@ function MakeProblem() {
                   <div>{data.id}.</div> {data.text}
                 </Answers>
               ) : (
-                ""
-              )
+                  ""
+                )
             )}
           </AnswerWrap>
         </div>
@@ -271,9 +274,18 @@ const Wrap = styled.div`
   margin: 0px auto;
   height: calc(100vh - 76px);
   & > form {
+    display: flex;
+    flex-direction: column;
+    justify-content:space-around;
     border: 1px solid ${colors.border};
     padding: 20px 40px;
     border-radius: 20px;
+    transition:height 1.5s;
+    height:300px;
+    @media (min-height:600px){
+      height:500px;
+    }
+    
     & > button {
       border-radius: 50px;
     }
@@ -285,6 +297,7 @@ const Wrap = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content:center;
     margin-left: 30px;
   }
 `;

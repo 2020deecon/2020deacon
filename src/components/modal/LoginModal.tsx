@@ -6,11 +6,18 @@ import { useHistory } from "react-router-dom";
 import Button from "../UI/Button";
 import Modal from "../UI/Modal";
 import Input, { WrapInput } from "../UI/Input";
+import { Login } from "../../store/slices/auth";
+import useModal from "../../hooks/useModal";
 function LoginModal() {
   const { register, handleSubmit } = useForm();
+  const { closed } = useModal("login");
   const history = useHistory();
+
   function OnSubmit(data: any) {
+    console.log('test')
+    Login(data);
     history.replace("/");
+    closed();
   }
   return (
     <Modal title="로그인" modalname="login">

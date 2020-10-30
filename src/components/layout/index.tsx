@@ -69,12 +69,12 @@ ol{
 `;
 
 const Wrap = styled.div`
-  min-height: 100vh;
+  /* min-height: 50vh; */
   display: flex;
   flex-direction: column;
   & > article {
     margin-top: 76px;
-    /* height: calc(100vh - 76px); */
+    height: calc(100vh - 76px);
   }
 `;
 export default index;

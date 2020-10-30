@@ -15,7 +15,7 @@ function Modal({ children, title, modalname }: ModalProps) {
   if (!isOpen) return null;
   return (
     <Wrap onClick={closed}>
-      <Body>
+      <Body onClick={(e) => e.stopPropagation()}>
         <div style={{ marginBottom: "10px" }}>
           <Headding tag="h2" tagStyle="h4">
             {title}
@@ -29,13 +29,12 @@ function Modal({ children, title, modalname }: ModalProps) {
 
 const Wrap = styled.div`
   position: fixed;
-  background: ${colors.gray};
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 3000;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 3000;
   animation: appear 0.5s;
 
   @keyframes appear {
@@ -43,14 +42,14 @@ const Wrap = styled.div`
       opacity: 0;
     }
     to {
-      opacity: 0.5;
+      opacity: 1;
     }
   }
 `;
 
 const Body = styled.div`
   position: absolute;
-  background: ${colors.white};
+  background: white;
   max-width: 720px;
   top: 50%;
   left: 50%;
@@ -61,5 +60,9 @@ const Body = styled.div`
   transform: translate(-50%, -50%);
   border-radius: 10px;
   transition: background 0.5s;
+
+  &:focus {
+    outline: 0;
+  }
 `;
 export default Modal;

@@ -13,25 +13,25 @@ function Home() {
       <Wrap>
         <Frame
           src={Image.questions}
-          title="자신에게 가장 필요한 문제만을 골라 문제를 만들어 보세요!"
-          subtitle="나만의 문제 만들러가기"
+          title="자신에게 필요한 문제만을 골라서 문제집를 만들어 보세요!"
+          subtitle="나만의 문제 만들러가기>"
         />
         <Frame
           src={Image.share}
-          title="다양한 문제를 만들어 사람들과 공유하세요!"
-          subtitle="나만의 문제 만들어 공유하기"
+          title="다양한 문제,문제집를 만들어 사람들과 공유하세요!"
+          subtitle="문제,문제집 공유하기>"
           reverse
         />
 
         <Frame
           src={Image.discussion}
           title="다양한 문제에 대해서 토론를 해봐요!"
-          subtitle="커뮤니티 탐방하기"
+          subtitle="커뮤니티 둘러보기>"
         />
         <Frame
           src={Image.academi}
-          title="학원에서 문제를 만들때도 이용하세요!"
-          subtitle="나만의 문제 만들러가기"
+          title="다양한 사람들이 올린 문제들도 풀어보세요!"
+          subtitle="내 패이지로 가기>"
           reverse
         />
         <div style={{ marginBottom: "30px" }}>

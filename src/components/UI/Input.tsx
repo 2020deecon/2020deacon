@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled,{css} from "styled-components";
 
 const Input = styled.input`
   display: block;
@@ -9,6 +9,7 @@ const Input = styled.input`
   border: 0;
   /* font-family: "Open Sans", sans-serif; */
   font-size: 15px;
+  border-radius:50px;
   &:focus {
     outline: 0;
   }
@@ -20,19 +21,23 @@ interface WrapInputProps {
   children?: React.ReactNode;
   error?: { type: string; message: string };
   fieldName: string;
+  None?:boolean;
 }
 
-export function WrapInput({ fieldName, children, error }: WrapInputProps) {
+export function WrapInput({ fieldName, children, error,None }: WrapInputProps) {
   return (
     <WrapInputStyle>
       <label>
         <span>{fieldName}</span>
         {children}
       </label>
-      <div className="error">{error && error.message}</div>
+      <Error className="error" None={None}>{error && error.message}</Error>
     </WrapInputStyle>
   );
 }
+const Error=styled.div<{None?:boolean}>`
+  ${({None}) => None && css`display: none;`};
+`;
 const WrapInputStyle = styled.div`
   position: relative;
   display: flex;

@@ -5,6 +5,8 @@ import Input, { WrapInput } from "../components/UI/Input";
 import styled from "styled-components";
 import Button from "../components/UI/Button";
 import { useHistory } from "react-router-dom";
+import User from "../hooks/useUsers";
+// import { toast } from "react-toastify";
 
 function SignUp() {
   const { register, handleSubmit, watch, errors } = useForm({
@@ -13,17 +15,17 @@ function SignUp() {
   const history = useHistory();
   const password = watch("password");
   function onSubmit(data: any) {
+    User().SignUp(data);
     history.replace("/");
-    alert("이메일 인증을 한뒤에 이용해주세요!");
   }
   return (
     <Layout title="signup">
       <Wrap>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <WrapInput fieldName="아이디" error={errors.usersId}>
+          <WrapInput fieldName="아이디" error={errors.id}>
             <Input
               type="text"
-              name="usersId"
+              name="id"
               autoComplete="userid"
               ref={register({
                 required: "아이디를 입력해주세요!.",
@@ -33,6 +35,16 @@ function SignUp() {
                 },
               })}
             />
+          </WrapInput>
+          <WrapInput fieldName="이름" error={errors.name}>
+            <Input
+              type="text"
+              name="name"
+              autoComplete="username"
+              ref={register({
+                required: "이름을 입력해주세요",
+              })}
+            ></Input>
           </WrapInput>
           <WrapInput fieldName="비밀번호" error={errors.password}>
             <Input
@@ -82,10 +94,11 @@ function SignUp() {
   );
 }
 const Wrap = styled.div`
-  padding: 20px 30px;
-  margin: 5% auto;
+  padding: 50px 30px;
+  margin: 0px auto;
   max-width: 640px;
   width: 100%;
+  overflow-y: hidden;
   & > form {
     display: flex;
     flex-direction: column;

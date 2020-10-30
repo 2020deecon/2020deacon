@@ -5,10 +5,12 @@ import viewport from "../constants/viewport";
 import Button from "../components/UI/Button";
 import colors from "../constants/colors";
 import { Icon } from "../lib/images";
-type What = "내문제" | "내 문제집" | "저장한 문제집";
+import Input, { WrapInput } from "../components/UI/Input";
+
+type What = "나만의 문제" | "나만의 문제집" | "구독한 자료";
 type Sort = "flex" | "grid";
 function Mypage() {
-  const [what, setwhat] = useState<What>("내문제");
+  const [what, setwhat] = useState<What>("나만의 문제");
   const [sort, setsort] = useState<Sort>("flex");
   return (
     <Layout>
@@ -18,49 +20,60 @@ function Mypage() {
             color={colors.primary}
             back={colors.white}
             hov={colors.gray}
-            onClick={(e) => setwhat("내문제")}
+            onClick={() => setwhat("나만의 문제")}
             css={ButtonCss}
-            className={what === "내문제" ? "click" : ""}
+            className={what === "나만의 문제" ? "click" : ""}
           >
-            내문제
+            나만의 문제
           </Button>
           <Button
             color={colors.primary}
             back={colors.white}
             hov={colors.gray}
-            onClick={() => setwhat("내 문제집")}
+            onClick={() => setwhat("나만의 문제집")}
             css={ButtonCss}
-            className={what === "내 문제집" ? "click" : ""}
+            className={what === "나만의 문제집" ? "click" : ""}
           >
-            내 문제집
+            나만의 문제집
           </Button>
+
           <Button
             color={colors.primary}
             back={colors.white}
             hov={colors.gray}
-            onClick={() => setwhat("저장한 문제집")}
+            onClick={() => setwhat("구독한 자료")}
             css={ButtonCss}
-            className={what === "저장한 문제집" ? "click" : ""}
+            className={what === "구독한 자료" ? "click" : ""}
           >
-            저장한 자료
+            구독한 자료
           </Button>
         </div>
         <div className="select_data">
           <div className="data_sort">
-            <button onClick={() => setsort("flex")}>
-              <img src={Icon.list} alt="" />
-            </button>
-            <button onClick={() => setsort("grid")}>
-              <img src={Icon.grid} alt="" />
-            </button>
+            <div className="searchBox">
+              <Input type="text" />
+              <img src={Icon.search} alt="" />
+            </div>
+            <div className="sortBox">
+              <button onClick={() => setsort("flex")} className={sort === "flex" ? "click" : ""}>
+                <img src={Icon.list} alt="" />
+              </button>
+              <button onClick={() => setsort("grid")} className={sort !== "flex" ? "click" : ""}>
+                <img src={Icon.grid} alt="" />
+              </button>
+            </div>
+
           </div>
-          <div className={sort === "flex" ? "flex" : "grid"}></div>
+
+          <div className={sort === "flex" ? "flex" : "grid"}>
+            <Items></Items>
+          </div>
         </div>
       </Wrap>
     </Layout>
   );
 }
-interface Click {}
+interface Click { }
 const Wrap = styled.div`
   max-width: ${viewport.desktop};
   padding: 0px 40px;
@@ -86,15 +99,36 @@ const Wrap = styled.div`
   & > .select_data {
     border-left: none;
     width: 100%;
+    
     & > .data_sort {
       display: flex;
-      justify-content: flex-end;
+      justify-content: center;
       align-items: center;
       height: 40px;
       border-bottom: 1px solid ${colors.gray};
-      & > button:hover {
-        background: ${colors.gray};
+      position: relative;
+      &>.searchBox{
+        display:flex;
+        background: ${colors.border};
+        border-radius:20px;
+        &>img{
+          margin-right: 10px;
+        }
       }
+      &>.sortBox{
+        position:absolute;
+        right:0;
+      & > .click {
+          background: ${colors.gray};
+          border: ${colors.gray};
+          color: ${colors.white};
+        }
+      & > button:hover {
+          background: ${colors.gray};
+        }
+      }
+      
+      
     }
     & > .flex {
       display: flex;
@@ -107,5 +141,10 @@ const Wrap = styled.div`
 
 const ButtonCss = css`
   border-radius: 0px;
+`;
+
+const Items = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 export default Mypage;

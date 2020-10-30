@@ -100,7 +100,6 @@ const SearchBox = styled.div`
     border-radius: 50px;
     background: ${colors.white};
     & > input {
-      border-radius: 50px;
       background: ${colors.white};
     }
     & > .searchIcon {

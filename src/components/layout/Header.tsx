@@ -6,43 +6,55 @@ import colors from "../../constants/colors";
 import Button from "../UI/Button";
 import Ul, { Li } from "../UI/Ul";
 import { Link } from "react-router-dom";
+import useLogin from "../../hooks/useLogin";
 import useModal from "../../hooks/useModal";
 function Header() {
   const [scrollpos, setscrollpos] = useState(0);
+  const login = useLogin();
   const [onOff, setOnOff] = useState(true);
   const { Open } = useModal("login");
+
   window.onscroll = function () {
-    // console.log(window.pageYOffset * 0.01);
     if (0 < scrollpos && scrollpos < 7) window.setTimeout(500);
     if (scrollpos > window.pageYOffset * 0.01) {
-      setOnOff(false);
-    } else {
       setOnOff(true);
+    } else {
+      setOnOff(false);
     }
     setscrollpos(window.pageYOffset * 0.01);
   };
+  const Blogin = () => {
+    return (
+      <>
+        <Button onClick={Open}>로그인</Button>
+        <Button>
+          <Link to="/signup">회원가입</Link>
+        </Button>
+      </>)
+  }
+  console.log(login.isLogin);
   return (
     <Wrap state={onOff}>
       <LeftHeader>
         <Title>
           <Headding tag="h2" tagStyle="h3">
-            <Link to="/">connet</Link>
+            <Link to="/">connect</Link>
           </Headding>
         </Title>
         <Ul>
           <Li>
             <b>
-              <Link to="/problem">문제만들기</Link>
+              <Link to="/makeproblem">문제만들기</Link>
             </b>
           </Li>
           <Li>
             <b>
-              <Link to="/problems">문제집만들기</Link>
+              <Link to="/makeworkbook">문제집만들기</Link>
             </b>
           </Li>
           <Li>
             <b>
-              <Link to="/mypage">내 문제</Link>
+              <Link to="/mypage">마이 페이지</Link>
             </b>
           </Li>
           <Li>
@@ -53,11 +65,7 @@ function Header() {
         </Ul>
       </LeftHeader>
       <RightHeader islogin={false}>
-        <Button onClick={Open}>로그인</Button>
-        <Button>
-          <Link to="/signup">회원가입</Link>
-        </Button>
-        {/* <Button>로그아웃</Button> */}
+        {!login.isLogin ? Blogin() : <Button>로그아웃</Button>}
       </RightHeader>
     </Wrap>
   );
@@ -92,26 +100,35 @@ const Wrap = styled.div<{ state: boolean }>`
   }}
 `;
 const Title = styled.div`
-  min-width: 150px;
+  min-width: 100px;
   color: ${colors.primary};
 `;
 const LeftHeader = styled.div`
   display: flex;
   align-items: center;
-  float: left;
+  /* float: left; */
   width: 100%;
+  & > ul {
+    width: 100%;
+    max-width: 600px;
+
+    @media (max-width: ${viewport.mobile}) {
+      /* padding: 10px 20px; */
+      padding-left: 0px;
+    }
+  }
 `;
 interface RightHeaderprops {
   islogin: boolean;
 }
 const RightHeader = styled.div<RightHeaderprops>`
   display: flex;
-  /* width: 100%; */
-  min-width: 300px;
+  width: 100%;
+  max-width: 300px;
   ${({ islogin }) =>
     islogin &&
     css`
-      min-width: 200px;
+      max-width: 200px;
     `}
   padding: 0 30px;
   & > button:first-child {

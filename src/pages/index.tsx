@@ -7,17 +7,19 @@ import MakeProblem from "./makeProblem";
 import MakeWorkbook from "./makeWorkbook";
 import Community from "./community";
 import Mypage from "./Mypage";
-import Viewer from "./problemView";
+import viewproblem from "./view/problemsView";
+import viewworkbook from "./view/workbookView";
 function Index() {
   return (
     <Switch>
       <Route path="/" exact component={Home} />
       <Route path="/signup" exact component={SignUp} />
-      <Route path="/problem" exact component={MakeProblem} />
-      <Route path="/problems" exact component={MakeWorkbook} />
+      <Route path="/makeproblem" exact component={MakeProblem} />
+      <Route path="/makeworkbook" exact component={MakeWorkbook} />
       <Route path="/mypage" exact component={Mypage} />
       <Route path="/community" exact component={Community} />
-      <Route path="/view/:id" exact component={Viewer} />
+      <Route path="/viewproblem/:title/:subtitle/:img/" exact component={viewproblem} />
+      <Route path="/viewworkbook/:title/" exact component={viewworkbook} />
     </Switch>
   );
 }
