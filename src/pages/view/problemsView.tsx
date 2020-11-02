@@ -6,7 +6,7 @@ import viewport from "../../constants/viewport";
 
 function ProblemView({ match }: any) {
   const { title, subtitle, img } = match.params;
-  //get answers
+  //get problemdata 
   return (
     <Layout title={title}>
       <Wrap>

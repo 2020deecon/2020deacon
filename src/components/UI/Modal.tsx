@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import colors from "../../constants/colors";
 import Headding from "../UI/Headding";
 import useModal from "../../hooks/useModal";
 import { Modals } from "../../store/slices/modal";

@@ -3,7 +3,6 @@ import { RootState } from "../store/reducers";
 
 function useLogin() {
     const value = useSelector((state: RootState) => state.auth);
-
     return value;
 }
 

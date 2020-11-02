@@ -92,7 +92,8 @@ const SearchBox = styled.div`
   align-items: center;
   background: ${colors.border};
   border-radius: 50px;
-  min-width: 300px;
+  width: 100%;
+  max-width: 300px;
   & > div {
     margin: 10px 5px;
     display: flex;

@@ -18,7 +18,7 @@ function Index() {
       <Route path="/makeworkbook" exact component={MakeWorkbook} />
       <Route path="/mypage" exact component={Mypage} />
       <Route path="/community" exact component={Community} />
-      <Route path="/viewproblem/:title/:subtitle/:img/" exact component={viewproblem} />
+      <Route path="/viewproblem/:title/" exact component={viewproblem} />
       <Route path="/viewworkbook/:title/" exact component={viewworkbook} />
     </Switch>
   );

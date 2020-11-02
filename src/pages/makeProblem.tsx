@@ -11,7 +11,7 @@ import Headding from "../components/UI/Headding";
 
 function MakeProblem() {
   const history = useHistory();
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit } = useForm();
   const [title, settitle] = useState("");
   const [subtitle, setsubtitle] = useState("");
   const [answer, setanswer] = useState("");
@@ -23,6 +23,7 @@ function MakeProblem() {
     { id: 4, text: "" },
     { id: 5, text: "" },
   ]);
+
   const [problemtype, setproblemtype] = useState(true);
   useEffect(() => {
     problemtype
@@ -35,7 +36,7 @@ function MakeProblem() {
   }, [problemtype]);
 
   function OnSubmit(data: any) {
-    // history.replace("/");
+    history.replace("/");
   }
   function Setimg() {
     const image: HTMLInputElement = document.getElementById(
@@ -55,6 +56,7 @@ function MakeProblem() {
       reader.readAsDataURL(image.files![0]);
     }
   }
+
   return (
     <Layout>
       <Wrap>
@@ -232,11 +234,13 @@ function MakeProblem() {
           <Headding tag="h3" tagStyle="h4">
             {title || "문제명을 입력해 주세요."}
           </Headding>
-          <img
-            style={{ maxWidth: "500px", maxHeight: "250px" }}
-            id="image_section"
-            src="https://via.placeholder.com/500x250.png/e5c7ff/ffffff/?text=grap Img"
-          />
+          <label htmlFor="bin">
+            <img
+              style={{ maxWidth: "500px", maxHeight: "250px" }}
+              id="image_section"
+              src="https://via.placeholder.com/500x250.png/e5c7ff/ffffff/?text=grap Img"
+            />
+          </label>
           <div>{subtitle || "부제목을 입력해주세요"}</div>
           <div>{answer || "답을 작성해주세요"}</div>
           <AnswerWrap>
@@ -282,6 +286,8 @@ const Wrap = styled.div`
     border-radius: 20px;
     transition:height 1.5s;
     height:300px;
+    width:100%;
+    max-width:300px;
     @media (min-height:600px){
       height:500px;
     }

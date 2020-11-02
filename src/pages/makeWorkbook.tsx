@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Layout from "../components/layout";
 import styled, { css } from "styled-components";
 import { Icon } from "../lib/images";
@@ -9,6 +9,8 @@ import Result from "../components/Serch/getData";
 import Button from "../components/UI/Button";
 import Slider from "react-slick";
 import Headding from "../components/UI/Headding";
+import Item from "../components/views/viewproblem";
+import useHistory from "react-router-dom";
 
 interface Workbooks {
   pid: string;
@@ -49,7 +51,7 @@ function MakePWorkbook() {
   return (
     <Layout>
       <Wrap>
-        <SearchFrom>
+        <SearchWrap>
           <form onSubmit={handleSubmit(OnSubmit)}>
             <select>
               <option value="국어">국어</option>
@@ -57,9 +59,11 @@ function MakePWorkbook() {
               <option value="수학">수학</option>
               <option value="과학">과학</option>
             </select>
-            <input type="text" onChange={e => settitle(e.target.value)} />
+
+            <input type="text" name="title" placeholder="문제집 이름을 입력하세요" onChange={e => settitle(e.target.value)} />
+
             <div id="search" style={{ display: "flex", alignItems: "center" }}>
-              <input type="text" />
+              <input type="text" placeholder="찾고있는 문제을 검색하세요" />
               <div style={{ padding: "5px", display: "flex" }}>
                 {SearchIcon}
               </div>
@@ -67,18 +71,20 @@ function MakePWorkbook() {
             <Result User={false} update={update} delupdate={delupdate} />
             <Button css={ButtonCss}>완성</Button>
           </form>
+        </SearchWrap>
 
-        </SearchFrom>
         <SliderWrap>
           <Slider {...settings}>
             <Problems>
               <Headding tag="h6" tagStyle="h5">{title}</Headding>
-              {workbook.length > 0 ? workbook.map((data) => <Items key={data.pid}>{data.title}
-                <img src={data.img} alt="" /></Items>) : "문제를 선택해서 문제집을 만들어 보세요!"}
+              <div>
+                {workbook.length > 0 ? workbook.map((data) => <Item key={data.pid} title={data.title} src={data.img} size="medium" />
+                ) : "문제를 선택해서 문제집을 만들어 보세요!"}
+              </div>
             </Problems>
             <Problems>
               <Headding tag="h6" tagStyle="h5">{title} 답지</Headding>
-              {answers.length > 0 ? answers.map((data) => <Items ></Items>) : "문제를 선택해서 문제집을 만들어 보세요!"}
+              {/* {answers.length > 0 ? answers.map((data) => <Items ></Items>) : "문제를 선택해서 문제집을 만들어 보세요!"} */}
             </Problems>
           </Slider>
         </SliderWrap>
@@ -96,64 +102,62 @@ const Wrap = styled.div`
   margin: 0px auto;
   height: calc(100vh - 76px);
 `;
-const SearchFrom = styled.div`
+
+const SearchWrap = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20px 40px;
   border: 1px solid ${colors.border};
   border-radius: 20px;
-  min-width: 300px;
+  max-width: 300px;
+  width:100%;
+  /* height: calc(100vh - 76px); */
   height: 90%;
   margin-right:30px;
   & > form > #search {
     padding: 0px 5px 0px 15px;
+    font-size:14px;
     background: ${colors.border};
     border-radius: 20px;
   }
 `;
+
 const Problems = styled.div`
 font-family: 'Noto Sans KR', sans-serif;
+display: flex;
+text-align:center;
+flex-direction: column;
+height:100%;
+&>div{
   display: flex;
+  justify-content: space-around;
   flex-flow: row wrap;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  border: 1px solid ${colors.gray};
-  text-align: center;
-  &>div{
-    margin:1%;
-    max-width:50px;
-    /* width:30%; */
-    max-height:50px;
-    /* height:30%; */
-    border: 1px solid ${colors.gray};
-  }
+}
   &:focus{
     outline: 0;
   }
 `;
 
-const Items = styled.div`
-display:flex;
-justify-content: center;
-flex-direction: column;
-`;
 const SliderWrap = styled.div`
 display:flex;
 justify-content: center;
 align-items: center;
 max-width:100%;
 overflow-x:hidden;
+height: calc(100vh - 76px);
 &>div{
   width:100%;
-  /* height:90%; */
+  height:90%;
+  border: 1px solid ${colors.gray};
+  &>div{
+    height:100%;
+  }
 }
-/* &>{
-  
-} */
 `;
+
 const ButtonCss = css`
   margin-top:30px;
+  border-radius:30px;
 `;
 export default MakePWorkbook;

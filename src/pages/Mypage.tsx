@@ -5,13 +5,18 @@ import viewport from "../constants/viewport";
 import Button from "../components/UI/Button";
 import colors from "../constants/colors";
 import { Icon } from "../lib/images";
-import Input, { WrapInput } from "../components/UI/Input";
+import Input from "../components/UI/Input";
+import PData from "../components/views/viewproblem";
+import WData from "../components/views/viewWorkbook";
 
-type What = "나만의 문제" | "나만의 문제집" | "구독한 자료";
-type Sort = "flex" | "grid";
+import { useHistory } from "react-router-dom";
+
+
+type What = "나만의 문제" | "나만의 문제집" | "공유된 자료";
+
 function Mypage() {
   const [what, setwhat] = useState<What>("나만의 문제");
-  const [sort, setsort] = useState<Sort>("flex");
+  const [whatsearch, setSearch] = useState("problem");
   return (
     <Layout>
       <Wrap>
@@ -21,7 +26,6 @@ function Mypage() {
             back={colors.white}
             hov={colors.gray}
             onClick={() => setwhat("나만의 문제")}
-            css={ButtonCss}
             className={what === "나만의 문제" ? "click" : ""}
           >
             나만의 문제
@@ -31,49 +35,126 @@ function Mypage() {
             back={colors.white}
             hov={colors.gray}
             onClick={() => setwhat("나만의 문제집")}
-            css={ButtonCss}
             className={what === "나만의 문제집" ? "click" : ""}
           >
             나만의 문제집
           </Button>
-
           <Button
             color={colors.primary}
             back={colors.white}
             hov={colors.gray}
-            onClick={() => setwhat("구독한 자료")}
-            css={ButtonCss}
-            className={what === "구독한 자료" ? "click" : ""}
+            onClick={() => setwhat("공유된 자료")}
+            className={what === "공유된 자료" ? "click" : ""}
           >
-            구독한 자료
+            공유된 자료
           </Button>
         </div>
-        <div className="select_data">
-          <div className="data_sort">
+
+        <SelectPData set={what}>
+          <div className="set_data_sort">
+            <div className="select_data">
+              <input id="dpb" type="radio" name="pb" onChange={e => setSearch(e.target.checked ? "problem" : "workbooks")} checked={whatsearch === "problem"} />
+              <label htmlFor="dpb">문제</label>
+              <input id="dpbs" type="radio" name="pb" onChange={e => setSearch(e.target.checked ? "workbooks" : "problem")} checked={whatsearch === "workbooks"} />
+              <label htmlFor="dpbs">문제집</label>
+            </div>
             <div className="searchBox">
               <Input type="text" />
-              <img src={Icon.search} alt="" />
+              <button><img src={Icon.search} alt="" /></button>
             </div>
-            <div className="sortBox">
-              <button onClick={() => setsort("flex")} className={sort === "flex" ? "click" : ""}>
-                <img src={Icon.list} alt="" />
-              </button>
-              <button onClick={() => setsort("grid")} className={sort !== "flex" ? "click" : ""}>
-                <img src={Icon.grid} alt="" />
-              </button>
-            </div>
-
           </div>
-
-          <div className={sort === "flex" ? "flex" : "grid"}>
-            <Items></Items>
-          </div>
-        </div>
+          {what !== "공유된 자료" ? <Results set={what} /> : <SearchResults select={whatsearch} />}
+        </SelectPData>
       </Wrap>
     </Layout>
   );
 }
-interface Click { }
+interface ResultsType {
+  set: What;
+}
+
+function Results({ set }: ResultsType) {
+  const history = useHistory();
+  function clickPb() {
+    history.replace("/viewproblem" + "/title");
+  }
+  function clickWb() {
+    history.replace("/viewworkbook" + "/title");
+  }
+  if (set !== "나만의 문제집")
+    return (
+      <ResultWrap>
+        <div onClick={clickPb}>
+          <PData title="다음이 있을때 이것을 구하시오" size="medium" estext />
+        </div>
+        <PData title="title" size="medium" />
+        <PData title="title" size="medium" />
+        <PData title="title" size="medium" />
+        <PData title="title" size="medium" />
+        <PData title="title" size="medium" />
+        <PData title="title" size="medium" />
+        <PData title="title" size="medium" />
+        <PData title="title" size="medium" />
+        <PData title="title" size="medium" />
+        <PData title="title" size="medium" />
+        <PData title="title" size="medium" />
+        <PData title="title" size="medium" />
+        <PData title="title" size="medium" />
+        <PData title="title" size="medium" />
+        <PData title="title" size="medium" />
+        <PData title="title" size="medium" />
+        <PData title="title" size="medium" />
+        <PData title="title" size="medium" />
+        <PData title="title" size="medium" />
+        <PData title="title" size="medium" />
+        <PData title="title" size="medium" />
+        <PData title="title" size="medium" />
+        <PData title="title" size="medium" />
+      </ResultWrap>
+    );
+  else
+    return (
+      <ResultWrap workbook>
+        {/* <div>testsetstset</div> */}
+        <div onClick={clickWb}>
+          <WData size="small" title="이건 꼭푼다 스벌" />
+        </div>
+        <WData size="small" title="이건 꼭푼다 스벌" />
+        <WData size="small" title="이건 꼭푼다 스벌" />
+        <WData size="small" title="이건 꼭푼다 스벌" />
+
+      </ResultWrap>
+    )
+
+}
+interface SearchResultsType {
+  select: string;
+}
+const SearchResults = ({ select }: SearchResultsType) => {
+  const history = useHistory();
+  function clickPb() {
+    history.replace("/viewproblem" + "/title");
+  }
+  function clickWb() {
+    history.replace("/viewworkbook" + "/title");
+  }
+  if (select === "problem")
+    return (
+      <ResultWrap>
+        <div onClick={clickPb}>
+          <PData title="다음이 있을때 이것을 구하시오" size="medium" estext />
+        </div>
+      </ResultWrap>
+    )
+  else
+    return (
+      <ResultWrap workbook>
+        <div onClick={clickWb}>
+          <WData size="small" title="이건 꼭푼다 스벌" />
+        </div>
+      </ResultWrap>
+    )
+}
 const Wrap = styled.div`
   max-width: ${viewport.desktop};
   padding: 0px 40px;
@@ -81,32 +162,47 @@ const Wrap = styled.div`
   display: flex;
   align-items: center;
   height: calc(100vh - 76px);
-  & > div {
-    display: flex;
-    flex-flow: column wrap;
-    border: 1px solid ${colors.gray};
+  & > .select_form {
+    max-width: 300px;
+    width: 100%;
     height: 100%;
     max-height: 95%;
-  }
-  & > .select_form {
-    min-width: 300px;
+    border: 1px solid ${colors.gray};
+    border-right:none;
     & > .click {
       background: ${colors.gray};
       border: ${colors.gray};
       color: ${colors.white};
     }
   }
-  & > .select_data {
-    border-left: none;
+`;
+
+const SelectPData = styled.div<ResultsType>`    
     width: 100%;
-    
-    & > .data_sort {
+    display:flex;
+    flex-direction: column;
+    border-left:none;
+    border: 1px solid ${colors.gray};
+    height: 100%;
+    max-height: 95%;
+
+    & > .set_data_sort {
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 40px;
-      border-bottom: 1px solid ${colors.gray};
+      height: 50px;
       position: relative;
+      border-bottom: 1px solid ${colors.gray};
+      &>.select_data{
+        ${({ set }) => set !== "공유된 자료" && css`
+        display:none;
+        `}
+        position: absolute;
+        left:1%;
+        &>label{
+          margin-right:10px;
+        }
+      }
       &>.searchBox{
         display:flex;
         background: ${colors.border};
@@ -114,37 +210,20 @@ const Wrap = styled.div`
         &>img{
           margin-right: 10px;
         }
-      }
-      &>.sortBox{
-        position:absolute;
-        right:0;
-      & > .click {
-          background: ${colors.gray};
-          border: ${colors.gray};
-          color: ${colors.white};
-        }
-      & > button:hover {
-          background: ${colors.gray};
-        }
-      }
-      
-      
+      }      
     }
-    & > .flex {
+`;
+
+const ResultWrap = styled.div<{ workbook?: boolean }>`
+      height: calc(100% - 50px);
       display: flex;
       flex-flow: row wrap;
-    }
-    & > .gird {
-    }
-  }
+      justify-content: space-around;
+      overflow-y:scroll;
+      ${({ workbook }) => workbook && css`
+        flex-flow: column nowrap;
+        justify-content:none;
+      `}
 `;
 
-const ButtonCss = css`
-  border-radius: 0px;
-`;
-
-const Items = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
 export default Mypage;

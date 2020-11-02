@@ -1,12 +1,15 @@
 import React from "react";
+import { FlattenSimpleInterpolation } from "styled-components";
 
 type HeadingTags = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
 interface HeadingProps {
   tag?: HeadingTags;
   tagStyle?: HeadingTags;
   children?: React.ReactNode;
+  Texteps?: boolean;
 }
-function Heading({ tag = "h1", tagStyle = "h1", children }: HeadingProps) {
+function Heading({ tag = "h1", tagStyle = "h1", children, Texteps }: HeadingProps) {
+  console.log("Heading Texteps:" + Texteps);
   const Tag = tag;
   const styles = {
     h1: "3.052em",
@@ -21,6 +24,7 @@ function Heading({ tag = "h1", tagStyle = "h1", children }: HeadingProps) {
       style={{
         fontSize: styles[tagStyle],
       }}
+      className={Texteps ? "ellipsis" : "none"}
     >
       {children}
     </Tag>

@@ -23,6 +23,7 @@ function Header() {
     }
     setscrollpos(window.pageYOffset * 0.01);
   };
+
   const Blogin = () => {
     return (
       <>
@@ -32,7 +33,18 @@ function Header() {
         </Button>
       </>)
   }
-  console.log(login.isLogin);
+
+  const Flogin = () => {
+    return (
+      <>
+        <UserName>{login.id}</UserName>
+        <Button onClick={login.logout}>
+          <Link to="/signup">로그아웃</Link>
+        </Button>
+      </>
+    )
+  }
+
   return (
     <Wrap state={onOff}>
       <LeftHeader>
@@ -65,7 +77,7 @@ function Header() {
         </Ul>
       </LeftHeader>
       <RightHeader islogin={false}>
-        {!login.isLogin ? Blogin() : <Button>로그아웃</Button>}
+        {!login.isLogin ? Blogin() : Flogin()}
       </RightHeader>
     </Wrap>
   );
@@ -99,8 +111,12 @@ const Wrap = styled.div<{ state: boolean }>`
         `;
   }}
 `;
+const UserName = styled.div`
+display: flex;
+align-items: center;
+  height: 100%;
+`;
 const Title = styled.div`
-  min-width: 100px;
   color: ${colors.primary};
 `;
 const LeftHeader = styled.div`
