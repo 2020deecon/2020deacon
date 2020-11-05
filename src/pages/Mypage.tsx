@@ -81,7 +81,7 @@ function Results({ set }: ResultsType) {
   function clickWb() {
     history.replace("/viewworkbook" + "/title");
   }
-  
+
   if (set !== "나만의 문제집")
     return (
       <ResultWrap>
@@ -143,7 +143,7 @@ const SearchResults = ({ select }: SearchResultsType) => {
     return (
       <ResultWrap>
         <div onClick={clickPb}>
-          <PData title="다음이 있을때 이것을 구하시오" size="medium" estext />
+          {/* <PData title="다음이 있을때 이것을 구하시오" size="medium" estext /> */}
         </div>
       </ResultWrap>
     )

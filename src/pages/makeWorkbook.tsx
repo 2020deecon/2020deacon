@@ -43,13 +43,11 @@ function MakePWorkbook() {
   const { handleSubmit } = useForm();
 
   function update({ pid, title, img }: Workbooks) {
-    // alert("Update")
     Get().GetsomeofProblems({ id: pid }).then(res => {
-      console.log(res);
+      setworkbook(workbook => [...workbook, { pid, title, img, answer: res.answer }]);
     }).catch(err => console.log(err));
 
 
-    setworkbook(workbook => [...workbook, { pid, title, img }]);
   }
 
   function delupdate(pid: string) {

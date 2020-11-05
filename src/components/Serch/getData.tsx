@@ -30,19 +30,21 @@ function SearchData({ User, update, delupdate }: GetProps) {
             seTest(res);
         }).catch(err => console.log(err))
     }, [])
-
-
+    // const [Checkeded, setchecked] = useState(false);
     // console.log(test);
 
     return (
         <Wrap>
             {
                 test.map(
-                    (data) => {
-                        return <SerachItem key={key++} onChange={(e) => e.target.checked ? update({ pid: data._id, title: data.title, img: data.image }) : delupdate(String(data.id))
-                        }
+                    (data) =>
+                        <SerachItem key={key++}
+                            onChange={(e) => {
+                                e.target.checked ? update({ pid: data._id, title: data.title, img: data.image }) : delupdate(String(data.id))
+                            }
+                            }
                             title={data.title} img={data.image} />
-                    })
+                )
             }
         </Wrap>
     );
@@ -51,6 +53,7 @@ function SearchData({ User, update, delupdate }: GetProps) {
 interface SerachProps {
     title: string;
     img: string;
+    // Checked: boolean;
     onChange: (e: any) => void;
 }
 function SerachItem({ title, img, onChange }: SerachProps) {

@@ -16,13 +16,14 @@ function Get() {
         return data
     }
     const GetsomeofProblems = async ({ id }: Test) => {
-        await getClient().get('/detailProblem?id=' + id).then(res => {
+        let data = await getClient().get('/detailProblem?id=' + id).then(res => {
             // alert("시벌");
             console.log(res);
             return res.data.data;
         }).catch(err => {
             throw parseError(err);
         })
+        return data
     }
     return { GetallProblems, GetsomeofProblems };
 }
