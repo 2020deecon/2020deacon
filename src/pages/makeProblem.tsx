@@ -63,7 +63,14 @@ function MakeProblem() {
       const reader = new FileReader();
       reader.onload = function (e?: any) {
         image_section.src = e.target.result;
-        setimg(btoa(e.target.result));//base64incoding
+        setimg(e.target.result);//base64incoding
+
+        alert("incodding");
+        // const a = btoa(e.target.result);
+        // console.log(e.target.result);
+        // console.log(a);
+        // console.log(atob(a));
+
       };
       reader.readAsDataURL(image.files![0]);
     }

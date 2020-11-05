@@ -81,6 +81,7 @@ function Results({ set }: ResultsType) {
   function clickWb() {
     history.replace("/viewworkbook" + "/title");
   }
+  
   if (set !== "나만의 문제집")
     return (
       <ResultWrap>

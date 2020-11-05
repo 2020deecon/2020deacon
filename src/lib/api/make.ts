@@ -11,18 +11,16 @@ interface Problem {
 }
 interface Problems {
     pid: string;
-    title: string;
-    img: string;
 }
+
 interface Answers {
     Sortanswer?: string;
     answers?: string[5];
 }
 interface Workbook {
     title: string;
-    problems: Problems[];
-    answers: Answers[];
     category: string;
+    problems: Problems[];
 }
 function Make() {
     const Makeproblem = async ({ title, subtitle, img, answer, problemtype, category }: Problem) => {
@@ -34,14 +32,16 @@ function Make() {
             throw parseError(err);
         })
     }
-    const MakeWorkbook = async ({ title, problems, answers, category }: Workbook) => {
-        await getClient().post('/problem', {}).then(res => {
+    const MakeWorkbook = async ({ title, problems, category }: Workbook) => {
+        await getClient().post('/workbookProblem', { title: title, problems: problems, category: category }).then(res => {
             console.log(res);
             return res.data;
         }).catch(err => {
             throw parseError(err);
         })
     }
+
+
     return { Makeproblem, MakeWorkbook };
 }
 

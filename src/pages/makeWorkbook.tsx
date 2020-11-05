@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "../components/layout";
 import styled, { css } from "styled-components";
 import { Icon } from "../lib/images";
@@ -12,12 +12,14 @@ import Headding from "../components/UI/Headding";
 import Item from "../components/views/viewproblem";
 import useHistory from "react-router-dom";
 import make from "../lib/api/make";
+import Get from "../lib/api/get";
 
 
 interface Workbooks {
   pid: string;
   title: string;
   img: string;
+  answer?: string | string[];
 }
 
 interface answers {
@@ -41,8 +43,13 @@ function MakePWorkbook() {
   const { handleSubmit } = useForm();
 
   function update({ pid, title, img }: Workbooks) {
-    setworkbook(workbook => [...workbook, { pid, title, img }]);
+    // alert("Update")
+    Get().GetsomeofProblems({ id: pid }).then(res => {
+      console.log(res);
+    }).catch(err => console.log(err));
 
+
+    setworkbook(workbook => [...workbook, { pid, title, img }]);
   }
 
   function delupdate(pid: string) {
@@ -66,8 +73,10 @@ function MakePWorkbook() {
               <option value="수학">수학</option>
               <option value="과학">과학</option>
             </select>
+            <div style={{ background: colors.border, borderRadius: "20px", height: "20px" }}>
+              <input type="text" name="title" placeholder="문제집 이름을 입력하세요" onChange={e => settitle(e.target.value)} />
+            </div>
 
-            <input type="text" name="title" placeholder="문제집 이름을 입력하세요" onChange={e => settitle(e.target.value)} />
 
             <div id="search" style={{ display: "flex", alignItems: "center" }}>
               <input type="text" placeholder="찾고있는 문제을 검색하세요" />
@@ -82,16 +91,15 @@ function MakePWorkbook() {
 
         <SliderWrap>
           <Slider {...settings}>
+
             <Problems>
               <Headding tag="h6" tagStyle="h5">{title}</Headding>
-              <div>
-                {workbook.length > 0 ? workbook.map((data) => <Item key={data.pid} title={data.title} src={data.img} size="medium" />
-                ) : "문제를 선택해서 문제집을 만들어 보세요!"}
-              </div>
+              <PItem workbook={workbook} />
             </Problems>
+
             <Problems>
               <Headding tag="h6" tagStyle="h5">{title} 답지</Headding>
-              {/* {answers.length > 0 ? answers.map((data) => <Items ></Items>) : "문제를 선택해서 문제집을 만들어 보세요!"} */}
+              {/* {answers.length > 0 ? answers.map((data) => <div ></div>) : "문제를 선택해서 문제집을 만들어 보세요!"} */}
             </Problems>
           </Slider>
         </SliderWrap>
@@ -99,7 +107,20 @@ function MakePWorkbook() {
     </Layout>
   );
 }
+interface Test {
+  workbook: Workbooks[];
+}
+function PItem({ workbook }: Test) {
 
+  return (
+    <>
+      <div>
+        {workbook.length > 0 ? workbook.map((data) => <Item key={data.pid} title={data.title} src={data.img} size="medium" />
+        ) : "문제를 선택해서 문제집을 만들어 보세요!"}
+      </div>
+    </>
+  )
+}
 const Wrap = styled.div`
   display: flex;
   flex-flow: row;

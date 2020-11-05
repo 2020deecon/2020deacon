@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Item from '../views/viewproblem';
+import Get from '../../lib/api/get';
+
 interface Drage {
     pid: string;
     title: string;
@@ -12,27 +14,35 @@ interface GetProps {
     update: ({ pid, title, img }: Drage) => void;
     delupdate: (pid: string) => void;
 }
+let key = 0;
 function SearchData({ User, update, delupdate }: GetProps) {
 
     //내꺼 인지 전체 인지 검사
     // const [on,off]
-    const [Itmes, setItmes] = useState([{
-        id: 1, title: "다음이 있을때 이것을 구하시오", img: "https://via.placeholder.com/100x100.png/e5c7ff/ffffff/?text=test", key: 0
-    },
-    { id: 2, title: "수능 대비1", img: "https://via.placeholder.com/100x100.png/e5c7ff/ffffff/?text=test", key: 0 },
-    { id: 3, title: "다음을 구하시오", img: "https://via.placeholder.com/100x100.png/e5c7ff/ffffff/?text=test", key: 0 },
-    { id: 4, title: "다음을 구하시오", img: "https://via.placeholder.com/100x100.png/e5c7ff/ffffff/?text=test", key: 0 },
-    { id: 5, title: "다음을 구하시오", img: "https://via.placeholder.com/100x100.png/e5c7ff/ffffff/?text=test", key: 0 },
-    { id: 6, title: "수능 대비", img: "https://via.placeholder.com/100x100.png/e5c7ff/ffffff/?text=test", key: 0 },
-    { id: 7, title: "수능 대비", img: "https://via.placeholder.com/100x100.png/e5c7ff/ffffff/?text=test", key: 0 }]);
+
+    // Itmes();
+
+    const [test, seTest] = useState<any[]>([]);
+    // async function test() {
+    useEffect(() => {
+        Get().GetallProblems().then(res => {
+            // console.log(res);
+            seTest(res);
+        }).catch(err => console.log(err))
+    }, [])
+
+
+    // console.log(test);
+
     return (
         <Wrap>
             {
-                Itmes.map(
-                    (data) =>
-                        <SerachItem key={data.id} onChange={(e) => e.target.checked ? update({ pid: String(data.id), title: data.title, img: data.img }) : delupdate(String(data.id))
+                test.map(
+                    (data) => {
+                        return <SerachItem key={key++} onChange={(e) => e.target.checked ? update({ pid: data._id, title: data.title, img: data.image }) : delupdate(String(data.id))
                         }
-                            title={data.title} img={data.img} />)
+                            title={data.title} img={data.image} />
+                    })
             }
         </Wrap>
     );

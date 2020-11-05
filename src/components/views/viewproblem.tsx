@@ -21,7 +21,7 @@ function viewproblem({ size = "small", title, subtitle, values, src, estext }: P
                     </Title>
                 </div>
                 <Body>
-                    <Img src={src || "https://via.placeholder.com/500x250.png/e5c7ff/ffffff/?text=grap Img"} size={size} />
+                    <Img src={src} size={size} />
                     <TitleText size={size}>{subtitle}</TitleText>
                     <Answers>
                         {values ? values.map(value => <li>{value}</li>) : ""}
