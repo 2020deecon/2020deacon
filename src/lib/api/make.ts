@@ -9,10 +9,6 @@ interface Problem {
     answer: any | any[];
     category: string;
 }
-interface Problems {
-    pid: string;
-}
-
 interface Answers {
     Sortanswer?: string;
     answers?: string[5];
@@ -20,7 +16,7 @@ interface Answers {
 interface Workbook {
     title: string;
     category: string;
-    problems: Problems[];
+    problems: any[];
 }
 function Make() {
     const Makeproblem = async ({ title, subtitle, img, answer, problemtype, category }: Problem) => {
@@ -33,7 +29,7 @@ function Make() {
         })
     }
     const MakeWorkbook = async ({ title, problems, category }: Workbook) => {
-        await getClient().post('/workbookProblem', { title: title, problems: problems, category: category }).then(res => {
+        await getClient().post('/workbookProblem', { title: title, problem_id: problems, category: category }).then(res => {
             console.log(res);
             return res.data;
         }).catch(err => {

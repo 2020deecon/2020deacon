@@ -22,9 +22,9 @@ function Index() {
       <Route path="/mypage" exact component={Mypage} />
       <Route path="/community" exact component={Community} />
       <Route path="/makecommunity" exact component={makeproblem} />
-      <Route path="/viewproblem/:title/" exact component={viewproblem} />
-      <Route path="/viewworkbook/:title/" exact component={viewworkbook} />
-      <Route path="/viewCommunity/:title/" exact component={viewcommunity} />
+      <Route path="/viewproblem/:id/" exact component={viewproblem} />
+      <Route path="/viewworkbook/:id/" exact component={viewworkbook} />
+      <Route path="/viewCommunity/:id/" exact component={viewcommunity} />
     </Switch>
   );
 }

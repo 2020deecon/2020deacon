@@ -6,6 +6,15 @@ interface Test {
 }
 
 function Get() {
+    const GetmyProblems = async () => {
+        let data = await getClient().get('/myProblem').then(res => {
+            // console.log(res.data.data);
+            return res.data.data;
+        }).catch(err => {
+            throw parseError(err);
+        })
+        return data
+    }
     const GetallProblems = async () => {
         let data = await getClient().get('/sendProblem').then(res => {
             // console.log(res.data.data);
@@ -17,7 +26,6 @@ function Get() {
     }
     const GetsomeofProblems = async ({ id }: Test) => {
         let data = await getClient().get('/detailProblem?id=' + id).then(res => {
-            // alert("시벌");
             console.log(res);
             return res.data.data;
         }).catch(err => {
@@ -25,7 +33,28 @@ function Get() {
         })
         return data
     }
-    return { GetallProblems, GetsomeofProblems };
+
+    const GetallWorkbooks = async () => {
+        let data = await getClient().get('/sendWorkbook').then(res => {
+            // console.log(res.data.data);
+            return res.data.data;
+        }).catch(err => {
+            throw parseError(err);
+        })
+        return data
+    }
+    const GetsomeofWorkbooks = async ({ id }: Test) => {
+        let data = await getClient().get('/detailWorkbook?id=' + id).then(res => {
+            console.log(res);
+            return res.data.data;
+        }).catch(err => {
+            throw parseError(err);
+        })
+        return data
+    }
+
+    return { GetmyProblems, GetallProblems, GetsomeofProblems, GetallWorkbooks, GetsomeofWorkbooks };
+
 }
 
 export default Get;

@@ -20,6 +20,7 @@ function Header() {
 
   useEffect(() => {
     setparams(window.location.pathname);
+    setOnOff(true);
   }, [window.location.pathname])
 
   window.onscroll = function () {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "../components/layout";
 import styled, { css } from "styled-components";
 import viewport from "../constants/viewport";
@@ -8,8 +8,8 @@ import { Icon } from "../lib/images";
 import Input from "../components/UI/Input";
 import PData from "../components/views/viewproblem";
 import WData from "../components/views/viewWorkbook";
-
 import { useHistory } from "react-router-dom";
+import Get from "../lib/api/get";
 
 
 type What = "나만의 문제" | "나만의 문제집" | "공유된 자료";
@@ -75,86 +75,108 @@ interface ResultsType {
 
 function Results({ set }: ResultsType) {
   const history = useHistory();
-  function clickPb() {
-    history.replace("/viewproblem" + "/title");
+  function clickPb(title: string) {
+    history.replace("/viewproblem/" + title);
   }
-  function clickWb() {
-    history.replace("/viewworkbook" + "/title");
+  function clickWb(title: string) {
+    history.replace("/viewworkbook/" + title);
   }
+  const [Items, setItems] = useState<any[]>([]);
 
-  if (set !== "나만의 문제집")
+
+  if (set !== "나만의 문제집") {
+    Get().GetmyProblems().then(res => {
+      setItems(res);
+    }).catch(err => {
+      console.log(err);
+    })
     return (
       <ResultWrap>
-        <div onClick={clickPb}>
-          <PData title="다음이 있을때 이것을 구하시오" size="medium" estext />
-        </div>
-        <PData title="title" size="medium" />
-        <PData title="title" size="medium" />
-        <PData title="title" size="medium" />
-        <PData title="title" size="medium" />
-        <PData title="title" size="medium" />
-        <PData title="title" size="medium" />
-        <PData title="title" size="medium" />
-        <PData title="title" size="medium" />
-        <PData title="title" size="medium" />
-        <PData title="title" size="medium" />
-        <PData title="title" size="medium" />
-        <PData title="title" size="medium" />
-        <PData title="title" size="medium" />
-        <PData title="title" size="medium" />
-        <PData title="title" size="medium" />
-        <PData title="title" size="medium" />
-        <PData title="title" size="medium" />
-        <PData title="title" size="medium" />
-        <PData title="title" size="medium" />
-        <PData title="title" size="medium" />
-        <PData title="title" size="medium" />
-        <PData title="title" size="medium" />
-        <PData title="title" size="medium" />
+        {Items.map((data) =>
+          <>
+            <div onClick={() => clickPb(data.id)}>
+              <PData title={data.title} size="medium" estext src={data.image} />
+            </div>
+          </>
+        )}
       </ResultWrap>
     );
-  else
-    return (
-      <ResultWrap workbook>
-        {/* <div>testsetstset</div> */}
-        <div onClick={clickWb}>
-          <WData size="small" title="이건 꼭푼다 스벌" />
-        </div>
-        <WData size="small" title="이건 꼭푼다 스벌" />
-        <WData size="small" title="이건 꼭푼다 스벌" />
-        <WData size="small" title="이건 꼭푼다 스벌" />
+  }
 
-      </ResultWrap>
+  else {
+    Get().GetallWorkbooks().then(res => {
+      setItems(res);
+    }).catch(err => {
+      console.log(err);
+    })
+    return (
+      < ResultWrap workbook >
+        {
+          Items.map((data) =>
+            <>
+              <div onClick={() => clickWb(data.id)}>
+                <WData size="small" title={data.title} />
+              </div>
+            </>
+          )
+        }
+      </ResultWrap >
     )
+  }
+
 
 }
 interface SearchResultsType {
   select: string;
 }
 const SearchResults = ({ select }: SearchResultsType) => {
+  const [Items, setItems] = useState<any[]>([]);
   const history = useHistory();
-  function clickPb() {
-    history.replace("/viewproblem" + "/title");
+  function clickPb(title: string) {
+    history.replace("/viewproblem/" + title);
   }
-  function clickWb() {
-    history.replace("/viewworkbook" + "/title");
+  function clickWb(title: string) {
+    history.replace("/viewworkbook" + title);
   }
-  if (select === "problem")
+  if (select === "problem") {
+    Get().GetallProblems().then(res => {
+      setItems(res);
+    }).catch(err => {
+      console.log(err);
+    })
     return (
       <ResultWrap>
-        <div onClick={clickPb}>
-          {/* <PData title="다음이 있을때 이것을 구하시오" size="medium" estext /> */}
-        </div>
+        {Items.map((data) =>
+          <>
+            <div onClick={() => clickPb(data.title)}>
+              <PData title={data.title} size="medium" estext src={data.image} />
+            </div>
+          </>
+        )}
       </ResultWrap>
     )
-  else
+  }
+
+  else {
+    Get().GetallWorkbooks().then(res => {
+      setItems(res);
+    }).catch(err => {
+      console.log(err);
+    })
     return (
-      <ResultWrap workbook>
-        <div onClick={clickWb}>
-          <WData size="small" title="이건 꼭푼다 스벌" />
-        </div>
-      </ResultWrap>
+      < ResultWrap workbook >
+        {
+          Items.map((data) =>
+            <>
+              <div onClick={() => clickWb(data.title)}>
+                <WData size="small" title={data.title} />
+              </div>
+            </>
+          )
+        }
+      </ResultWrap >
     )
+  }
 }
 const Wrap = styled.div`
   max-width: ${viewport.desktop};

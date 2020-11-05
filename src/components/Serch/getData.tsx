@@ -30,7 +30,7 @@ function SearchData({ User, update, delupdate }: GetProps) {
             seTest(res);
         }).catch(err => console.log(err))
     }, [])
-    // const [Checkeded, setchecked] = useState(false);
+    const [Checkeded, setchecked] = useState(false);
     // console.log(test);
 
     return (
@@ -40,9 +40,18 @@ function SearchData({ User, update, delupdate }: GetProps) {
                     (data) =>
                         <SerachItem key={key++}
                             onChange={(e) => {
-                                e.target.checked ? update({ pid: data._id, title: data.title, img: data.image }) : delupdate(String(data.id))
+                                if (e.target.checked) {
+                                    update({ pid: data._id, title: data.title, img: data.image });
+                                    // setchecked(true);
+                                }
+                                else {
+                                    delupdate(String(data.id));
+                                    // setchecked(false);
+                                }
                             }
+
                             }
+                            // Checked={Checkeded}
                             title={data.title} img={data.image} />
                 )
             }
@@ -60,7 +69,9 @@ function SerachItem({ title, img, onChange }: SerachProps) {
     return (
         <IWrap>
             <Item title={title} src={img} estext />
-            <input type="checkbox" onClick={(e) => onChange(e)} />
+            <input type="checkbox" onClick={(e) => onChange(e)}
+            // checked={Checked}
+            />
         </IWrap>
     )
 };

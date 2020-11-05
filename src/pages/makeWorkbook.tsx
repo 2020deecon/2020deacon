@@ -35,12 +35,13 @@ function MakePWorkbook() {
     slidesToShow: 1,
     slidesToScroll: 1,
   };
+
   const [workbook, setworkbook] = useState<Workbooks[]>([]);
   const [answers, setanswers] = useState<answers[]>([]);
   const [category, setcategory] = useState("국어");
   const [title, settitle] = useState("");
 
-  const { handleSubmit } = useForm();
+  const { handleSubmit, register } = useForm();
 
   function update({ pid, title, img }: Workbooks) {
     Get().GetsomeofProblems({ id: pid }).then(res => {
@@ -58,7 +59,7 @@ function MakePWorkbook() {
   const SearchIcon = <img src={Icon.search} width="24px" height="24px" />;
 
   function OnSubmit(data: any) {
-    // make().MakeWorkbook({ title, problems: workbook, answers, category });
+    make().MakeWorkbook({ title, problems: workbook.map((data) => data.pid), category });
   }
   return (
     <Layout>
@@ -72,7 +73,11 @@ function MakePWorkbook() {
               <option value="과학">과학</option>
             </select>
             <div style={{ background: colors.border, borderRadius: "20px", height: "20px" }}>
-              <input type="text" name="title" placeholder="문제집 이름을 입력하세요" onChange={e => settitle(e.target.value)} />
+              <input type="text" name="title" placeholder="문제집 이름을 입력하세요" onChange={e => settitle(e.target.value)}
+                ref={register({
+                  required: "제목을 입력해주세요",
+                })}
+              />
             </div>
 
 
