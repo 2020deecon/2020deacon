@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "../components/layout";
 import styled from "styled-components";
 import Input from "../components/UI/Input";
@@ -9,15 +9,22 @@ import viewport from "../constants/viewport";
 import colors from "../constants/colors";
 import { Icon } from "../lib/images";
 import Item from "../components/views/viewcommunity";
-
+import Get from "../lib/api/get";
 
 
 function Community() {
   const history = useHistory();
+  const [Items, setItems] = useState<any[]>([]);
   const [click, setclick] = useState([
     { click: true, what: "question" },
     { click: true, what: "debate" },
   ]);
+  useEffect(() => {
+    Get().Getallcommunity().then(res => {
+      console.log(res);
+      setItems(res);
+    }).catch(err => console.log(err));
+  }, []);
   return (
     <Layout title="community">
       <Wrap>
@@ -68,10 +75,13 @@ function Community() {
         </Categorys>
 
         <Results>
-          <div onClick={() => history.replace("/viewCommunity/" + "아니 이게 어떻게 된거인거임야발암ㅇ란ㅇㄹ")}>
-            <Item title="아니 이게 어떻게 된거인거임야발암ㅇ란ㅇㄹ" contents="이게이렇게 어떻게 나옴?ssdafsdanifldsafildsanflsdiflsdaissdafsdanifldsafildsanflsdiflsdai" Written="question" />
-          </div>
-
+          {Items.map(item => {
+            return (
+              <div onClick={() => history.replace("/viewCommunity/" + item.id)}>
+                <Item title={item.title} contents={item.text} Written={item.type} />
+              </div>)
+          })}
+          {/* 
           <Item title="test" contents="이게이렇게 어떻게 나옴?" />
           <Item title="test" contents="이게이렇게 어떻게 나옴?" />
           <Item title="test" contents="이게이렇게 어떻게 나옴?" />
@@ -80,7 +90,7 @@ function Community() {
           <Item title="test" contents="이게이렇게 어떻게 나옴?" />
           <Item title="test" contents="이게이렇게 어떻게 나옴?" />
           <Item title="test" contents="이게이렇게 어떻게 나옴?" />
-          <Item title="test" contents="이게이렇게 어떻게 나옴?" />
+          <Item title="test" contents="이게이렇게 어떻게 나옴?" /> */}
         </Results>
       </Wrap>
     </Layout>

@@ -9,14 +9,20 @@ interface Problem {
     answer: any | any[];
     category: string;
 }
-interface Answers {
-    Sortanswer?: string;
-    answers?: string[5];
-}
 interface Workbook {
     title: string;
     category: string;
     problems: any[];
+}
+interface Community {
+    title: string;
+    image: string;
+    text: string;
+    type: string;
+}
+interface Comment {
+    id: string;
+    text: string;
 }
 function Make() {
     const Makeproblem = async ({ title, subtitle, img, answer, problemtype, category }: Problem) => {
@@ -37,8 +43,25 @@ function Make() {
         })
     }
 
+    const MakeCommunity = async ({ title, image, text, type }: Community) => {
+        console.log(title, image, text, type);
+        await getClient().post('/makePost', { title: title, image: image, text: text, type: type }).then(res => {
+            console.log(res);
+            return res.data;
+        }).catch(err => {
+            throw parseError(err);
+        })
+    }
+    const MakeCommented = async ({ id, text }: Comment) => {
+        await getClient().post('/makeComment', { project_id: id, comment: text }).then(res => {
+            console.log(res);
+            return res.data;
+        }).catch(err => {
+            throw parseError(err);
+        })
+    }
 
-    return { Makeproblem, MakeWorkbook };
+    return { Makeproblem, MakeWorkbook, MakeCommunity, MakeCommented };
 }
 
 export default Make;

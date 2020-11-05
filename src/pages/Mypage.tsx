@@ -11,12 +11,45 @@ import WData from "../components/views/viewWorkbook";
 import { useHistory } from "react-router-dom";
 import Get from "../lib/api/get";
 
-
 type What = "나만의 문제" | "나만의 문제집" | "공유된 자료";
 
 function Mypage() {
   const [what, setwhat] = useState<What>("나만의 문제");
   const [whatsearch, setSearch] = useState("problem");
+  const [Items, setItems] = useState<any[]>([]);
+  useEffect(() => {
+    if (what === "공유된 자료")
+      return;
+    if (what !== "나만의 문제집")
+      Get().GetmyWorkbook().then(res => {
+        setItems(res);
+      }).catch(err => {
+        console.log(err);
+      })
+    else {
+      Get().GetallWorkbooks().then(res => {
+        setItems(res);
+      }).catch(err => {
+        console.log(err);
+      })
+    }
+  }, [what]);
+
+  useEffect(() => {
+    if (whatsearch === "problem")
+      Get().GetallProblems().then(res => {
+        alert("test");
+        setItems(res);
+      }).catch(err => {
+        console.log(err);
+      })
+    else
+      Get().GetallWorkbooks().then(res => {
+        setItems(res);
+      }).catch(err => {
+        console.log(err);
+      })
+  }, [whatsearch]);
   return (
     <Layout>
       <Wrap>
@@ -63,7 +96,7 @@ function Mypage() {
               <button><img src={Icon.search} alt="" /></button>
             </div>
           </div>
-          {what !== "공유된 자료" ? <Results set={what} /> : <SearchResults select={whatsearch} />}
+          {what !== "공유된 자료" ? <Results set={what} Items={Items} /> : <SearchResults select={whatsearch} />}
         </SelectPData>
       </Wrap>
     </Layout>
@@ -71,9 +104,10 @@ function Mypage() {
 }
 interface ResultsType {
   set: What;
+  Items: any[];
 }
 
-function Results({ set }: ResultsType) {
+function Results({ set, Items }: ResultsType) {
   const history = useHistory();
   function clickPb(title: string) {
     history.replace("/viewproblem/" + title);
@@ -81,15 +115,7 @@ function Results({ set }: ResultsType) {
   function clickWb(title: string) {
     history.replace("/viewworkbook/" + title);
   }
-  const [Items, setItems] = useState<any[]>([]);
-
-
   if (set !== "나만의 문제집") {
-    Get().GetmyProblems().then(res => {
-      setItems(res);
-    }).catch(err => {
-      console.log(err);
-    })
     return (
       <ResultWrap>
         {Items.map((data) =>
@@ -104,11 +130,7 @@ function Results({ set }: ResultsType) {
   }
 
   else {
-    Get().GetallWorkbooks().then(res => {
-      setItems(res);
-    }).catch(err => {
-      console.log(err);
-    })
+
     return (
       < ResultWrap workbook >
         {
@@ -136,14 +158,9 @@ const SearchResults = ({ select }: SearchResultsType) => {
     history.replace("/viewproblem/" + title);
   }
   function clickWb(title: string) {
-    history.replace("/viewworkbook" + title);
+    history.replace("/viewworkbook/" + title);
   }
   if (select === "problem") {
-    Get().GetallProblems().then(res => {
-      setItems(res);
-    }).catch(err => {
-      console.log(err);
-    })
     return (
       <ResultWrap>
         {Items.map((data) =>
@@ -158,11 +175,7 @@ const SearchResults = ({ select }: SearchResultsType) => {
   }
 
   else {
-    Get().GetallWorkbooks().then(res => {
-      setItems(res);
-    }).catch(err => {
-      console.log(err);
-    })
+
     return (
       < ResultWrap workbook >
         {
@@ -200,7 +213,7 @@ const Wrap = styled.div`
   }
 `;
 
-const SelectPData = styled.div<ResultsType>`    
+const SelectPData = styled.div<{ set: What }>`    
     width: 100%;
     display:flex;
     flex-direction: column;

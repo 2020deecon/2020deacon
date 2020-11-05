@@ -11,8 +11,9 @@ interface communityProps {
     src?: string;
     size?: sizeType;
     writer?: string;
+    CommentItem?: any[];
 }
-function viewcommunity({ title, src, size = "small", contents, Written = "debate" }: communityProps) {
+function viewcommunity({ title, src, size = "small", contents, Written = "debate", CommentItem }: communityProps) {
     return (
         <Wrap size={size} Written={Written}>
             <div>
@@ -25,13 +26,15 @@ function viewcommunity({ title, src, size = "small", contents, Written = "debate
                         fontSize: "20px"
                     }}>댓글</div>
                     <div className="contents">
+                        {CommentItem?.map(data => <CommentItems writer={data.writer} contents={data.comment} />)}
+
+                        {/* <CommentItems writer="writer" contents="ㅋㅋㅋㅋ 그렇게 하는거 아닌데" />
                         <CommentItems writer="writer" contents="ㅋㅋㅋㅋ 그렇게 하는거 아닌데" />
                         <CommentItems writer="writer" contents="ㅋㅋㅋㅋ 그렇게 하는거 아닌데" />
                         <CommentItems writer="writer" contents="ㅋㅋㅋㅋ 그렇게 하는거 아닌데" />
                         <CommentItems writer="writer" contents="ㅋㅋㅋㅋ 그렇게 하는거 아닌데" />
                         <CommentItems writer="writer" contents="ㅋㅋㅋㅋ 그렇게 하는거 아닌데" />
-                        <CommentItems writer="writer" contents="ㅋㅋㅋㅋ 그렇게 하는거 아닌데" />
-                        <CommentItems writer="writer" contents="ㅋㅋㅋㅋ 그렇게 하는거 아닌데" />
+                        <CommentItems writer="writer" contents="ㅋㅋㅋㅋ 그렇게 하는거 아닌데" /> */}
                     </div>
                 </Comments>
             </div>

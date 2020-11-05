@@ -5,25 +5,58 @@ import { useHistory } from "react-router-dom"
 import Input from "../components/UI/Input";
 import { useForm } from "react-hook-form";
 import Button from "../components/UI/Button";
+import Make from "../lib/api/make";
+import colors from "../constants/colors";
+
 function Makecommunity() {
   const history = useHistory()
-  const [title, setTitle] = useState("")
-  const [text, setText] = useState("")
   const [type, setType] = useState("question");
-
+  const [img, setimg] = useState("");
   function Upload(data: any) {
+    Make().MakeCommunity({ ...data, image: img });
     history.replace("/");
   }
-  const { register, handleSubmit, errors } = useForm({
+  const { register, handleSubmit } = useForm({
     mode: "onChange",
   });
 
+  function Setimg() {
+    const image: HTMLInputElement = document.getElementById(
+      "bin"
+    ) as HTMLInputElement;
+    //input tag
+    //img tag
+    if (image.files![0]) {
+      const reader = new FileReader();
+      reader.onload = function (e?: any) {
+        // image_section.src = e.target.result;
+        setimg(e.target.result);//base64incoding
+      };
+      reader.readAsDataURL(image.files![0]);
+    }
+  }
   return (
     <Layout>
       <Wrap>
         <form onSubmit={handleSubmit(Upload)}>
           <TitleWrap>
             <Title>게시판 등록</Title>
+            <label>
+              <input
+                type="file"
+                name="uploadImg"
+                accept="image/jpeg,image/png" //파일 형식 지정
+                id="bin"
+                onChange={(e) => {
+                  Setimg();
+                }}
+                ref={register({
+                  required: false,
+                })}
+                style={{ display: "none" }}
+              />
+              <div style={{ background: colors.border, borderRadius: "50px", textAlign: "center" }}>{!img ? "이미지 선택하기" : "이미지 선택완료"}</div>
+            </label>
           </TitleWrap>
           <TitleLine></TitleLine>
           <Input
@@ -51,7 +84,7 @@ function Makecommunity() {
           <InputText
             rows={25}
             placeholder="내용"
-            name="contents"
+            name="text"
             style={{ margin: "7px 0px" }}
             ref={register({
               required: "내용을 작성해주세요!"

@@ -9,12 +9,12 @@ import Viewproblem from "../../components/views/viewproblem";
 import Get from "../../lib/api/get";
 function WorkbookView({ match }: any) {
     const { id } = match.params;
-    const [data, setdata] = useState<any>("");
+    const [data, setdata] = useState<any>([]);
     useEffect(() => {
         Get().GetsomeofWorkbooks({ id: id }).then(res => {
             console.log(res);
             // setData(res);
-            setdata(res);
+            // setdata(res);
         }).catch(err => console.log(err)
         );
     }, []);
@@ -26,6 +26,9 @@ function WorkbookView({ match }: any) {
                     <img src={Icon.print} width="24px" height="24px" />
                 </Title>
                 <div>
+                    {data.problems.map((v: any) =>
+                        <Viewproblem title={v.title} size="medium" src={v.image} />
+                    )}
                     {/* {data}
                     <Viewproblem title={title} size="medium" />
                     <Viewproblem title={title} size="medium" />

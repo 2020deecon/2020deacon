@@ -1,21 +1,31 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Layout from "../../components/layout";
 import styled from "styled-components";
 import viewport from "../../constants/viewport";
 import ViewCommunity from "../../components/views/viewcommunity";
 import Input from "../../components/UI/Input";
+import Get from "../../lib/api/get";
+import Make from "../../lib/api/make";
 function CommunityView({ match }: any) {
-    const { title, subtitle, img } = match.params;
+    const { id } = match.params;
+    const [Item, setItems] = useState<any>("");
+    const [text, settext] = useState("");
+    useEffect(() => {
+        Get().Getsomeofcommunity({ id: id }).then(res => {
+            console.log(res);
+            setItems(res);
+        }).catch(err => console.log(err)
+        );
+    }, []);
 
     return (
-        <Layout title={title}>
+        <Layout title={id}>
             <Wrap>
-                <ViewCommunity title={title} size="large" contents="동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세 무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세" />
+                <ViewCommunity title={Item.title} size="large" contents={Item.text} CommentItem={Item.comment} />
                 <InputWrap>
-                    <Input type="text" placeholder="댓글" />
-                    <button>▶</button>
+                    <Input type="text" placeholder="댓글" onChange={e => settext(e.target.value)} />
+                    <button onClick={() => { Make().MakeCommented({ id, text }); }} >▶</button>
                 </InputWrap>
-
             </Wrap>
         </Layout>
     );
