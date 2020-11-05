@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import getClient from "../../lib/api/client";
 import User from "../../lib/api/user";
 import { setToken, getToken, setuseToken, getuserToken, delToken } from "../../lib/token";
 
@@ -13,13 +14,34 @@ interface AuthType {
 export const Login = createAsyncThunk(
     "auth/Login",
     async ({ id, password }: { id: string; password: string }) => {
-        const token = await User().Login({ id, password });
-        setToken(token);
-        setuseToken(id);
+        // alert("test");
+        getClient().post('/auth', { id: id, pw: password })
+            .then(res => {
+                console.log(res)
+                // console.log(res.data.access_token)
+                const token = res.data.access_token
+                setToken(token)
+                // window.location.reload();
 
-        return token;
+            })
+            .catch(err => console.log(err));
+        User().Login({ id, password })
+        // setToken(token);
+        // return token;
     }
 );
+export const getUser = createAsyncThunk(
+    "auth/getUser",
+    async () => {
+        // alert("Test");
+        const Test = await User().Userget();
+        console.log("test" + Test);
+
+        // console.log(id);
+
+        // return id;
+    }
+)
 
 const initialState: AuthType = {
     token: getToken(),

@@ -9,7 +9,7 @@ interface HeadingProps {
   Texteps?: boolean;
 }
 function Heading({ tag = "h1", tagStyle = "h1", children, Texteps }: HeadingProps) {
-  console.log("Heading Texteps:" + Texteps);
+  // console.log("Heading Texteps:" + Texteps);
   const Tag = tag;
   const styles = {
     h1: "3.052em",

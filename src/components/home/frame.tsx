@@ -2,14 +2,15 @@ import React from "react";
 import styled, { css } from "styled-components";
 import Headding from "../UI/Headding";
 import colors from "../../constants/colors";
-
+import { Link } from "react-router-dom";
 interface HomeFrameProps {
   src: string;
   title: string;
   subtitle?: string;
   reverse?: boolean;
+  linkto?: string;
 }
-function Frame({ src, title, subtitle, reverse }: HomeFrameProps) {
+function Frame({ src, title, subtitle, reverse, linkto }: HomeFrameProps) {
   return (
     <Wrap reversy={reverse}>
       <div
@@ -24,7 +25,10 @@ function Frame({ src, title, subtitle, reverse }: HomeFrameProps) {
         </Headding>
         <SubTitle>
           <Headding tag="h4" tagStyle="h5">
-            {subtitle}
+            <Link to={linkto ? linkto : ""}>
+              {subtitle}
+            </Link>
+
           </Headding>
         </SubTitle>
       </div>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
 import viewport from "../../constants/viewport";
 import Headding from "../UI/Headding";
@@ -9,10 +9,14 @@ import { Link } from "react-router-dom";
 import useLogin from "../../hooks/useLogin";
 import useModal from "../../hooks/useModal";
 function Header() {
+  const [params, setparams] = useState(window.location.pathname);
   const [scrollpos, setscrollpos] = useState(0);
   const login = useLogin();
   const [onOff, setOnOff] = useState(true);
   const { Open } = useModal("login");
+  useEffect(() => {
+    setparams(window.location.pathname);
+  }, [window.location.pathname])
 
   window.onscroll = function () {
     if (0 < scrollpos && scrollpos < 7) window.setTimeout(500);
@@ -38,8 +42,8 @@ function Header() {
     return (
       <>
         <UserName>{login.id}</UserName>
-        <Button onClick={login.logout}>
-          <Link to="/signup">로그아웃</Link>
+        <Button onClick={() => { login.logout(); window.location.reload() }}>
+          <Link to="/">로그아웃</Link>
         </Button>
       </>
     )
@@ -50,26 +54,28 @@ function Header() {
       <LeftHeader>
         <Title>
           <Headding tag="h2" tagStyle="h3">
-            <Link to="/">connect</Link>
+            <Link to="/">connec
+            <div style={{ color: colors.primary }}>text</div>
+            </Link>
           </Headding>
         </Title>
         <Ul>
-          <Li>
+          <Li clicked={params === "/makeproblem"}>
             <b>
               <Link to="/makeproblem">문제만들기</Link>
             </b>
           </Li>
-          <Li>
+          <Li clicked={params === "/makeworkbook"}>
             <b>
               <Link to="/makeworkbook">문제집만들기</Link>
             </b>
           </Li>
-          <Li>
+          <Li clicked={params === "/mypage"}>
             <b>
               <Link to="/mypage">마이 페이지</Link>
             </b>
           </Li>
-          <Li>
+          <Li clicked={params === "/community"}>
             <b>
               <Link to="/community">커뮤니티</Link>
             </b>
@@ -117,7 +123,12 @@ align-items: center;
   height: 100%;
 `;
 const Title = styled.div`
-  color: ${colors.primary};
+  color: ${colors.border};
+  /* width: 100%; */
+  &>h2>a{
+    display: flex;
+  }
+  
 `;
 const LeftHeader = styled.div`
   display: flex;

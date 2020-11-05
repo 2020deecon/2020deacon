@@ -3,16 +3,20 @@ import Layout from "../components/layout";
 import styled from "styled-components";
 import Input from "../components/UI/Input";
 import Button from "../components/UI/Button";
+import { useHistory } from "react-router-dom";
 
 import viewport from "../constants/viewport";
 import colors from "../constants/colors";
 import { Icon } from "../lib/images";
+import Item from "../components/views/viewcommunity";
+
+
 
 function Community() {
+  const history = useHistory();
   const [click, setclick] = useState([
-    { click: false, what: "질문" },
-    { click: false, what: "잡담" },
-    { click: false, what: "문제집" },
+    { click: true, what: "question" },
+    { click: true, what: "debate" },
   ]);
   return (
     <Layout title="community">
@@ -28,12 +32,13 @@ function Community() {
             </div>
           </div>
         </SearchBox>
+
         <Categorys>
           <Button
             onClick={(e) =>
               setclick(
                 click.map((data) =>
-                  data.what === "질문"
+                  data.what === "question"
                     ? { click: !data.click, what: data.what }
                     : data
                 )
@@ -41,13 +46,13 @@ function Community() {
             }
             className={click[0].click ? "click" : ""}
           >
-            질문
+            question
           </Button>
           <Button
             onClick={(e) =>
               setclick(
                 click.map((data) =>
-                  data.what === "잡담"
+                  data.what === "debate"
                     ? { click: !data.click, what: data.what }
                     : data
                 )
@@ -55,24 +60,28 @@ function Community() {
             }
             className={click[1].click ? "click" : ""}
           >
-            잡담
+            debate
           </Button>
-          <Button
-            onClick={(e) =>
-              setclick(
-                click.map((data) =>
-                  data.what === "문제집"
-                    ? { click: !data.click, what: data.what }
-                    : data
-                )
-              )
-            }
-            className={click[2].click ? "click" : ""}
-          >
-            문제집
-          </Button>
+          <button id="writebutton" onClick={() => history.replace("/makecommunity")}>
+            글쓰기
+          </button>
         </Categorys>
-        <Results></Results>
+
+        <Results>
+          <div onClick={() => history.replace("/viewCommunity/" + "아니 이게 어떻게 된거인거임야발암ㅇ란ㅇㄹ")}>
+            <Item title="아니 이게 어떻게 된거인거임야발암ㅇ란ㅇㄹ" contents="이게이렇게 어떻게 나옴?ssdafsdanifldsafildsanflsdiflsdaissdafsdanifldsafildsanflsdiflsdai" Written="question" />
+          </div>
+
+          <Item title="test" contents="이게이렇게 어떻게 나옴?" />
+          <Item title="test" contents="이게이렇게 어떻게 나옴?" />
+          <Item title="test" contents="이게이렇게 어떻게 나옴?" />
+          <Item title="test" contents="이게이렇게 어떻게 나옴?" />
+          <Item title="test" contents="이게이렇게 어떻게 나옴?" />
+          <Item title="test" contents="이게이렇게 어떻게 나옴?" />
+          <Item title="test" contents="이게이렇게 어떻게 나옴?" />
+          <Item title="test" contents="이게이렇게 어떻게 나옴?" />
+          <Item title="test" contents="이게이렇게 어떻게 나옴?" />
+        </Results>
       </Wrap>
     </Layout>
   );
@@ -80,8 +89,8 @@ function Community() {
 const Results = styled.div`
   display: flex;
   flex-direction: column;
-  border: 1px solid ${colors.border};
-  border-radius: 50px;
+  border-top: 3px solid ${colors.border};
+  overflow-y: scroll;
   margin-top: 1rem;
   width: 100%;
   height: 75%;
@@ -119,6 +128,19 @@ const Categorys = styled.div`
   justify-content: center;
   margin-top: 30px;
   width: 100%;
+  position: relative;
+  &>#writebutton{
+    position: absolute;
+    right:20px;
+    bottom:0;
+    font-size:18px;
+    font-weight:600;
+    color:${colors.primary};
+    transition: color 0.5s;
+    &:hover {
+      color:${colors.border};
+    }
+  }
   & > button {
     max-width: 100px;
     margin: 0px 10px;
@@ -130,7 +152,6 @@ const Categorys = styled.div`
 `;
 const Wrap = styled.div`
   display: flex;
-  /* justify-content: center; */
   align-items: center;
   flex-direction: column;
   margin: 0px auto;

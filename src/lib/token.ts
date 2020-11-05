@@ -1,17 +1,18 @@
 export function getToken() {
-    return window.sessionStorage && sessionStorage.getItem("token");
+    return window.localStorage.getItem("token");
+    // return localStorage.getItem("token");
 }
 export function setToken(token: any) {
-    return window.sessionStorage && sessionStorage.setItem("token", token);
+    return window.localStorage.setItem("token", token);
 }
 
 export function setuseToken(token: any) {
-    return window.sessionStorage && sessionStorage.setItem("usertoken", token);
+    return window.window.localStorage && window.localStorage.setItem("usertoken", token);
 }
 export function getuserToken() {
-    return window.sessionStorage && sessionStorage.getItem("usertoken");
+    return window.window.localStorage && window.localStorage.getItem("usertoken");
 }
 
 export function delToken() {
-    return window.sessionStorage && sessionStorage.clear();
+    return window.window.localStorage && window.localStorage.clear();
 }

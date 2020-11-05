@@ -7,7 +7,7 @@ import { useHistory } from "react-router-dom";
 import Button from "../UI/Button";
 import Modal from "../UI/Modal";
 import Input, { WrapInput } from "../UI/Input";
-import { Login } from "../../store/slices/auth";
+import { Login, getUser } from "../../store/slices/auth";
 import useModal from "../../hooks/useModal";
 import { useDispatch, useSelector } from "react-redux";
 function LoginModal() {
@@ -20,13 +20,16 @@ function LoginModal() {
   useEffect(() => {
     isLogin && closed();
     history.replace("/");
+    // window.location.reload();
   }, [isLogin, dispatch])
 
   const { closed } = useModal("login");
   const history = useHistory();
 
   function OnSubmit(data: any) {
+    // alert("test");
     dispatch(Login(data));
+    // window.location.reload();
   }
   return (
     <Modal title="로그인" modalname="login">
