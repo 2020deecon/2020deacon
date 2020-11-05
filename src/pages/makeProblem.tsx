@@ -8,6 +8,7 @@ import { useHistory } from "react-router-dom";
 import viewport from "../constants/viewport";
 import colors from "../constants/colors";
 import Headding from "../components/UI/Headding";
+import Make from "../lib/api/make";
 
 function MakeProblem() {
   const history = useHistory();
@@ -16,6 +17,8 @@ function MakeProblem() {
   const [subtitle, setsubtitle] = useState("");
   const [answer, setanswer] = useState("");
   const [img, setimg] = useState("");
+  const [category, setcategory] = useState("국어");
+  const [problemtype, setproblemtype] = useState(true);
   const [answers, setanswers] = useState([
     { id: 1, text: "" },
     { id: 2, text: "" },
@@ -24,7 +27,6 @@ function MakeProblem() {
     { id: 5, text: "" },
   ]);
 
-  const [problemtype, setproblemtype] = useState(true);
   useEffect(() => {
     problemtype
       ? setanswers(
@@ -35,8 +37,18 @@ function MakeProblem() {
       : setanswer("");
   }, [problemtype]);
 
+
   function OnSubmit(data: any) {
-    history.replace("/");
+    // console.log("make data" + data);
+    // if (!problemtype)//주관식 등등
+    // console.log(category);
+
+    // alert(category);
+    Make().Makeproblem({ title, subtitle, img, answer, problemtype, category: category });
+    // else//객관식
+    //   Make().Makeproblem({ title, subtitle, img, answer: answers, problemtype, category: data.category });
+
+    // history.replace("/");
   }
   function Setimg() {
     const image: HTMLInputElement = document.getElementById(
@@ -63,7 +75,7 @@ function MakeProblem() {
         <form onSubmit={handleSubmit(OnSubmit)}>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <WrapInput fieldName="과목" None>
-              <select>
+              <select onChange={e => setcategory(e.target.value)}>
                 <option value="국어">국어</option>
                 <option value="영어">영어</option>
                 <option value="수학">수학</option>
@@ -73,7 +85,7 @@ function MakeProblem() {
 
             <WrapInput fieldName="문제 유형" None>
               <select
-                onChange={(e) => setproblemtype(!(e.target.value === "객관식"))}
+                onChange={(e) => setproblemtype(e.target.value !== "객관식")}
               >
                 <option value="주관식">주관식</option>
                 <option value="객관식">객관식</option>

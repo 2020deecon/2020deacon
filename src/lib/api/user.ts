@@ -39,7 +39,6 @@ function User() {
             throw parseError(err);
         })
     }
-
     const Userget = async () => {
         try {
             const data = await getClient().get('/user');

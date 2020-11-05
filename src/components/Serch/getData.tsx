@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import Headding from '../UI/Headding';
 import Item from '../views/viewproblem';
 interface Drage {
     pid: string;

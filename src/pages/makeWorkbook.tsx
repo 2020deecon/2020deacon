@@ -11,6 +11,8 @@ import Slider from "react-slick";
 import Headding from "../components/UI/Headding";
 import Item from "../components/views/viewproblem";
 import useHistory from "react-router-dom";
+import make from "../lib/api/make";
+
 
 interface Workbooks {
   pid: string;
@@ -33,6 +35,7 @@ function MakePWorkbook() {
   };
   const [workbook, setworkbook] = useState<Workbooks[]>([]);
   const [answers, setanswers] = useState<answers[]>([]);
+  const [category, setcategory] = useState("국어");
   const [title, settitle] = useState("");
 
   const { handleSubmit } = useForm();
@@ -41,6 +44,7 @@ function MakePWorkbook() {
     setworkbook(workbook => [...workbook, { pid, title, img }]);
 
   }
+
   function delupdate(pid: string) {
     setworkbook(workbook.filter(data => data.pid !== pid));
   }
@@ -48,13 +52,15 @@ function MakePWorkbook() {
   // eslint-disable-next-line jsx-a11y/alt-text
   const SearchIcon = <img src={Icon.search} width="24px" height="24px" />;
 
-  function OnSubmit(data: any) { }
+  function OnSubmit(data: any) {
+    // make().MakeWorkbook({ title, problems: workbook, answers, category });
+  }
   return (
     <Layout>
       <Wrap>
         <SearchWrap>
           <form onSubmit={handleSubmit(OnSubmit)}>
-            <select>
+            <select onChange={e => setcategory(e.target.value)}>
               <option value="국어">국어</option>
               <option value="영어">영어</option>
               <option value="수학">수학</option>
