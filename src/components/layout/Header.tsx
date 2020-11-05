@@ -8,12 +8,16 @@ import Ul, { Li } from "../UI/Ul";
 import { Link } from "react-router-dom";
 import useLogin from "../../hooks/useLogin";
 import useModal from "../../hooks/useModal";
+import { getuserToken } from "../../lib/token";
+
 function Header() {
   const [params, setparams] = useState(window.location.pathname);
   const [scrollpos, setscrollpos] = useState(0);
   const login = useLogin();
+  const [id, setid] = useState(getuserToken());
   const [onOff, setOnOff] = useState(true);
   const { Open } = useModal("login");
+
   useEffect(() => {
     setparams(window.location.pathname);
   }, [window.location.pathname])
@@ -41,7 +45,7 @@ function Header() {
   const Flogin = () => {
     return (
       <>
-        <UserName>{login.id}</UserName>
+        <UserName>{id != "undefined" && id != null ? id + "님" : ""}</UserName>
         <Button onClick={() => { login.logout(); window.location.reload() }}>
           <Link to="/">로그아웃</Link>
         </Button>
@@ -118,9 +122,11 @@ const Wrap = styled.div<{ state: boolean }>`
   }}
 `;
 const UserName = styled.div`
-display: flex;
-align-items: center;
   height: 100%;
+  font-weight: bold;
+  font-size:20px;
+  margin-right:20px;
+  width:100%;
 `;
 const Title = styled.div`
   color: ${colors.border};
@@ -150,6 +156,7 @@ interface RightHeaderprops {
 }
 const RightHeader = styled.div<RightHeaderprops>`
   display: flex;
+  align-items:center;
   width: 100%;
   max-width: 300px;
   ${({ islogin }) =>

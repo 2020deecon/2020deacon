@@ -8,38 +8,34 @@ interface AuthType {
     isLogin: boolean;
     pending: boolean;
     error?: string;
-    id: string | null;
     logout: () => void;
 }
 export const Login = createAsyncThunk(
     "auth/Login",
-    async ({ id, password }: { id: string; password: string }) => {
+    ({ id, password }: { id: string; password: string }) => {
         // alert("test");
-        getClient().post('/auth', { id: id, pw: password })
-            .then(res => {
-                console.log(res)
-                // console.log(res.data.access_token)
-                const token = res.data.access_token
-                setToken(token)
-                // window.location.reload();
+        // getClient().post('/auth', { id: id, pw: password })
+        //     .then(res => {
+        //         // console.log(res)
+        //         // console.log(res.data.access_token)
+        //         const token = res.data.access_token
+        //         setToken(token)
+        //         // window.location.reload();
 
-            })
-            .catch(err => console.log(err));
-        User().Login({ id, password })
+        //     })
+        //     .catch(err => console.log(err));
+        User().Login({ id, password });
+
         // setToken(token);
         // return token;
     }
 );
 export const getUser = createAsyncThunk(
     "auth/getUser",
-    async () => {
+    () => {
         // alert("Test");
-        const Test = await User().Userget();
-        console.log("test" + Test);
-
-        // console.log(id);
-
-        // return id;
+        User().Userget();
+        // return Test;
     }
 )
 
@@ -47,7 +43,6 @@ const initialState: AuthType = {
     token: getToken(),
     isLogin: !!getToken(),
     pending: false,
-    id: getuserToken(),
     logout: () => delToken(),
 };
 const authSlice = createSlice({

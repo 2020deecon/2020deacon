@@ -66,10 +66,11 @@ function Makecommunity() {
 
 const Title = styled.div`
   font-size: 28px;
-  font-family: "NanumSRB";
+  font-family: 'Nanum Gothic Coding', monospace;
   display: flex;
   justify-content: center;
   align-items: center;
+  font-weight:600;
 `
 
 const TitleLine = styled.div`
