@@ -17,22 +17,22 @@ function Mypage() {
   const [what, setwhat] = useState<What>("나만의 문제");
   const [Text, setText] = useState("");
   const [whatsearch, setSearch] = useState("problem");
-  const [Items, setItems] = useState<any[]>([]);
-
+  const [problemItems, setproblemItems] = useState<any[]>([]);
+  const [workbookItems, setworkbookItems] = useState<any[]>([]);
   useEffect(() => {
     if (what === "공유된 자료")
       return;
     if (what !== "나만의 문제집")
       Get().GetmyWorkbook().then(res => {
         // alert("fads");
-        setItems(res);
+        setworkbookItems(res);
         console.log(res);
       }).catch(err => {
         console.log(err);
       })
     else {
       Get().GetallWorkbooks().then(res => {
-        setItems(res);
+        setworkbookItems(res);
         console.log(res);
       }).catch(err => {
         console.log(err);
@@ -44,14 +44,14 @@ function Mypage() {
     if (whatsearch === "problem")
       Get().GetallProblems().then(res => {
         // alert("test");
-        setItems(res);
+        setproblemItems(res);
 
       }).catch(err => {
         console.log(err);
       })
     else
       Get().GetallWorkbooks().then(res => {
-        setItems(res);
+        setproblemItems(res);
       }).catch(err => {
         console.log(err);
       })
@@ -102,7 +102,7 @@ function Mypage() {
               <button><img src={Icon.search} alt="" /></button>
             </div>
           </div>
-          {what !== "공유된 자료" ? <Results set={what} Items={Items} Text={Text} /> : <SearchResults select={whatsearch} Items={Items} Text={Text} />}
+          {what !== "공유된 자료" ? <Results set={what} problemItems={problemItems} workbookItems={workbookItems} Text={Text} /> : <SearchResults select={whatsearch} problemItems={problemItems} workbookItems={workbookItems} Text={Text} />}
         </SelectPData>
       </Wrap>
     </Layout>
@@ -110,11 +110,12 @@ function Mypage() {
 }
 interface ResultsType {
   set: What;
-  Items: any[];
+  problemItems: any[];
+  workbookItems: any[];
   Text: string;
 }
 
-function Results({ set, Items, Text }: ResultsType) {
+function Results({ set, problemItems, workbookItems, Text }: ResultsType) {
   const history = useHistory();
   function clickPb(title: string) {
     history.replace("/viewproblem/" + title);
@@ -125,7 +126,7 @@ function Results({ set, Items, Text }: ResultsType) {
   if (set !== "나만의 문제집") {
     return (
       <ResultWrap>
-        {Items.map((data) =>
+        {problemItems.map((data) =>
           data.title.includes(Text) ?
             <>
               <div onClick={() => clickPb(data._id)}>
@@ -142,7 +143,7 @@ function Results({ set, Items, Text }: ResultsType) {
     return (
       < ResultWrap workbook >
         {
-          Items.map((data) =>
+          workbookItems.map((data) =>
             data.title.includes(Text) ?
               <>
                 <div onClick={() => clickWb(data.id)}>
@@ -160,11 +161,12 @@ function Results({ set, Items, Text }: ResultsType) {
 }
 interface SearchResultsType {
   select: string;
-  Items: any[];
+  problemItems: any[];
+  workbookItems: any[];
   Text: string;
 }
-const SearchResults = ({ select, Items }: SearchResultsType) => {
-  console.log(Items);
+const SearchResults = ({ select, problemItems, workbookItems }: SearchResultsType) => {
+  console.log(problemItems);
   const history = useHistory();
   function clickPb(title: string) {
     history.replace("/viewproblem/" + title);
@@ -175,7 +177,7 @@ const SearchResults = ({ select, Items }: SearchResultsType) => {
   if (select === "problem") {
     return (
       <ResultWrap>
-        {Items.map((data) =>
+        {problemItems.map((data) =>
           <>
             <div onClick={() => clickPb(data._id)}>
               <PData title={data.title} size="medium" estext src={data.image} />
@@ -191,7 +193,7 @@ const SearchResults = ({ select, Items }: SearchResultsType) => {
     return (
       < ResultWrap workbook >
         {
-          Items.map((data) =>
+          workbookItems.map((data) =>
             <>
               <div onClick={() => clickWb(data.id)}>
                 <WData size="small" title={data.title} />

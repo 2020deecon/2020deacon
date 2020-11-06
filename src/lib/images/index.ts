@@ -8,6 +8,7 @@ import list from "./list.svg";
 import search from "./search.svg";
 import print from "./print.svg";
 import base from "./baseimg.png";
+
 const Image = {
     "questions": questions,
     "discussion": discussion,

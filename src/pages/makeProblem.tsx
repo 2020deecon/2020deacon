@@ -255,6 +255,7 @@ function MakeProblem() {
           </WrapInput>
           <Button>완성</Button>
         </form>
+
         <div>
           <Headding tag="h3" tagStyle="h4">
             {title || "문제명을 입력해 주세요."}
@@ -280,6 +281,7 @@ function MakeProblem() {
             )}
           </AnswerWrap>
         </div>
+        
       </Wrap>
     </Layout>
   );

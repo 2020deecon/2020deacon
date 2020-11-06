@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import Button from "../components/UI/Button";
 import Make from "../lib/api/make";
 import colors from "../constants/colors";
+import Image from "../lib/images";
 
 function Makecommunity() {
   const history = useHistory()
@@ -25,12 +26,22 @@ function Makecommunity() {
       "bin"
     ) as HTMLInputElement;
     //input tag
+    const image_section: HTMLImageElement = document.getElementById(
+      "image_section"
+    ) as HTMLImageElement;
     //img tag
     if (image.files![0]) {
       const reader = new FileReader();
       reader.onload = function (e?: any) {
-        // image_section.src = e.target.result;
+        image_section.src = e.target.result;
         setimg(e.target.result);//base64incoding
+
+        // alert("incodding");
+        // const a = btoa(e.target.result);
+        // console.log(e.target.result);
+        // console.log(a);
+        // console.log(atob(a));
+
       };
       reader.readAsDataURL(image.files![0]);
     }
@@ -41,22 +52,6 @@ function Makecommunity() {
         <form onSubmit={handleSubmit(Upload)}>
           <TitleWrap>
             <Title>게시판 등록</Title>
-            <label>
-              <input
-                type="file"
-                name="uploadImg"
-                accept="image/jpeg,image/png" //파일 형식 지정
-                id="bin"
-                onChange={(e) => {
-                  Setimg();
-                }}
-                ref={register({
-                  required: false,
-                })}
-                style={{ display: "none" }}
-              />
-              <div style={{ background: colors.border, borderRadius: "50px", textAlign: "center" }}>{!img ? "이미지 선택하기" : "이미지 선택완료"}</div>
-            </label>
           </TitleWrap>
           <TitleLine></TitleLine>
           <Input
@@ -79,8 +74,32 @@ function Makecommunity() {
             ref={register({
               required: "타입을 정해주세요"
             })}
-
           />
+          <div style={{ width: "100%", margin: "21px 0px 7px" }}>
+            <label>
+              <input
+                type="file"
+                name="uploadImg"
+                accept="image/jpeg,image/png" //파일 형식 지정
+                id="bin"
+                onChange={(e) => {
+                  Setimg();
+                }}
+                ref={register({
+                  required: false,
+                })}
+                style={{ display: "none" }}
+              />
+              <div style={{ background: colors.border, borderRadius: "50px", display: "flex", alignItems: "center", justifyContent: "center", height: "35px" }}>{!img ? "이미지 선택하기" : "이미지 선택완료"}</div>
+            </label>
+          </div>
+          <label htmlFor="bin">
+            <img
+              style={{ maxWidth: "500px", maxHeight: "250px" }}
+              id="image_section"
+              src={img || Image.base}
+            />
+          </label>
           <InputText
             rows={25}
             placeholder="내용"
@@ -93,7 +112,7 @@ function Makecommunity() {
           <Button>등록</Button>
         </form>
       </Wrap>
-    </Layout>
+    </Layout >
   );
 }
 

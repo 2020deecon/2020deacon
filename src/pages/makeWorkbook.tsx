@@ -83,12 +83,10 @@ function MakePWorkbook() {
 
         <SliderWrap>
           <Slider {...settings}>
-
             <Problems>
               <Headding tag="h6" tagStyle="h5">{title}</Headding>
               <PItem workbook={workbook} />
             </Problems>
-
             <Problems>
               <Headding tag="h6" tagStyle="h5">{title} 답지</Headding>
               <ol style={{ display: "flex", flexFlow: "column wrap", alignItems: "center", fontSize: "18px" }}>
@@ -178,6 +176,9 @@ height: calc(100vh - 76px);
   border: 1px solid ${colors.gray};
   &>div{
     height:100%;
+  }
+  &>div>div>.slick>div{
+    width:100%;
   }
 }
 `;
