@@ -24,7 +24,16 @@ function User() {
     const Login = async ({ id, password }: Login) => {
         try {
             const data = await getClient().post('/auth', { id: id, pw: password });
-            setToken(data.data.access_token);
+            if (data.data.access_token) {
+                setToken(data.data.access_token)
+                alert("로그인 성공");
+                window.location.reload();
+
+
+
+            }
+            else
+                alert("로그인 실패");
             // return data.data.access_token;
         }
         catch (err) {

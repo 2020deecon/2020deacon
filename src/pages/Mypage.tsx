@@ -8,7 +8,7 @@ import { Icon } from "../lib/images";
 import Input from "../components/UI/Input";
 import PData from "../components/views/viewproblem";
 import WData from "../components/views/viewWorkbook";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import Get from "../lib/api/get";
 
 type What = "나만의 문제" | "나만의 문제집" | "공유된 자료";
@@ -127,11 +127,12 @@ function Results({ set, problemItems, workbookItems, Text }: ResultsType) {
     return (
       <ResultWrap>
         {problemItems.map((data) =>
+
           data.title.includes(Text) ?
             <>
-              <div onClick={() => clickPb(data._id)}>
+              <Link to={`/popup/${data._id}`} target="_blank">
                 <PData title={data.title} size="medium" estext src={data.image} />
-              </div>
+              </Link>
             </>
             : ""
         )}
@@ -146,7 +147,7 @@ function Results({ set, problemItems, workbookItems, Text }: ResultsType) {
           workbookItems.map((data) =>
             data.title.includes(Text) ?
               <>
-                <div onClick={() => clickWb(data.id)}>
+                <div onClick={() => clickWb(data.id)} style={{ cursor: "pointer" }}>
                   <WData size="small" title={data.title} />
                 </div>
               </>
@@ -174,14 +175,18 @@ const SearchResults = ({ select, problemItems, workbookItems }: SearchResultsTyp
   function clickWb(title: string) {
     history.replace("/viewworkbook/" + title);
   }
+  // <Link to={`/popup/${data.pid}`} target="_blank">
+  //           <Item key={data.pid} title={data.title} src={data.img} size="medium" />
+  //         </Link>
   if (select === "problem") {
+    // alert("tseat");
     return (
       <ResultWrap>
         {problemItems.map((data) =>
           <>
-            <div onClick={() => clickPb(data._id)}>
+            <Link to={`/popup/${data.pid}`} target="_blank">
               <PData title={data.title} size="medium" estext src={data.image} />
-            </div>
+            </Link>
           </>
         )}
       </ResultWrap>
@@ -195,7 +200,7 @@ const SearchResults = ({ select, problemItems, workbookItems }: SearchResultsTyp
         {
           workbookItems.map((data) =>
             <>
-              <div onClick={() => clickWb(data.id)}>
+              <div onClick={() => clickWb(data.id)} style={{ cursor: "pointer" }}>
                 <WData size="small" title={data.title} />
               </div>
             </>

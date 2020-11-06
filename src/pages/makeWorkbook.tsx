@@ -35,7 +35,7 @@ function MakePWorkbook() {
   const [title, settitle] = useState("");
   const [search, setSearch] = useState("");
   const { handleSubmit, register } = useForm();
-
+  const history = useHistory();
   function update({ pid, title, img }: Workbooks) {
     Get().GetsomeofProblems({ id: pid }).then(res => {
       setworkbook(workbook => [...workbook, { pid, title, img, answer: res.answer }]);
@@ -53,6 +53,8 @@ function MakePWorkbook() {
 
   function OnSubmit(data: any) {
     make().MakeWorkbook({ title, problems: workbook.map((data) => data.pid), category });
+    alert("문제집 생성이 완료 되었습니다.");
+    history.replace("/");
   }
   return (
     <Layout>

@@ -19,6 +19,8 @@ const SubTitle = styled.h3``
 const Img = styled.img`
 /* width:40vw; */
 min-width:30vw;
+max-width:80vw;
+max-height:80vh;
 `
 const Category = styled.div`
 width:80vw;
@@ -59,6 +61,7 @@ export default class DetailProblem extends Component {
             view: '',
             get_answer: true
         }
+        console.log()
 
     }
     componentDidMount() {
@@ -76,10 +79,8 @@ export default class DetailProblem extends Component {
                 })
             }
         ).catch(err => console.log(err))
-
-
     }
-
+    
 
     render() {
         return (

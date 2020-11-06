@@ -16,6 +16,7 @@ function SignUp() {
   const password = watch("password");
   function onSubmit(data: any) {
     User().SignUp(data);
+    alert("회원가입이 완료 되었습니다.");
     history.replace("/");
   }
   return (

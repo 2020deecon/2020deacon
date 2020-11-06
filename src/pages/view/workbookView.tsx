@@ -7,6 +7,9 @@ import { Icon } from "../../lib/images";
 import Headding from "../../components/UI/Headding";
 import Viewproblem from "../../components/views/viewproblem";
 import Get from "../../lib/api/get";
+import { useHistory, Link } from "react-router-dom";
+import DetailsView from "../DetailProblem";
+
 function WorkbookView({ match }: any) {
     const { id } = match.params;
     const [problems, setproblems] = useState<any[]>([]);
@@ -29,7 +32,10 @@ function WorkbookView({ match }: any) {
                 </Title>
                 <div>
                     {problems.map((v: any) =>
-                        <Viewproblem title={v.title} size="medium" src={v.image} />
+                        <Link to={`/popup/${v._id}`} target="_blank">
+                            <Viewproblem title={v.title} size="medium" src={v.image} />
+                        </Link>
+
                     )}
                 </div>
             </Wrap>

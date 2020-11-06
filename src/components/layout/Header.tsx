@@ -9,15 +9,23 @@ import { Link } from "react-router-dom";
 import useLogin from "../../hooks/useLogin";
 import useModal from "../../hooks/useModal";
 import { getuserToken } from "../../lib/token";
-
+import { useHistory } from "react-router-dom"
 function Header() {
   const [params, setparams] = useState(window.location.pathname);
   const [scrollpos, setscrollpos] = useState(0);
   const login = useLogin();
+  const history = useHistory();
   const [id, setid] = useState(getuserToken());
   const [onOff, setOnOff] = useState(true);
   const { Open } = useModal("login");
-
+  useEffect(() => {
+    if (id === null && login.isLogin === true) {
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+      return;
+    }
+  }, [id])
   useEffect(() => {
     setparams(window.location.pathname);
     setOnOff(true);
@@ -65,18 +73,35 @@ function Header() {
             </Link>
           </Headding>
         </Title>
+
         <Ul>
-          <Li clicked={params === "/makeproblem"}>
+          <Li clicked={params === "/makeproblem"} onClick={() => {
+            if (!login.isLogin) {
+              alert("로그인 후 이용하세요");
+              history.replace("/");
+            }
+          }
+          }>
             <b>
               <Link to="/makeproblem">문제만들기</Link>
             </b>
           </Li>
-          <Li clicked={params === "/makeworkbook"}>
+          <Li clicked={params === "/makeworkbook"} onClick={() => {
+            if (!login.isLogin) {
+              alert("로그인 후 이용하세요");
+              history.replace("/");
+            }
+          }}>
             <b>
               <Link to="/makeworkbook">문제집만들기</Link>
             </b>
           </Li>
-          <Li clicked={params === "/mypage"}>
+          <Li clicked={params === "/mypage"} onClick={() => {
+            if (!login.isLogin) {
+              alert("로그인 후 이용하세요");
+              history.replace("/");
+            }
+          }}>
             <b>
               <Link to="/mypage">마이 페이지</Link>
             </b>
@@ -89,7 +114,7 @@ function Header() {
         </Ul>
       </LeftHeader>
       <RightHeader islogin={false}>
-        {!login.isLogin ? Blogin() : Flogin()}
+        {!login.token ? Blogin() : Flogin()}
       </RightHeader>
     </Wrap >
   );

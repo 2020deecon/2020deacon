@@ -3,6 +3,7 @@ import colors from "../../constants/colors";
 
 const Ul = styled.ul`
   display: flex;
+  
 `;
 export const Li = styled.li<{ clicked?: boolean }>`
   &:after {

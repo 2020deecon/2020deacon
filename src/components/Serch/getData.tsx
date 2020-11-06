@@ -30,20 +30,33 @@ function SearchData({ update, delupdate, category, nowids, search }: GetProps) {
     return (
         <Wrap>
             {
-                test.map(
-                    (data) => {
-                        // && data.title.indexof(search) !== -1
-                        return data.category === category && data.title.includes(search) ?
-                            <SerachItem key={key++}
-                                onClick={(e) =>
-                                    nowids.includes(data._id) ? delupdate(String(data._id))
-                                        : update({ pid: data._id, title: data.title, img: data.image })
-                                }
-                                Checkeded={nowids.includes(data._id)}
-                                title={data.title} img={data.image} />
-                            : ""
-                    }
-                )
+                category !== "전부" ?
+                    test.map(
+                        (data) => {
+                            return data.category === category && data.title.includes(search) ?
+                                <SerachItem key={key++}
+                                    onClick={(e) =>
+                                        nowids.includes(data._id) ? delupdate(String(data._id))
+                                            : update({ pid: data._id, title: data.title, img: data.image })
+                                    }
+                                    Checkeded={nowids.includes(data._id)}
+                                    title={data.title} img={data.image} />
+                                : ""
+                        }
+                    ) :
+                    test.map(
+                        (data) => {
+                            return (
+                                <SerachItem key={key++}
+                                    onClick={(e) =>
+                                        nowids.includes(data._id) ? delupdate(String(data._id))
+                                            : update({ pid: data._id, title: data.title, img: data.image })
+                                    }
+                                    Checkeded={nowids.includes(data._id)}
+                                    title={data.title} img={data.image} />
+                            )
+                        }
+                    )
             }
         </Wrap>
     );
