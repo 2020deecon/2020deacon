@@ -8,16 +8,17 @@ export const Li = styled.li<{ clicked?: boolean }>`
   &:after {
     content: "";
     border-left: 1px solid ${colors.gray};
-    margin: 0 3px;
+    margin: 0 15px;
   }
   &:last-child:after {
     content: none;
   }
+  letter-spacing: 2px;
   ${({ clicked }) => clicked && css`
-  color: ${colors.border};
+  color: ${colors.title};
   `}
   &:hover{
-    transition:color 0.5s;
+    transition:color 0.2s;
     color: ${colors.border};
   }
 

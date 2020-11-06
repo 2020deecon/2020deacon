@@ -44,6 +44,7 @@ function MakePWorkbook() {
   }
 
   function delupdate(pid: string) {
+    // alert(pid);
     setworkbook(workbook.filter(data => data.pid !== pid));
   }
 

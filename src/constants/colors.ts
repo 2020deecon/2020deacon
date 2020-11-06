@@ -3,7 +3,8 @@ const colors = {
     black: "#000000",
     primary: "#a840ff",
     border: "#e5c7ff",
-    gray: "#bfbdbd"
+    gray: "#bfbdbd",
+    title: "#8C00FF"
 }
 
 export default colors;

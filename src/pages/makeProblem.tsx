@@ -42,7 +42,7 @@ function MakeProblem() {
     if (!problemtype)
       Make().Makeproblem({ title, subtitle, img: img == "" ? Image.base : img, answer, problemtype, category: category });
     else {//객관식
-      alert("객관식");
+      // alert("객관식");
       Make().Makeproblem({ title, subtitle, img: img == "" ? Image.base : img, answer: answer, problemtype, category: category, view: answers.map(data => data.text) });
     }
     alert("문제 완성");
@@ -122,7 +122,7 @@ function MakeProblem() {
                 })}
                 style={{ display: "none" }}
               />
-              <div style={{ background: colors.border, borderRadius: "50px", textAlign: "center" }}>{!img ? "이미지 선택하기" : "이미지 선택완료"}</div>
+              <div style={{ background: colors.border, borderRadius: "50px", display: "flex", alignItems: "center", justifyContent: "center", height: "35px" }}>{!img ? "이미지 선택하기" : "이미지 선택완료"}</div>
             </label>
           </WrapInput>
           <WrapInput fieldName="부제목" None>

@@ -53,14 +53,15 @@ function Header() {
       </>
     )
   }
-
+  let value = 600;
+  let value2 = 500;
   return (
     <Wrap state={onOff}>
       <LeftHeader>
         <Title>
-          <Headding tag="h2" tagStyle="h3">
-            <Link to="/">connec
-            <div style={{ color: colors.primary }}>text</div>
+          <Headding tag="h2" tagStyle="h2">
+            <Link to="/" style={{ fontWeight: value2 }}>connec
+            <div style={{ color: colors.primary, fontWeight: value }}>text</div>
             </Link>
           </Headding>
         </Title>
@@ -90,7 +91,7 @@ function Header() {
       <RightHeader islogin={false}>
         {!login.isLogin ? Blogin() : Flogin()}
       </RightHeader>
-    </Wrap>
+    </Wrap >
   );
 }
 
@@ -130,7 +131,8 @@ const UserName = styled.div`
   width:100%;
 `;
 const Title = styled.div`
-  color: ${colors.border};
+  color: ${colors.title};
+  font-weight:600;
   /* width: 100%; */
   &>h2>a{
     display: flex;

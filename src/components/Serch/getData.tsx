@@ -36,10 +36,10 @@ function SearchData({ update, delupdate, category, nowids, search }: GetProps) {
                         return data.category === category && data.title.includes(search) ?
                             <SerachItem key={key++}
                                 onClick={(e) =>
-                                    e.target.checked ? update({ pid: data._id, title: data.title, img: data.image })
-                                        : delupdate(String(data.id))
+                                    nowids.includes(data._id) ? delupdate(String(data._id))
+                                        : update({ pid: data._id, title: data.title, img: data.image })
                                 }
-                                Checkeded={nowids.indexOf(data._id) !== -1}
+                                Checkeded={nowids.includes(data._id)}
                                 title={data.title} img={data.image} />
                             : ""
                     }
@@ -56,8 +56,7 @@ interface SerachProps {
     onClick: (e: any) => void;
 }
 function SerachItem({ title, img, onClick, Checkeded }: SerachProps) {
-    console.log(Checkeded);
-
+    // console.log(Checkeded);
     return (
         <IWrap>
             <Item title={title} src={img} estext />
