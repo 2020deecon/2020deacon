@@ -6,8 +6,9 @@ interface Problem {
     img: string;
     subtitle: string;
     problemtype: boolean;
-    answer: any | any[];
+    answer: any;
     category: string;
+    view?: any[];
 }
 interface Workbook {
     title: string;
@@ -25,9 +26,9 @@ interface Comment {
     text: string;
 }
 function Make() {
-    const Makeproblem = async ({ title, subtitle, img, answer, problemtype, category }: Problem) => {
+    const Makeproblem = async ({ title, subtitle, img, answer, problemtype, category, view }: Problem) => {
         // alert(category);
-        await getClient().post('/problem', { title: title, sub_title: subtitle, image: img, answer: answer, type: problemtype, category: category }).then(res => {
+        await getClient().post('/problem', { title: title, sub_title: subtitle, image: img, answer: answer, type: problemtype, category: category, view: view }).then(res => {
             console.log(res);
             return res.data;
         }).catch(err => {

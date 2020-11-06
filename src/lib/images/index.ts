@@ -7,12 +7,13 @@ import grid from "./grid.svg";
 import list from "./list.svg";
 import search from "./search.svg";
 import print from "./print.svg";
-
+import base from "./baseimg.png";
 const Image = {
     "questions": questions,
     "discussion": discussion,
     "share": share,
-    "academi": academi
+    "academi": academi,
+    "base": base
 }
 export const Icon = {
     "search": search,

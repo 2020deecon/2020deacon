@@ -9,7 +9,7 @@ import viewport from "../constants/viewport";
 import colors from "../constants/colors";
 import Headding from "../components/UI/Headding";
 import Make from "../lib/api/make";
-
+import Image from "../lib/images";
 function MakeProblem() {
   const history = useHistory();
   const { register, handleSubmit } = useForm();
@@ -18,7 +18,7 @@ function MakeProblem() {
   const [answer, setanswer] = useState("");
   const [img, setimg] = useState("");
   const [category, setcategory] = useState("국어");
-  const [problemtype, setproblemtype] = useState(true);
+  const [problemtype, setproblemtype] = useState(false);
   const [answers, setanswers] = useState([
     { id: 1, text: "" },
     { id: 2, text: "" },
@@ -39,16 +39,14 @@ function MakeProblem() {
 
 
   function OnSubmit(data: any) {
-    // console.log("make data" + data);
-    // if (!problemtype)//주관식 등등
-    // console.log(category);
-
-    // alert(category);
-    Make().Makeproblem({ title, subtitle, img, answer, problemtype, category: category });
-    // else//객관식
-    //   Make().Makeproblem({ title, subtitle, img, answer: answers, problemtype, category: data.category });
-
-    // history.replace("/");
+    if (!problemtype)
+      Make().Makeproblem({ title, subtitle, img: img == "" ? Image.base : img, answer, problemtype, category: category });
+    else {//객관식
+      alert("객관식");
+      Make().Makeproblem({ title, subtitle, img: img == "" ? Image.base : img, answer: answer, problemtype, category: category, view: answers.map(data => data.text) });
+    }
+    alert("문제 완성");
+    history.replace("/");
   }
   function Setimg() {
     const image: HTMLInputElement = document.getElementById(
@@ -65,7 +63,7 @@ function MakeProblem() {
         image_section.src = e.target.result;
         setimg(e.target.result);//base64incoding
 
-        alert("incodding");
+        // alert("incodding");
         // const a = btoa(e.target.result);
         // console.log(e.target.result);
         // console.log(a);
@@ -92,7 +90,7 @@ function MakeProblem() {
 
             <WrapInput fieldName="문제 유형" None>
               <select
-                onChange={(e) => setproblemtype(e.target.value !== "객관식")}
+                onChange={(e) => setproblemtype(e.target.value === "객관식")}
               >
                 <option value="주관식">주관식</option>
                 <option value="객관식">객관식</option>
@@ -138,9 +136,8 @@ function MakeProblem() {
               onChange={(e) => setsubtitle(e.target.value)}
             />
           </WrapInput>
-
           <WrapInput fieldName="답" None>
-            {problemtype ? (
+            {!problemtype ? (
               <Input
                 type="text"
                 name="answer"
@@ -152,6 +149,15 @@ function MakeProblem() {
               />
             ) : (
                 <MultipleChoice>
+                  <Input
+                    type="text"
+                    name="answer"
+                    ref={register({
+                      required: "답을 입력해주세요",
+                    })}
+                    placeholder="답을 입력하세요"
+                    onChange={(e) => setanswer(e.target.value)}
+                  />
                   <ol>
                     <li>
                       <Input
@@ -257,7 +263,7 @@ function MakeProblem() {
             <img
               style={{ maxWidth: "500px", maxHeight: "250px" }}
               id="image_section"
-              src="https://via.placeholder.com/500x250.png/e5c7ff/ffffff/?text=grap Img"
+              src={img || Image.base}
             />
           </label>
           <div>{subtitle || "부제목을 입력해주세요"}</div>

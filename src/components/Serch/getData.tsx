@@ -10,49 +10,39 @@ interface Drage {
 }
 
 interface GetProps {
-    User?: boolean;
     update: ({ pid, title, img }: Drage) => void;
     delupdate: (pid: string) => void;
+    category: string;
+    nowids: string[];
+    search: string;
 }
 let key = 0;
-function SearchData({ User, update, delupdate }: GetProps) {
-
-    //내꺼 인지 전체 인지 검사
-    // const [on,off]
-
-    // Itmes();
-
+function SearchData({ update, delupdate, category, nowids, search }: GetProps) {
     const [test, seTest] = useState<any[]>([]);
-    // async function test() {
     useEffect(() => {
         Get().GetallProblems().then(res => {
-            // console.log(res);
+            // seTest(res.map((data: any) => { return { ...data, Checkeded: false } }))
             seTest(res);
         }).catch(err => console.log(err))
-    }, [])
-    const [Checkeded, setchecked] = useState(false);
-    // console.log(test);
-
+    }, []);
+    // alert("fdas");
+    // console.log(search);
     return (
         <Wrap>
             {
                 test.map(
-                    (data) =>
-                        <SerachItem key={key++}
-                            onChange={(e) => {
-                                if (e.target.checked) {
-                                    update({ pid: data._id, title: data.title, img: data.image });
-                                    // setchecked(true);
+                    (data) => {
+                        // && data.title.indexof(search) !== -1
+                        return data.category === category && data.title.includes(search) ?
+                            <SerachItem key={key++}
+                                onClick={(e) =>
+                                    e.target.checked ? update({ pid: data._id, title: data.title, img: data.image })
+                                        : delupdate(String(data.id))
                                 }
-                                else {
-                                    delupdate(String(data.id));
-                                    // setchecked(false);
-                                }
-                            }
-
-                            }
-                            // Checked={Checkeded}
-                            title={data.title} img={data.image} />
+                                Checkeded={nowids.indexOf(data._id) !== -1}
+                                title={data.title} img={data.image} />
+                            : ""
+                    }
                 )
             }
         </Wrap>
@@ -62,15 +52,17 @@ function SearchData({ User, update, delupdate }: GetProps) {
 interface SerachProps {
     title: string;
     img: string;
-    // Checked: boolean;
-    onChange: (e: any) => void;
+    Checkeded: boolean;
+    onClick: (e: any) => void;
 }
-function SerachItem({ title, img, onChange }: SerachProps) {
+function SerachItem({ title, img, onClick, Checkeded }: SerachProps) {
+    console.log(Checkeded);
+
     return (
         <IWrap>
             <Item title={title} src={img} estext />
-            <input type="checkbox" onClick={(e) => onChange(e)}
-            // checked={Checked}
+            <input type="checkbox" onClick={(e) => onClick(e)}
+                checked={Checkeded}
             />
         </IWrap>
     )
@@ -81,6 +73,7 @@ flex-direction: column;
 padding-top:30px;
 max-width:250px;
 width:100%;
+height:100%;
 max-height:400px;
 overflow-y:scroll;
 overflow-x:hidden;

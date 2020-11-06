@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../components/layout";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import Input from "../components/UI/Input";
 import Button from "../components/UI/Button";
 import { useHistory } from "react-router-dom";
@@ -15,6 +15,7 @@ import Get from "../lib/api/get";
 function Community() {
   const history = useHistory();
   const [Items, setItems] = useState<any[]>([]);
+  const [Text, setText] = useState("");
   const [click, setclick] = useState([
     { click: true, what: "question" },
     { click: true, what: "debate" },
@@ -30,8 +31,7 @@ function Community() {
       <Wrap>
         <SearchBox>
           <div>
-            <Input type="text" />
-
+            <Input type="text" onChange={e => setText(e.target.value)} />
             <div className="searchIcon">
               <button>
                 <img src={Icon.search} />
@@ -55,7 +55,9 @@ function Community() {
           >
             question
           </Button>
+
           <Button
+            css={Buttoncss}
             onClick={(e) =>
               setclick(
                 click.map((data) =>
@@ -75,22 +77,12 @@ function Community() {
         </Categorys>
 
         <Results>
-          {Items.map(item => {
-            return (
+          {Items.map(item =>
+            item.title.includes(Text) ?
               <div onClick={() => history.replace("/viewCommunity/" + item.id)}>
                 <Item title={item.title} contents={item.text} Written={item.type} />
-              </div>)
-          })}
-          {/* 
-          <Item title="test" contents="이게이렇게 어떻게 나옴?" />
-          <Item title="test" contents="이게이렇게 어떻게 나옴?" />
-          <Item title="test" contents="이게이렇게 어떻게 나옴?" />
-          <Item title="test" contents="이게이렇게 어떻게 나옴?" />
-          <Item title="test" contents="이게이렇게 어떻게 나옴?" />
-          <Item title="test" contents="이게이렇게 어떻게 나옴?" />
-          <Item title="test" contents="이게이렇게 어떻게 나옴?" />
-          <Item title="test" contents="이게이렇게 어떻게 나옴?" />
-          <Item title="test" contents="이게이렇게 어떻게 나옴?" /> */}
+              </div> : ""
+          )}
         </Results>
       </Wrap>
     </Layout>
@@ -146,9 +138,9 @@ const Categorys = styled.div`
     font-size:18px;
     font-weight:600;
     color:${colors.primary};
-    transition: color 0.5s;
+    transition: color 0.5s,opacity 0.5s;
     &:hover {
-      color:${colors.border};
+      color:${colors.black};
     }
   }
   & > button {
@@ -156,7 +148,8 @@ const Categorys = styled.div`
     margin: 0px 10px;
   }
   & > .click {
-    color: ${colors.primary};
+    color: ${colors.white};
+    /* opacity :0.8; */
     background: ${colors.border};
   }
 `;
@@ -169,4 +162,7 @@ const Wrap = styled.div`
   max-width: ${viewport.desktop};
   height: 100%;
 `;
+const Buttoncss = css`
+background:${colors.gray};
+`
 export default Community;

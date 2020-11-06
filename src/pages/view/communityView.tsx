@@ -6,7 +6,9 @@ import ViewCommunity from "../../components/views/viewcommunity";
 import Input from "../../components/UI/Input";
 import Get from "../../lib/api/get";
 import Make from "../../lib/api/make";
+import { useHistory } from "react-router-dom";
 function CommunityView({ match }: any) {
+    const history = useHistory();
     const { id } = match.params;
     const [Item, setItems] = useState<any>("");
     const [text, settext] = useState("");
@@ -24,7 +26,7 @@ function CommunityView({ match }: any) {
                 <ViewCommunity title={Item.title} size="large" contents={Item.text} CommentItem={Item.comment} />
                 <InputWrap>
                     <Input type="text" placeholder="댓글" onChange={e => settext(e.target.value)} />
-                    <button onClick={() => { Make().MakeCommented({ id, text }); }} >▶</button>
+                    <button onClick={() => { Make().MakeCommented({ id, text }); window.location.reload(); history.replace(window.location.pathname) }} >▶</button>
                 </InputWrap>
             </Wrap>
         </Layout>

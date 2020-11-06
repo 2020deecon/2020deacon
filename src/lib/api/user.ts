@@ -1,6 +1,6 @@
 import getClient from "./client";
 import parseError from "./parseError";
-import { getToken, setToken, setuseToken } from "../token";
+import { getToken, setToken, setuseToken, delToken } from "../token";
 export interface Login {
     id: string;
     password: string;
@@ -42,7 +42,10 @@ function User() {
     const Userget = async () => {
         try {
             const data = await getClient().get('/user');
-            setuseToken(data.data.id);
+            if (data.data.code !== 200)
+                delToken();
+            else
+                setuseToken(data.data.id);
             return data.data;
         }
         catch (err) {

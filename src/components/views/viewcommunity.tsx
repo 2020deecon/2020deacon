@@ -18,7 +18,7 @@ function viewcommunity({ title, src, size = "small", contents, Written = "debate
         <Wrap size={size} Written={Written}>
             <div>
                 <Title className={size === "small" ? "textsmall" : ""} size={size}>{title}</Title>
-                <Img className={size === "small" ? "delect" : ""} src={src || "https://via.placeholder.com/500x250.png/e5c7ff/ffffff/?text=grap Img"} size={size} />
+                <Img className={size === "small" ? "delect" : ""} src={src} size={size} />
                 <Contents className={size === "small" ? "textsmall" : ""} size={size}>{contents}</Contents>
                 <Comments className={size === "small" ? "delect" : ""} size={size}>
                     <div style={{

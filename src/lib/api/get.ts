@@ -54,7 +54,7 @@ function Get() {
     }
     const GetsomeofWorkbooks = async ({ id }: Test) => {
         let data = await getClient().get('/detailWorkbook?id=' + id).then(res => {
-            console.log(res);
+            // console.log(res);
             return res.data.data;
         }).catch(err => {
             throw parseError(err);
@@ -80,7 +80,7 @@ function Get() {
         })
         return data
     }
-    
+
     return { GetmyProblems, GetmyWorkbook, GetallProblems, GetsomeofProblems, GetallWorkbooks, GetsomeofWorkbooks, Getallcommunity, Getsomeofcommunity };
 
 }

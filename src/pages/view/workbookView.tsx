@@ -9,32 +9,28 @@ import Viewproblem from "../../components/views/viewproblem";
 import Get from "../../lib/api/get";
 function WorkbookView({ match }: any) {
     const { id } = match.params;
-    const [data, setdata] = useState<any>([]);
+    const [problems, setproblems] = useState<any[]>([]);
+    const [title, settitle] = useState("");
     useEffect(() => {
         Get().GetsomeofWorkbooks({ id: id }).then(res => {
             console.log(res);
-            // setData(res);
-            // setdata(res);
+            setproblems(res.problems);
+            settitle(res.title);
         }).catch(err => console.log(err)
         );
     }, []);
+    // console.log(data.problems.map((data: any) => data.title));
     return (
-        <Layout title={data.title}>
+        <Layout title={title}>
             <Wrap>
                 <Title>
-                    <Headding tag="h2" tagStyle="h3">{data.title}</Headding>
+                    <Headding tag="h2" tagStyle="h3">{title}</Headding>
                     <img src={Icon.print} width="24px" height="24px" />
                 </Title>
                 <div>
-                    {data.problems.map((v: any) =>
+                    {problems.map((v: any) =>
                         <Viewproblem title={v.title} size="medium" src={v.image} />
                     )}
-                    {/* {data}
-                    <Viewproblem title={title} size="medium" />
-                    <Viewproblem title={title} size="medium" />
-                    <Viewproblem title={title} size="medium" />
-                    <Viewproblem title={title} size="medium" />
-                     */}
                 </div>
             </Wrap>
         </Layout>
