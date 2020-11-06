@@ -140,7 +140,7 @@ margin-top:20px;
         width: 100%;
         display:flex;
         flex-direction: column;
-        align-items: center;
+        align-items: start;
         /* justify-content: center; */
     }
 `;
@@ -154,6 +154,8 @@ const CommentItem = styled.div`
         margin-bottom:1px;
     }
     &>.contents{
+        display: flex;
+        
         border-radius:20px;
         background:${color.gray};
         padding:8px 10px;

@@ -18,8 +18,10 @@ function LoginModal() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    isLogin && closed();
-    history.replace("/");
+    setTimeout(() => {
+      isLogin && closed();
+      history.replace("/");
+    }, 10000)
     // window.location.reload();
   }, [isLogin, dispatch])
 

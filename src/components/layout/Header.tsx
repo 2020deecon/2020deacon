@@ -59,7 +59,7 @@ function Header() {
     <Wrap state={onOff}>
       <LeftHeader>
         <Title>
-          <Headding tag="h2" tagStyle="h2">
+          <Headding tag="h2" tagStyle="h3">
             <Link to="/" style={{ fontWeight: value2 }}>connec
             <div style={{ color: colors.primary, fontWeight: value }}>text</div>
             </Link>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, Route } from "react-router-dom";
+import { Route as Switch, Route } from "react-router-dom";
 
 import Home from "./Home";
 import SignUp from "./SignUp";
@@ -11,6 +11,8 @@ import viewproblem from "./view/problemsView";
 import viewworkbook from "./view/workbookView";
 import viewcommunity from "./view/communityView";
 import makeproblem from "./makecommunity";
+import DetailsView from "./DetailProblem";
+
 
 function Index() {
   return (
@@ -25,6 +27,7 @@ function Index() {
       <Route path="/viewproblem/:id/" exact component={viewproblem} />
       <Route path="/viewworkbook/:id/" exact component={viewworkbook} />
       <Route path="/viewCommunity/:id/" exact component={viewcommunity} />
+      <Route path="/popup/:id/" exact component={DetailsView} />
     </Switch>
   );
 }

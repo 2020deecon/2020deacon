@@ -6,6 +6,7 @@ import { setToken, getToken, setuseToken, getuserToken, delToken } from "../../l
 interface AuthType {
     token: string | null;
     isLogin: boolean;
+    user: string | null;
     pending: boolean;
     error?: string;
     logout: () => void;
@@ -42,6 +43,7 @@ export const getUser = createAsyncThunk(
 const initialState: AuthType = {
     token: getToken(),
     isLogin: !!getToken(),
+    user: getuserToken(),
     pending: false,
     logout: () => delToken(),
 };

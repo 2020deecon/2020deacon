@@ -23,7 +23,7 @@ function CommunityView({ match }: any) {
     return (
         <Layout title={id}>
             <Wrap>
-                <ViewCommunity title={Item.title} size="large" contents={Item.text} CommentItem={Item.comment} />
+                <ViewCommunity title={Item.title} size="large" contents={Item.text} CommentItem={Item.comment} src={Item.image} />
                 <InputWrap>
                     <Input type="text" placeholder="댓글" onChange={e => settext(e.target.value)} />
                     <button onClick={() => { Make().MakeCommented({ id, text }); window.location.reload(); history.replace(window.location.pathname) }} >▶</button>

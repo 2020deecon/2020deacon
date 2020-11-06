@@ -65,6 +65,7 @@ function Get() {
     const Getallcommunity = async () => {
         let data = await getClient().get('/sendPost').then(res => {
             console.log(res);
+            // alert("test");
             return res.data.data;
         }).catch(err => {
             throw parseError(err);
@@ -74,6 +75,7 @@ function Get() {
     const Getsomeofcommunity = async ({ id }: Test) => {
         let data = await getClient().get('/detailPost?id=' + id).then(res => {
             console.log(res);
+
             return res.data.data;
         }).catch(err => {
             throw parseError(err);

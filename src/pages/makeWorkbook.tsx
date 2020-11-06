@@ -10,7 +10,7 @@ import Button from "../components/UI/Button";
 import Slider from "react-slick";
 import Headding from "../components/UI/Headding";
 import Item from "../components/views/viewproblem";
-import useHistory from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import make from "../lib/api/make";
 import Get from "../lib/api/get";
 
@@ -63,6 +63,7 @@ function MakePWorkbook() {
             <option value="영어">영어</option>
             <option value="수학">수학</option>
             <option value="과학">과학</option>
+            <option value="전부">전부</option>
           </select>
           <div className="search" style={{ display: "flex", alignItems: "center", height: "50px" }}>
             <input type="text" name="title" placeholder="제목을 입력하세요" onChange={e => settitle(e.target.value)}
@@ -103,10 +104,16 @@ interface Test {
   workbook: Workbooks[];
 }
 function PItem({ workbook }: Test) {
+  const history = useHistory();
+
   return (
     <>
       <div>
-        {workbook.length > 0 ? workbook.map((data) => <Item key={data.pid} title={data.title} src={data.img} size="medium" />
+        {workbook.length > 0 ? workbook.map((data) =>
+          <Link to={`/popup/${data.pid}`} target="_blank">
+            <Item key={data.pid} title={data.title} src={data.img} size="medium" />
+          </Link>
+
         ) : "문제를 선택해서 문제집을 만들어 보세요!"}
       </div>
     </>
