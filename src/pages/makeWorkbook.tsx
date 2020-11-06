@@ -174,12 +174,13 @@ height: calc(100vh - 76px);
   width:100%;
   height:90%;
   border: 1px solid ${colors.gray};
-  &>div{
+  &>.slick-list{
     height:100%;
+    &>div>div>div{
+      width:100%;
   }
-  &>div>div>.slick>div{
-    width:100%;
   }
+ 
 }
 `;
 
