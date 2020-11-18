@@ -12,13 +12,14 @@ import viewworkbook from "./view/workbookView";
 import viewcommunity from "./view/communityView";
 import makeproblem from "./makecommunity";
 import DetailsView from "./DetailProblem";
-
+import Login from "./login";
 
 function Index() {
   return (
     <Switch>
       <Route path="/" exact component={Home} />
       <Route path="/signup" exact component={SignUp} />
+      <Route path="/login" exact component={Login} />
       <Route path="/makeproblem" exact component={MakeProblem} />
       <Route path="/makeworkbook" exact component={MakeWorkbook} />
       <Route path="/mypage" exact component={Mypage} />

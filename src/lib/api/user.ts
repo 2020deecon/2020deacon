@@ -51,6 +51,7 @@ function User() {
     const Userget = async () => {
         try {
             const data = await getClient().get('/user');
+            
             if (data.data.code !== 200)
                 delToken();
             else

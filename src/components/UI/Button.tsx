@@ -22,6 +22,9 @@ const Button = styled.button<ButtonProps>`
 
     border: 1px solid ${({ hov }) => hov || colors.border};
   }
+  &:focus{
+    outline: 0;
+  }
   cursor: pointer;
   ${(props) => props.css};
 `;

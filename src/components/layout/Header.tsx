@@ -1,23 +1,29 @@
 import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
+import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom"
+
 import viewport from "../../constants/viewport";
-import Headding from "../UI/Headding";
 import colors from "../../constants/colors";
+
+import Headding from "../UI/Headding";
 import Button from "../UI/Button";
 import Ul, { Li } from "../UI/Ul";
-import { Link } from "react-router-dom";
+
 import useLogin from "../../hooks/useLogin";
 import useModal from "../../hooks/useModal";
 import { getuserToken } from "../../lib/token";
-import { useHistory } from "react-router-dom"
+import {Icon} from "../../lib/images";
 function Header() {
   const [params, setparams] = useState(window.location.pathname);
   const [scrollpos, setscrollpos] = useState(0);
   const login = useLogin();
   const history = useHistory();
   const [id, setid] = useState(getuserToken());
-  const [onOff, setOnOff] = useState(true);
+  const [onofflinks,setonofflinks] = useState(false);
+  const [onOffHeader, setOnOffHeader] = useState(true);
   const { Open } = useModal("login");
+
   useEffect(() => {
     if (id === null && login.isLogin === true) {
       setTimeout(() => {
@@ -25,27 +31,38 @@ function Header() {
       }, 1000);
       return;
     }
-  }, [id])
+  }, [id]);
+
   useEffect(() => {
     setparams(window.location.pathname);
-    setOnOff(true);
+    setOnOffHeader(true);
   }, [window.location.pathname])
 
   window.onscroll = function () {
     if (0 < scrollpos && scrollpos < 7) window.setTimeout(500);
     if (scrollpos > window.pageYOffset * 0.01) {
-      setOnOff(true);
+      setOnOffHeader(true);
     } else {
-      setOnOff(false);
+      setOnOffHeader(false);
     }
     setscrollpos(window.pageYOffset * 0.01);
   };
-
+  window.addEventListener("resize", function(event) {
+    setonofflinks(document.body.clientWidth <= 800);
+      // Number(viewport.mobile));
+    console.log(document.body.clientWidth + ' wide by ' + document.body.clientHeight+' high');
+})
+  
   const Blogin = () => {
     return (
       <>
-        <Button onClick={Open}>로그인</Button>
-        <Button>
+        <Button css={buttoncss} onClick={
+          ()=>{
+            history.replace("/login");
+          }
+          
+          }>로그인</Button>
+        <Button css={buttoncss}>
           <Link to="/signup">회원가입</Link>
         </Button>
       </>)
@@ -61,15 +78,15 @@ function Header() {
       </>
     )
   }
-  let value = 600;
-  let value2 = 500;
+
   return (
-    <Wrap state={onOff}>
+    <Wrap state={onOffHeader}>
       <LeftHeader>
         <Title>
           <Headding tag="h2" tagStyle="h3">
-            <Link to="/" style={{ fontWeight: value2 }}>connec
-            <div style={{ color: colors.primary, fontWeight: value }}>text</div>
+            <Link to="/">
+              <Title1>connec</Title1>
+            <Title2>Text</Title2>
             </Link>
           </Headding>
         </Title>
@@ -83,7 +100,7 @@ function Header() {
           }
           }>
             <b>
-              <Link to="/makeproblem">문제만들기</Link>
+              <Link to="/makeproblem">{onofflinks ? <img src={Icon.add} alt=""/> : "문제만들기"}</Link>
             </b>
           </Li>
           <Li clicked={params === "/makeworkbook"} onClick={() => {
@@ -93,7 +110,9 @@ function Header() {
             }
           }}>
             <b>
-              <Link to="/makeworkbook">문제집만들기</Link>
+              <Link to="/makeworkbook">
+              {onofflinks ? <img src={Icon.workbook} alt=""/> : "문제집만들기"}
+                </Link>
             </b>
           </Li>
           <Li clicked={params === "/mypage"} onClick={() => {
@@ -103,12 +122,16 @@ function Header() {
             }
           }}>
             <b>
-              <Link to="/mypage">마이 페이지</Link>
+              <Link to="/mypage">
+              {onofflinks ? <img src={Icon.user} alt=""/> : "마이 페이지"}
+                </Link>
             </b>
           </Li>
           <Li clicked={params === "/community"}>
             <b>
-              <Link to="/community">커뮤니티</Link>
+              <Link to="/community">
+              {onofflinks ? <img src={Icon.community} alt=""/> : "커뮤니티"}
+                </Link>
             </b>
           </Li>
         </Ul>
@@ -158,12 +181,17 @@ const UserName = styled.div`
 const Title = styled.div`
   color: ${colors.title};
   font-weight:600;
-  /* width: 100%; */
   &>h2>a{
     display: flex;
   }
-  
 `;
+const Title1= styled.div`
+font-weight: 600;
+`;
+const Title2= styled.div`
+font-weight: 700;
+`;
+
 const LeftHeader = styled.div`
   display: flex;
   align-items: center;
@@ -196,5 +224,8 @@ const RightHeader = styled.div<RightHeaderprops>`
   & > button:first-child {
     margin-right: 20px;
   }
+`;
+const buttoncss = css`
+border-radius:5px;
 `;
 export default Header;

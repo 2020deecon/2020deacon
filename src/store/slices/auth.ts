@@ -26,7 +26,6 @@ export const Login = createAsyncThunk(
         //     })
         //     .catch(err => console.log(err));
         User().Login({ id, password });
-
         // setToken(token);
         // return token;
     }
@@ -35,7 +34,7 @@ export const getUser = createAsyncThunk(
     "auth/getUser",
     () => {
         // alert("Test");
-        User().Userget();
+        // User().Userget();
         // return Test;
     }
 )

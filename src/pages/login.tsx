@@ -1,0 +1,205 @@
+import React from 'react';
+import styled, { css } from 'styled-components';
+import { useForm } from 'react-hook-form';
+import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Helmet } from 'react-helmet';
+
+import Image, { Icon } from '../lib/images';
+import viewport from '../constants/viewport';
+import color from '../constants/colors';
+// import { WrapInput } from "../components/UI/Input";
+import { Login } from '../store/slices/auth';
+import Button from '../components/UI/Button';
+import { RootState } from '../store/reducers';
+
+function Loginpage() {
+	const { register, handleSubmit } = useForm();
+	const history = useHistory();
+	const dispatch = useDispatch();
+	const { error, pending, isLogin } = useSelector(
+		(state: RootState) => state.auth,
+	);
+	function OnSubmit(data: any) {
+		// alert("test");
+		dispatch(Login(data));
+		history.replace('/');
+		// window.location.reload();
+	}
+	return (
+		<>
+			<Helmet>
+				<link
+					href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap"
+					rel="stylesheet"
+				/>
+				<title>login</title>
+			</Helmet>
+			<Wrap>
+				<form onSubmit={handleSubmit(OnSubmit)}>
+					<img
+						src={Icon.clear}
+						alt=""
+						className="back"
+						onClick={() => history.replace('/')}
+					/>
+					<div id="triangle-right">
+
+					</div>
+					<img src={Image.login} alt="" />
+					<div>
+						<Title>Login</Title>
+						<InputWrap text={"ㅅㄷㄴㅅ"}>
+							<Input
+								type="text"
+								name="id"
+								ref={register({ required: true })}
+								
+							/>
+						</InputWrap>
+						<InputWrap text="비밀번호">
+							<Input
+								type="password"
+								name="password"
+								ref={register({ required: true })}
+								
+							/>
+						</InputWrap>
+						
+            <Button css={buttoncss} disabled={pending}>
+							{!pending ? '로그인' : '로그인중'}{' '}
+						</Button>
+
+						<Goto>
+							<div className="question">개정이 없으신가요?</div>
+							<div className="gotosignup" onClick={()=>history.replace('/signup')}>새로운 개정 만들기</div>
+						</Goto>
+					</div>
+				</form>
+			</Wrap>
+		</>
+	);
+}
+
+const Wrap = styled.div`
+	background: linear-gradient(to left, ${color.primary},${color.border},#9198e5);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-flow: column nowrap;
+	height: 100vh;
+
+	& > form {
+		background: white;
+		display: flex;
+		align-items: center;
+		justify-content: space-around;
+		max-width: 60%;
+		max-height: 70%;
+		width: 100%;
+		height: 100%;
+		border-radius: 20px;
+		position: relative;
+		&>#triangle-right {
+      width: 0;
+      height: 0;
+	  position: absolute;
+	   left:0;
+	   top:10%;
+	  /*
+      border-top: 350px solid transparent;
+      border-left: 100px solid ${color.border};
+      border-bottom: 150px solid transparent; */
+
+      /* border-bottom: 450px solid ${color.border};
+      border-right: 500px solid transparent;
+	  border-radius: 20px; */
+	  opacity: 0.5;
+    }
+		& > .back {
+			position: absolute;
+			top: 1%;
+			right: 1%;
+			cursor: pointer;
+		}
+
+		& > img {
+			max-width: 300px;
+			max-height: 300px;
+		}
+		& > div {
+			margin-right: 30px;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			line-height: 30px;
+      position: relative;
+		}
+	}
+`;
+const buttoncss = css`
+	border-radius: 20px;
+	margin-top: 30px;
+  max-width:200px;
+`;
+
+const Title = styled.h2`
+	font-family: 'Open Sans';
+	font-weight: 700;
+	font-size: 40px;
+	color: ${color.primary};
+  /* color: linear-gradient(to right, ${color.primary},${color.border},#9198e5); */
+`;
+const InputWrap=styled.div<{ text: string }>`
+position: relative;
+&::before {
+		position: absolute;
+    ${({ text }) =>{
+		console.log("text"+typeof(text));
+		
+		return css`
+    content:${text};
+    /* content:"아이디"; */
+    font-size:12px;
+    ` }};
+		top: 0;
+		color:gray;   
+	}
+  padding-top:20px;
+`;
+const Input = styled.input`
+	border: none;
+	border-bottom: 2px solid ${color.border};
+	font-size: 16px;
+	
+	&:focus {
+		outline: 0;
+		border-bottom: 3px solid ${color.border};
+	}
+	
+	&:-webkit-autofill{
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+`;
+
+const Goto= styled.div`
+  font-size:14px;
+  margin-top:10px;
+  color:gray;
+  display:flex;
+  bottom:0;
+  &>.question{
+    margin-right:10px;
+  }
+  &>.gotosignup{
+    color:${color.primary};
+    font-weight:600;
+    cursor:pointer;
+    transition: color 0.8;
+    &:hover{
+      color:${color.border};
+    }
+  }
+
+`;
+export default Loginpage;

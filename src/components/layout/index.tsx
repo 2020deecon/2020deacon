@@ -28,6 +28,7 @@ function index({ title, children }: Header) {
 const GlobalStyle = createGlobalStyle`
 body{
   /* scroll-behavior: smooth; */
+  margin:0;
   scroll-snap-type: y proximity;
 }
 *{
@@ -56,6 +57,7 @@ input{
   border: none;
   background: none;
 }
+
 button{
   &:focus{
     outline: 0;

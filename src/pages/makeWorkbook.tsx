@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from "react";
-import Layout from "../components/layout";
 import styled, { css } from "styled-components";
-import { Icon } from "../lib/images";
-import viewport from "../constants/viewport";
-import colors from "../constants/colors";
 import { useForm } from "react-hook-form";
+import Slider from "react-slick";
+import { useHistory, Link } from "react-router-dom";
+
+import Layout from "../components/layout";
 import Result from "../components/Serch/getData";
 import Button from "../components/UI/Button";
-import Slider from "react-slick";
 import Headding from "../components/UI/Headding";
 import Item from "../components/views/viewproblem";
-import { useHistory, Link } from "react-router-dom";
+
+import viewport from "../constants/viewport";
+import colors from "../constants/colors";
+
+import { Icon } from "../lib/images";
 import make from "../lib/api/make";
 import Get from "../lib/api/get";
 
@@ -122,6 +125,7 @@ function PItem({ workbook }: Test) {
   )
 }
 const Wrap = styled.div`
+
   display: flex;
   flex-flow: row;
   justify-content:space-around;
