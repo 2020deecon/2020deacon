@@ -1,9 +1,11 @@
 import React from "react";
-import LoginModal from "./LoginModal";
+// import LoginModal from "./LoginModal";
+import ExplanModal from "./ExplanModal";
+
 function index() {
   return (
     <>
-      <LoginModal />
+      <ExplanModal />
     </>
   );
 }

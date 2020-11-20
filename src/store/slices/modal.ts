@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState = {
-    login: false
+    explan: false,
 }
 export type Modals = keyof typeof initialState;
 const modalSlice = createSlice({

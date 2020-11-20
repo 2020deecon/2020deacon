@@ -12,12 +12,14 @@ import login from './login.svg';
 import clear from './clear.svg';
 import together from './together.svg';
 import signup from './signup.svg';
+import signin from './signin.svg';
 
 import workbook from './workbook.svg';
 import user from './user.svg';
 import add from './add.svg';
 import community from './community.svg';
-
+import email from './email.svg';
+import listmake from './listmake.svg';
 const Image = {
   questions: questions,
   discussion: discussion,
@@ -26,7 +28,9 @@ const Image = {
   base: base,
   login: login,
   together:together,
-  signup:signup
+  signup:signup,
+  email:email,
+  signin:signin,
 };
 export const Icon = {
   search: search,
@@ -35,6 +39,7 @@ export const Icon = {
   print: print,
   clear: clear,
 
+  listmake: listmake,
   user: user,
   add: add,
   workbook: workbook,

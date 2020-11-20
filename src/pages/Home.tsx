@@ -26,10 +26,13 @@ function Home() {
 			<Wrap>
 				<ReactFullpage
 					licenseKey={'YOUR_KEY_HERE'}
-          scrollingSpeed={600}
-          recordHistory={true}
-          scrollOverflow={true}
-          navigation={true}
+					scrollingSpeed={600}
+					recordHistory={true}
+					scrollOverflow={true}
+					navigation={true}
+					responsiveHeight={100}
+					
+					cardsOptions= {{perspective: 100, fadeContent: true, fadeBackground: true}}
 					render={({ state, fullpageApi }: any) => {
 						return (
 							<ReactFullpage.Wrapper>
@@ -111,6 +114,10 @@ const Wrap = styled.div`
 	flex-flow: column nowrap;
 	/* scroll-behavior: smooth; */
 	scroll-snap-type: y mandatory;
+	@media (max-width: ${viewport.mobile}) {
+		margin: 0px;
+		padding: 0px;
+	}
 `;
 const Start = styled.div`
 	display: flex;
@@ -118,35 +125,35 @@ const Start = styled.div`
 	flex-direction: column;
 	justify-content: center;
 	& > a {
-		width: 500px;
+		max-width: 500px;
+		width: 100%;
 	}
 `;
-  interface ItemProps {
-    color: string;
-    isSelected: boolean;
-    onClick: () => void;
-  }
-  function Item({ color, isSelected, onClick }: ItemProps) {
-    const spring = {
-      type: 'spring',
-      stiffness: 500,
-      damping: 30,
-    };
-    return (
-      <li className="item" onClick={onClick} style={{ backgroundColor: color }}>
-        {isSelected && (
-          <motion.div
-            layoutId="outline"
-            className="outline"
-            initial={false}
-            animate={{ borderColor: color }}
-            transition={spring}
-          />
-        )}
-      </li>
-    );
-  }
-
+interface ItemProps {
+	color: string;
+	isSelected: boolean;
+	onClick: () => void;
+}
+function Item({ color, isSelected, onClick }: ItemProps) {
+	const spring = {
+		type: 'spring',
+		stiffness: 500,
+		damping: 30,
+	};
+	return (
+		<li className="item" onClick={onClick} style={{ backgroundColor: color }}>
+			{isSelected && (
+				<motion.div
+					layoutId="outline"
+					className="outline"
+					initial={false}
+					animate={{ borderColor: color }}
+					transition={spring}
+				/>
+			)}
+		</li>
+	);
+}
 
 // const Navigation = styled.div`
 // 	position: absolute;

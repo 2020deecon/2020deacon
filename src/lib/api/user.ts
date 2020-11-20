@@ -1,6 +1,7 @@
 import getClient from "./client";
 import parseError from "./parseError";
 import { getToken, setToken, setuseToken, delToken } from "../token";
+import {toast } from 'react-toastify';
 export interface Login {
     id: string;
     password: string;
@@ -10,7 +11,6 @@ export interface SignUp extends Login {
     email: string;
 }
 function User() {
-
     // const Login = ({ id, password }: Login) => {
     //     try {
     //         getClient().post('/auth', { id: id, pw: password });
@@ -24,17 +24,15 @@ function User() {
     const Login = async ({ id, password }: Login) => {
         try {
             const data = await getClient().post('/auth', { id: id, pw: password });
+            console.log
+            (data.data);
             if (data.data.access_token) {
                 setToken(data.data.access_token)
-                alert("로그인 성공");
+                toast.success("로그인 성공");
                 window.location.reload();
-
-
-
             }
             else
-                alert("로그인 실패");
-            // return data.data.access_token;
+                toast.error("로그인 실패");
         }
         catch (err) {
             throw parseError(err);

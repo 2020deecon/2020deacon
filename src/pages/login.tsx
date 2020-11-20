@@ -22,6 +22,7 @@ function Loginpage() {
 	);
 	function OnSubmit(data: any) {
 		// alert("test");
+		console.log(data);
 		dispatch(Login(data));
 		history.replace('/');
 		// window.location.reload();
@@ -43,13 +44,10 @@ function Loginpage() {
 						className="back"
 						onClick={() => history.replace('/')}
 					/>
-					<div id="triangle-right">
-
-					</div>
 					<img src={Image.login} alt="" />
 					<div>
 						<Title>Login</Title>
-						<InputWrap text={"ㅅㄷㄴㅅ"}>
+						<InputWrap text="아이디">
 							<Input
 								type="text"
 								name="id"
@@ -154,14 +152,8 @@ const InputWrap=styled.div<{ text: string }>`
 position: relative;
 &::before {
 		position: absolute;
-    ${({ text }) =>{
-		console.log("text"+typeof(text));
-		
-		return css`
-    content:${text};
-    /* content:"아이디"; */
-    font-size:12px;
-    ` }};
+		font-size:12px;
+		content:'${({text})=>text}';
 		top: 0;
 		color:gray;   
 	}

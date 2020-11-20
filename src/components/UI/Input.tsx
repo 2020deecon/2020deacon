@@ -31,10 +31,12 @@ export function WrapInput({
 	error,
 	None,
 }: WrapInputProps) {
+	console.log(error ? error.type : "");
+	
 	return (
-		<WrapInputStyle>
+		<WrapInputStyle text={fieldName}>
 			<label>
-				<span>{fieldName}</span>
+				{/* <span>{fieldName}</span> */}
 				{children}
 			</label>
 			<Error className="error" None={None}>
@@ -50,12 +52,19 @@ const Error = styled.div<{ None?: boolean }>`
 			display: none;
 		`};
 `;
-const WrapInputStyle = styled.div`
+const WrapInputStyle = styled.div<{text: string}>`
 	position: relative;
 	display: flex;
 	flex-direction: column;
+	padding-top:10px;
+	&::before {
+		position: absolute;
+		font-size:12px;
+		content:'${({text})=>text}';
+		top: 0;
+		color:gray;   
+	}
 	label > span {
-		margin-bottom: 3px;
 		font-weight: 600;
 		font-size: 17px;
 	}
