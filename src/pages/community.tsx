@@ -88,6 +88,7 @@ function Community() {
     </Layout>
   );
 }
+
 const Results = styled.div`
   display: flex;
   flex-direction: column;

@@ -7,7 +7,9 @@ import Input from "../../components/UI/Input";
 import Get from "../../lib/api/get";
 import Make from "../../lib/api/make";
 import { useHistory } from "react-router-dom";
-function CommunityView({ match }: any) {
+function CommunityView({ match,theme }: any) {
+    console.log(theme);
+    
     const history = useHistory();
     const { id } = match.params;
     const [Item, setItems] = useState<any>("");

@@ -44,7 +44,7 @@ function Loginpage() {
 						className="back"
 						onClick={() => history.replace('/')}
 					/>
-					<img src={Image.login} alt="" />
+					<img src={Image.login} alt="" className="logo"/>
 					<div>
 						<Title>Login</Title>
 						<InputWrap text="아이디">
@@ -86,6 +86,7 @@ const Wrap = styled.div`
 	justify-content: center;
 	flex-flow: column nowrap;
 	height: 100vh;
+	width:100%;
 
 	& > form {
 		background: white;
@@ -98,6 +99,11 @@ const Wrap = styled.div`
 		height: 100%;
 		border-radius: 20px;
 		position: relative;
+		@media (max-width: ${viewport.mobile}){
+			&>.logo{
+				display:none;
+			}
+		}
 		&>#triangle-right {
       width: 0;
       height: 0;

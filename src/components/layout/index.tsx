@@ -72,6 +72,7 @@ ol{
 
 const Wrap = styled.div`
   /* min-height: 50vh; */
+  width: 100%;
   display: flex;
   flex-direction: column;
   & > article {

@@ -13,24 +13,28 @@ import User from '../hooks/useUsers';
 
 function SignUp() {
 	const { register, handleSubmit, watch, errors } = useForm({
-		mode: 'onChange',
+		mode: 'onSubmit',
+		reValidateMode: 'onSubmit',
 	});
+	const history = useHistory();
+	const password = watch('password');
+
 	var settings = {
 		dots: true,
 		infinite: true,
 		speed: 500,
 		slidesToShow: 1,
 		slidesToScroll: 1,
+		nextArrow: <Button onClick={()=>alert("test")}>회원가입 시작하기</Button>,
 	};
-	const history = useHistory();
-	const password = watch('password');
-
+	
+	
 	function onSubmit(data: any) {
 		User().SignUp(data);
 		alert('회원가입이 완료 되었습니다.');
 		history.replace('/');
 	}
-
+	
 	return (
 		<>
 			<Helmet>
@@ -66,9 +70,6 @@ function SignUp() {
 											</div>
 										</div>
 									</Goto>
-									<Button onClick={() => history.replace('/')}>
-										회원가입 시작하기
-									</Button>
 								</div>
 							</SliderItem>
 							<SliderItem>
@@ -158,11 +159,10 @@ function SignUp() {
 											alt=""
 											style={{ maxWidth: '300px', maxHeight: '300px' }}
 										/>
-										<Button>회원가입</Button>
+										<Button type="submit">회원가입</Button>
 									</label>
 								</form>
 							</SliderItem>
-
 							<SliderItem>
 								<Completesignup>
 									<img src={Image.email} alt="" />
@@ -192,7 +192,7 @@ const Wrap = styled.div`
 	justify-content: center;
 	flex-flow: column nowrap;
 	height: 100vh;
-
+	width: 100%;
 	& > div {
 		background: white;
 		display: flex;
@@ -264,7 +264,19 @@ const SliderWrap = styled.div`
 		height: 80%;
 		& > .slick-list {
 			height: 100%;
-		}
+			
+			}
+
+			&>button{
+				position: relative;
+				max-width:200px;
+				top: -23%;
+				transform: translate(-4%, -1%);
+				left:40%;
+				&:before {
+				content:none;
+			}
+		}		
 	}
 `;
 
@@ -283,8 +295,9 @@ const SliderItem = styled.div`
 		}
 		& > button {
 			margin-top: 10px;
-			max-width: 200px;
-		}
+			 max-width: 200px;
+		} 
+		
 	}
 	& > form {
 		display: flex;

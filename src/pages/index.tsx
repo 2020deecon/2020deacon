@@ -13,6 +13,8 @@ import viewcommunity from "./view/communityView";
 import makeproblem from "./makecommunity";
 import DetailsView from "./DetailProblem";
 import Login from "./login";
+import New from "./newcommuntiy";
+
 
 function Index() {
   return (
@@ -29,6 +31,7 @@ function Index() {
       <Route path="/viewworkbook/:id/" exact component={viewworkbook} />
       <Route path="/viewCommunity/:id/" exact component={viewcommunity} />
       <Route path="/popup/:id/" exact component={DetailsView} />
+      <Route path={["/test/:id", "/test"]} exact component={New} />
     </Switch>
   );
 }

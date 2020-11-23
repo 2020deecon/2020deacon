@@ -213,7 +213,8 @@ function Header() {
 
 const Wrap = styled.div`
 	position: fixed;
-	top: 0px;
+	top: 0;
+	left: 0;
 	width: 100%;
 	display: flex;
 	justify-content: space-between;
