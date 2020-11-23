@@ -66,87 +66,92 @@ function SignUp() {
 											</div>
 										</div>
 									</Goto>
-									<Button>회원가입 시작하기</Button>
+									<Button onClick={() => history.replace('/')}>
+										회원가입 시작하기
+									</Button>
 								</div>
 							</SliderItem>
 							<SliderItem>
 								<form onSubmit={handleSubmit(onSubmit)}>
-									<WrapInput fieldName="이름" error={errors.name}>
-										<Input
-											type="text"
-											name="name"
-											autoComplete="username"
-											ref={register({
-												required: '이름을 입력해주세요',
-											})}
-										/>
-									</WrapInput>
-									<WrapInput fieldName="나이" error={errors.age}>
-										<Input
-											type="text"
-											name="age"
-											autoComplete="userage"
-											ref={register({
-												required: '나이를 적어주세요!',
-											})}
-										/>
-									</WrapInput>
-									<WrapInput fieldName="아이디" error={errors.id}>
-										<Input
-											type="text"
-											name="id"
-											autoComplete="userid"
-											ref={register({
-												required: '아이디를 입력해주세요!.',
-												minLength: {
-													value: 6,
-													message: '아이디는 6자 이상이어야 합니다.',
-												},
-											})}
-										/>
-									</WrapInput>
-									<WrapInput fieldName="비밀번호" error={errors.password}>
-										<Input
-											type="password"
-											name="password"
-											autoComplete="password"
-											ref={register({
-												required: '비밀번호를 입력해주세요',
-												minLength: {
-													value: 8,
-													message: '비밀번호는 8자 이상이어야 합니다.',
-												},
-											})}
-										/>
-									</WrapInput>
-									<WrapInput
-										fieldName="비밀번호 확인"
-										error={errors.passwordAccept}
-									>
-										<Input
-											type="password"
-											autoComplete="new-password"
-											name="passwordAccept"
-											ref={register({
-												validate: (value) =>
-													password === value || '비밀번호를 다시 확인해주세요.',
-											})}
-										/>
-									</WrapInput>
-									<WrapInput fieldName="이메일" error={errors.email}>
-										<Input
-											type="text"
-											autoComplete="email"
-											name="email"
-											ref={register({
-												required: '이메일을 입력해주세요!',
-												pattern: {
-													message: '이메일을 다시확인해주세요.',
-													value: /.com$/,
-												},
-											})}
-										/>
-									</WrapInput>
+									<div>
+										<WrapInput fieldName="이름" error={errors.name}>
+											<Input
+												type="text"
+												name="name"
+												autoComplete="username"
+												ref={register({
+													required: '이름을 입력해주세요',
+												})}
+											/>
+										</WrapInput>
+										<WrapInput fieldName="나이" error={errors.age}>
+											<Input
+												type="text"
+												name="age"
+												autoComplete="userage"
+												ref={register({
+													required: '나이를 적어주세요!',
+												})}
+											/>
+										</WrapInput>
+										<WrapInput fieldName="아이디" error={errors.id}>
+											<Input
+												type="text"
+												name="id"
+												autoComplete="userid"
+												ref={register({
+													required: '아이디를 입력해주세요!.',
+													minLength: {
+														value: 6,
+														message: '아이디는 6자 이상이어야 합니다.',
+													},
+												})}
+											/>
+										</WrapInput>
+										<WrapInput fieldName="비밀번호" error={errors.password}>
+											<Input
+												type="password"
+												name="password"
+												autoComplete="password"
+												ref={register({
+													required: '비밀번호를 입력해주세요',
+													minLength: {
+														value: 8,
+														message: '비밀번호는 8자 이상이어야 합니다.',
+													},
+												})}
+											/>
+										</WrapInput>
+										<WrapInput
+											fieldName="비밀번호 확인"
+											error={errors.passwordAccept}
+										>
+											<Input
+												type="password"
+												autoComplete="new-password"
+												name="passwordAccept"
+												ref={register({
+													validate: (value) =>
+														password === value ||
+														'비밀번호를 다시 확인해주세요.',
+												})}
+											/>
+										</WrapInput>
+										<WrapInput fieldName="이메일" error={errors.email}>
+											<Input
+												type="text"
+												autoComplete="email"
+												name="email"
+												ref={register({
+													required: '이메일을 입력해주세요!',
+													pattern: {
+														message: '이메일을 다시확인해주세요.',
+														value: /.com$/,
+													},
+												})}
+											/>
+										</WrapInput>
+									</div>
 									<label>
 										<img
 											src={Image.signin}
@@ -160,11 +165,12 @@ function SignUp() {
 
 							<SliderItem>
 								<Completesignup>
-									
-										<img src={Image.email} alt="" />
-										<div className="message">회원가입이 완료 되었습니다!</div>
-										<div className="question">이메일 인증후 이용해주세요!</div>
-											<Button>알겠습니다!</Button>
+									<img src={Image.email} alt="" />
+									<div className="message">회원가입이 완료 되었습니다!</div>
+									<div className="question">이메일 인증후 이용해주세요!</div>
+									<Button onClick={() => history.replace('/')}>
+										알겠습니다!
+									</Button>
 								</Completesignup>
 							</SliderItem>
 						</Slider>
@@ -282,22 +288,25 @@ const SliderItem = styled.div`
 	}
 	& > form {
 		display: flex;
-		flex-flow: column wrap;
+		flex-flow: row nowrap;
+		justify-content: space-between;
+		align-items: center;
 		height: 100%;
 		padding: 0px 10%;
-		position: relative;
 		& > div {
-			max-width: 300px;
-			margin: 0 30px;
+			& > div {
+				max-width: 300px;
+				margin: 0 30px;
+			}
 		}
 		& > label {
-			position: absolute;
+			/* position: absolute;
 			top: 50%;
 			left: 80%;
-			/* bottom: 50%; */
-			transform: translate(-50%, -50%);
+			/* bottom: 50%;
+			transform: translate(-50%, -50%); */
 			& > button {
-				margin-top:10px;
+				margin-top: 10px;
 				border-radius: 20px;
 			}
 			max-width: 300px;
@@ -314,18 +323,18 @@ const Title = styled.h2`
 	/* color: linear-gradient(to right, ${color.primary},${color.border},#9198e5); */
 `;
 
-const Completesignup= styled.div`
-display:flex;
-justify-content: center;
-align-items: center;
-font-size:17px;
-line-height:30px;
-	&>img{
+const Completesignup = styled.div`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 17px;
+	line-height: 30px;
+	& > img {
 		max-width: 300px;
 		max-height: 300px;
-		width:100%;
-		height:100%;
-		margin-bottom:10px;
+		width: 100%;
+		height: 100%;
+		margin-bottom: 10px;
 	}
 `;
 export default SignUp;
