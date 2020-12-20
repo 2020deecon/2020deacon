@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
-import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import Slider from 'react-slick';
 
+import viewport from '../constants/viewport';
 import Image, { Icon } from '../lib/images';
 import color from '../constants/colors';
 import Input, { WrapInput } from '../components/UI/Input';
@@ -12,28 +12,82 @@ import Button from '../components/UI/Button';
 import User from '../hooks/useUsers';
 
 function SignUp() {
-	const { register, handleSubmit, watch, errors } = useForm({
-		mode: 'onSubmit',
-		reValidateMode: 'onSubmit',
-	});
+	const isEnglish=/[A-Za-z0-9]/;
+	const iskorean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+		const isNumber=/^[1-9]{10}$|^[1-4]{1}[0-9]{1}$|^50$/;
+		const isEmail=/^[-!#$%& amp;'*+./0-9=?A-Z^_a-z{|}~]+@[-!#$%&'*+/0-9=?A-Z^_a-z{|}~]+.[-!#$%& amp;'*+./0-9=?A-Z^_a-z{|}~]+$/;		
 	const history = useHistory();
-	const password = watch('password');
+	const [Submitdisable, setSubmitdisable]=useState(true);
+	const [id, setid]=useState({
+		text:"",
+		error:{type:"",message:""},
+	});
+	const [age, setage]=useState({
+		text:"",
+		error:{type:"",message:""},
+	});
+	const [password, setpassword]=useState({
+		text:"",
+		error:{type:"",message:""},
+	});
+	const [repassword, setrepassword]=useState({
+		text:"",
+		error:{type:"",message:""},
+	});
+	const [name, setname]=useState({
+		text:"",
+		error:{type:"",message:""},
+	});
+	const [email, setemail]=useState({
+		text:"",
+		error:{type:"",message:""},
+	});
+	const checkdata=(data:any)=>{
+		if(data.text!=="" && data.error.message==="")
+			return true;
+		else
+			return false;
+	}
+	useEffect(() => {
+		if(checkdata(id) && checkdata(password) 
+		&& checkdata(repassword) && checkdata(email) 
+		&& checkdata(age) && checkdata(name))
+			setSubmitdisable(false);
+		else
+			setSubmitdisable(true);
+	},[id,age,password,email,repassword,name])
+	const onSubmit=()=>{
+		User().SignUp({ id:id.text,age:age.text,password:password.text, name:name.text,email:email.text});
+		history.replace('/');
+	}
 
-	var settings = {
+	const settings = {
 		dots: true,
 		infinite: true,
 		speed: 500,
 		slidesToShow: 1,
 		slidesToScroll: 1,
-		nextArrow: <Button onClick={()=>alert("test")}>회원가입 시작하기</Button>,
+		nextArrow: <Button id="startclick">회원가입 시작하기</Button>,
 	};
 	
-	
-	function onSubmit(data: any) {
-		User().SignUp(data);
-		alert('회원가입이 완료 되었습니다.');
-		history.replace('/');
-	}
+	useEffect(()=>{
+		//navgation start click
+		var test=document.getElementById("startclick");
+		if(test)
+			test.onclick=()=>{
+				if(test) 
+					test.style.display="none";
+			};
+		
+		//navgation false	
+		var test2=document.getElementsByClassName("slick-dots");
+		var array=test2[0].children;
+		for(var i=0; i<2;i++){
+			// console.log(array[i].children[0]);
+			var t=array[i].children[0]as HTMLElement;
+			t.onclick=null;
+		}
+	},[]);
 	
 	return (
 		<>
@@ -44,6 +98,7 @@ function SignUp() {
 				/>
 				<title>signup</title>
 			</Helmet>
+
 			<Wrap>
 				<div>
 					<img
@@ -72,84 +127,79 @@ function SignUp() {
 									</Goto>
 								</div>
 							</SliderItem>
+
 							<SliderItem>
-								<form onSubmit={handleSubmit(onSubmit)}>
+								<form>
 									<div>
-										<WrapInput fieldName="이름" error={errors.name}>
+										<WrapInput fieldName="이름" error={name.error}>
 											<Input
 												type="text"
 												name="name"
 												autoComplete="username"
-												ref={register({
-													required: '이름을 입력해주세요',
-												})}
+												value={name.text}
+												onChange={e=> iskorean.test(e.target.value) ? setname({text:e.target.value,error:{type:
+												"",message:""}}) : setname({text:e.target.value,error:{type:"",message:"이름을 입력해주세요"}})}
 											/>
 										</WrapInput>
-										<WrapInput fieldName="나이" error={errors.age}>
+										<WrapInput fieldName="나이" error={age.error}>
 											<Input
 												type="text"
 												name="age"
 												autoComplete="userage"
-												ref={register({
-													required: '나이를 적어주세요!',
-												})}
+												value={age.text}
+												onChange={e=> isNumber.test(e.target.value) ? setage({text:e.target.value,error:{type:
+													"",message:""}}) : setage({text:e.target.value,error:{type:"",message:"나이를 적어주세요!"}})}
 											/>
 										</WrapInput>
-										<WrapInput fieldName="아이디" error={errors.id}>
+										<WrapInput fieldName="아이디" error={id.error}>
 											<Input
 												type="text"
 												name="id"
 												autoComplete="userid"
-												ref={register({
-													required: '아이디를 입력해주세요!.',
-													minLength: {
-														value: 6,
-														message: '아이디는 6자 이상이어야 합니다.',
-													},
-												})}
+												value={id.text}
+												onChange={e=> isEnglish.test(e.target.value) && e.target.value.length>6 ? setid({text:e.target.value,error:{type:
+													"",message:""}}) : setid({text:e.target.value,error:{type:"",message:"6자 이상이어야 합니다."}})}
 											/>
 										</WrapInput>
-										<WrapInput fieldName="비밀번호" error={errors.password}>
+										<WrapInput fieldName="비밀번호" error={password.error}>
 											<Input
 												type="password"
 												name="password"
 												autoComplete="password"
-												ref={register({
-													required: '비밀번호를 입력해주세요',
-													minLength: {
-														value: 8,
-														message: '비밀번호는 8자 이상이어야 합니다.',
-													},
-												})}
+												value={password.text}
+												onChange={e=> isEnglish.test(e.target.value) && e.target.value.length>8 ? setpassword({text:e.target.value,error:{type:
+													"",message:""}}) : setpassword({text:e.target.value,error:{type:"",message:"8자 이상이어야 합니다."}})}
 											/>
 										</WrapInput>
 										<WrapInput
 											fieldName="비밀번호 확인"
-											error={errors.passwordAccept}
+											error={repassword.error}
 										>
 											<Input
 												type="password"
-												autoComplete="new-password"
+												autoComplete="re-password"
 												name="passwordAccept"
-												ref={register({
-													validate: (value) =>
-														password === value ||
-														'비밀번호를 다시 확인해주세요.',
-												})}
+												value={repassword.text}
+												onChange={e=> isEnglish.test(e.target.value) && e.target.value===password.text ? setrepassword({text:e.target.value,error:{type:
+													"",message:""}}) : setrepassword({text:e.target.value,error:{type:"",message:"비밀번호가 다릅니다."}})}
 											/>
 										</WrapInput>
-										<WrapInput fieldName="이메일" error={errors.email}>
+										<WrapInput fieldName="이메일" error={email.error}>
 											<Input
 												type="text"
 												autoComplete="email"
 												name="email"
-												ref={register({
-													required: '이메일을 입력해주세요!',
-													pattern: {
-														message: '이메일을 다시확인해주세요.',
-														value: /.com$/,
-													},
-												})}
+												// ref={register({
+												// 	required: '이메일을 입력해주세요!',
+												// 	pattern: {
+												// 		message: '이메일을 다시확인해주세요.',
+												// 		value: /.com$/,
+												// 	},
+												// })}
+												value={email.text}
+												onChange={e=> isEmail.test(e.target.value) ? setemail({text:e.target.value,error:{type:
+													"",message:""}}) : setemail({text:e.target.value,error:{type:"",message:"이메일을 다시확인해주세요."}})}
+
 											/>
 										</WrapInput>
 									</div>
@@ -159,11 +209,11 @@ function SignUp() {
 											alt=""
 											style={{ maxWidth: '300px', maxHeight: '300px' }}
 										/>
-										<Button type="submit">회원가입</Button>
+										<Button onClick={onSubmit} disabled={Submitdisable}>회원가입</Button>
 									</label>
 								</form>
 							</SliderItem>
-							<SliderItem>
+							{/* <SliderItem>
 								<Completesignup>
 									<img src={Image.email} alt="" />
 									<div className="message">회원가입이 완료 되었습니다!</div>
@@ -172,7 +222,7 @@ function SignUp() {
 										알겠습니다!
 									</Button>
 								</Completesignup>
-							</SliderItem>
+							</SliderItem> */}
 						</Slider>
 					</SliderWrap>
 				</div>
@@ -181,6 +231,11 @@ function SignUp() {
 	);
 }
 const Wrap = styled.div`
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right:0;
 	background: linear-gradient(
 		to left,
 		${color.primary},
@@ -193,6 +248,7 @@ const Wrap = styled.div`
 	flex-flow: column nowrap;
 	height: 100vh;
 	width: 100%;
+	
 	& > div {
 		background: white;
 		display: flex;
@@ -215,6 +271,12 @@ const Wrap = styled.div`
 			/* cursor: default; */
 		}
 	}
+	@media (max-width: ${viewport.mobile}){
+		height:100%;
+		& > div {
+			max-height: 60%;
+		}
+	}
 `;
 
 const Goto = styled.div`
@@ -225,8 +287,12 @@ const Goto = styled.div`
 	margin-top: 10px;
 	color: gray;
 	width: 50%;
+	@media (max-width: ${viewport.mobile}){
+
+	}
 	& > div {
 		display: flex;
+		flex-flow:row wrap;
 		margin-top: 10px;
 		width: 100%;
 		max-width: 300px;
@@ -263,21 +329,19 @@ const SliderWrap = styled.div`
 		width: 100%;
 		height: 80%;
 		& > .slick-list {
-			height: 100%;
-			
+			height: 100%;		
 			}
-
 			&>button{
-				position: relative;
+				position: fixed;
 				max-width:200px;
-				top: -23%;
-				transform: translate(-4%, -1%);
-				left:40%;
+				top: 50%;
+  				left: 50%;
+				transform: translate(-50%, 300%);
 				&:before {
 				content:none;
-			}
-		}		
-	}
+				}
+			}		
+		}
 `;
 
 const SliderItem = styled.div`
@@ -306,6 +370,9 @@ const SliderItem = styled.div`
 		align-items: center;
 		height: 100%;
 		padding: 0px 10%;
+		@media (max-width: ${viewport.mobile}){
+			flex-direction: column;
+		}
 		& > div {
 			& > div {
 				max-width: 300px;
@@ -313,14 +380,15 @@ const SliderItem = styled.div`
 			}
 		}
 		& > label {
-			/* position: absolute;
-			top: 50%;
-			left: 80%;
-			/* bottom: 50%;
-			transform: translate(-50%, -50%); */
+			@media (max-width: ${viewport.mobile}){
+				&>img{
+					display:none;
+				}
+			}
 			& > button {
 				margin-top: 10px;
 				border-radius: 20px;
+				width:100%;
 			}
 			max-width: 300px;
 		}

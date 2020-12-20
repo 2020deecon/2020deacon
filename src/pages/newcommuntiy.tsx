@@ -40,6 +40,7 @@ function Newcommuntiy({ match }: any) {
 						{id && imageHasLoaded && <Item id={id} key="item" />}
 					</AnimatePresence>
 				</AnimateSharedLayout>
+				
 				<Navigation onoff={gotop}>
 					<div>▲</div>
 				</Navigation>

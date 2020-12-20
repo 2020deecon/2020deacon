@@ -6,7 +6,7 @@ import Header from "./Header";
 interface Header {
   title?: string;
   children?: React.ReactNode;
-}
+} 
 function index({ title, children }: Header) {
   return (
     <>

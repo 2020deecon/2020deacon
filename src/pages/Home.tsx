@@ -1,26 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import ReactFullpage from '@fullpage/react-fullpage';
-import { motion, AnimateSharedLayout } from 'framer-motion';
 
 import Layout from '../components/layout';
 import Button from '../components/UI/Button';
 import Frame from '../components/home/frame';
 
-import { getUser } from '../store/slices/auth';
 import viewport from '../constants/viewport';
 import Image from '../lib/images';
+
 function Home() {
-	const dispatch = useDispatch();
-	const colors = ['#ff0055', '#0099ff', '#22cc88', '#ffaa00', '#ffaa00'];
-	const [selected, setSelected] = useState(colors[0]);
-
-	useEffect(() => {
-		dispatch(getUser());
-	}, []);
-
 	return (
 		<Layout title="home">
 			<Wrap>
@@ -87,22 +77,6 @@ function Home() {
 					}}
 				/>
 			</Wrap>
-			{/* <Navigation>
-				<AnimateSharedLayout>
-					<Ul>
-						<li className="topbottom">└</li>
-						{colors.map((color) => (
-							<Item
-								key={color}
-								color={color}
-								isSelected={selected === color}
-								onClick={() => setSelected(color)}
-							/>
-						))}
-						<li className="topbottom">ㄱ</li>
-					</Ul>
-				</AnimateSharedLayout>
-			</Navigation> */}
 		</Layout>
 	);
 }
@@ -129,73 +103,4 @@ const Start = styled.div`
 		width: 100%;
 	}
 `;
-interface ItemProps {
-	color: string;
-	isSelected: boolean;
-	onClick: () => void;
-}
-function Item({ color, isSelected, onClick }: ItemProps) {
-	const spring = {
-		type: 'spring',
-		stiffness: 500,
-		damping: 30,
-	};
-	return (
-		<li className="item" onClick={onClick} style={{ backgroundColor: color }}>
-			{isSelected && (
-				<motion.div
-					layoutId="outline"
-					className="outline"
-					initial={false}
-					animate={{ borderColor: color }}
-					transition={spring}
-				/>
-			)}
-		</li>
-	);
-}
-
-// const Navigation = styled.div`
-// 	position: absolute;
-// 	right: 0;
-// 	top: 50%;
-// 	transform: rotate(90deg);
-// 	transform: translate(-50%, -50%);
-// `;
-
-// const Ul = styled.ul`
-// 	list-style: none;
-// 	margin: 0;
-// 	padding: 0;
-// 	display: flex;
-// 	flex-direction: row;
-// 	flex-wrap: wrap;
-// 	justify-content: center;
-
-// 	/* width: 280px;
-// 	height: 280px; */
-// 	transform: rotate(90deg);
-// 	& > .topbottom {
-// 		transform: rotate(45deg);
-// 	}
-// 	& > .item {
-// 		display: block;
-// 		width: 10px;
-// 		height: 10px;
-// 		border-radius: 50%;
-// 		margin: 20px;
-// 		position: relative;
-// 		cursor: pointer;
-// 		flex-shrink: 0;
-// 		& > .outline {
-// 			position: absolute;
-// 			top: -8px;
-// 			left: -8px;
-// 			right: -8px;
-// 			bottom: -8px;
-// 			border: 4px solid white;
-// 			border-radius: 50%;
-// 		}
-// 	}
-// `;
 export default Home;

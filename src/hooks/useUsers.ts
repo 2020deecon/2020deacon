@@ -4,14 +4,16 @@ import Userslice from "../store/slices/user";
 import User, { Login, SignUp } from "../lib/api/user";
 
 function UseUser() {
-    // const dispatch = useDispatch();
-
     const Login = ({ id, password }: Login) => {
         User().Login({ id, password });
     };
-    const SignUp = ({ id, password, name, email }: SignUp) => {
-        User().signUp({ id, password, name, email });
+    
+    const SignUp = ({ id,age, password, name, email }: SignUp) => {
+        User().signUp({ id,age, password, name, email });
     }
-    return { Login, SignUp };
+    const checkToken =()=>{
+        User().Userget();
+    }
+    return { Login, SignUp,checkToken };
 }
 export default UseUser;
