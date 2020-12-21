@@ -24,7 +24,12 @@ function Header() {
 		setparams(window.location.pathname);
 		User().checkToken();
 	}, [window.location.pathname]);
-	
+
+	setInterval(()=>{
+		// console.log("3s")
+		// User().checkToken();
+		// alert("time");
+	},300)
 
 	console.log(getuserToken());
 	
