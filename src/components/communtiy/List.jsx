@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { items } from "./data";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import Image from "../../lib/images";
-
-function Card({ id, title, category, theme,img }) {
+import Get from "../../lib/api/get";
+function Card({ id, title, category, theme,img,Written }) {
   return (
     <li className={`card ${theme}`}>
       <div className="card-content-container">
@@ -24,17 +24,27 @@ function Card({ id, title, category, theme,img }) {
           </motion.div>
         </motion.div>
       </div>
-      <Link to={"/test/"+id} className={`card-open-link`} />
+      <Link to={"/community/"+id} className={`card-open-link`} />
     </li>
   );
 }
 
-export function List(selectedId) {
+export function List(selectedId,selectedtext) {
+  // alert("test")
+  const [Items, setItems] = useState([]);
+  Get().Getallcommunity().then(res => {
+    console.log(res);
+    setItems(res);
+  }).catch(err => console.log(err));
+
   return (
     <ul className="card-list">
-      {items.map(card => (
-        <Card key={card.id} {...card} isSelected={card.id === selectedId} img={Image.login}/>
+      {Items.map(card =>(
+        <Card key={card.id} title={card.title} category={card.text} isSelected={card.id===selectedId} img={card.img} Written={card.type}/>
       ))}
+      {/* {items.map(card => (
+        <Card key={card.id} {...card} isSelected={card.id === selectedId} img={Image.login}/>
+      ))} */}
     </ul>
   );
 }

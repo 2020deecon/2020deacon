@@ -20,6 +20,7 @@ import add from './add.svg';
 import community from './community.svg';
 import email from './email.svg';
 import listmake from './listmake.svg';
+import pen from './pen.svg';
 const Image = {
   questions: questions,
   discussion: discussion,
@@ -44,5 +45,6 @@ export const Icon = {
   add: add,
   workbook: workbook,
   community: community,
+  pen: pen,
 };
 export default Image;

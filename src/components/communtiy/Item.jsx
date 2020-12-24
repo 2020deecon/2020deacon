@@ -3,8 +3,10 @@ import { motion } from "framer-motion";
 // import { LoremIpsum } from "react-lorem-ipsum";
 import { Link } from "react-router-dom";
 import { items } from "./data";
+import {useHistory} from "react-router-dom";
 
 export function Item(id) {
+  const history = useHistory();
   const { category, title } = items.find(item => item.id === id.id);
   return (
     <>
@@ -14,12 +16,18 @@ export function Item(id) {
         exit={{ opacity: 0, transition: { duration: 0.15 } }}
         transition={{ duration: 0.2, delay: 0.15 }}
         style={{ pointerEvents: "auto" }}
-        className="overlay"
+        className="overlay" 
+        onClick={()=>history.replace("/community")}
       >
-        <Link to="/test" />
+        {/* <Link to="/community" /> */}
       </motion.div>
-      <div className="card-content-container open">
-        <motion.div className="card-content" layoutId={`card-container-${id}`}>
+      <div className="fakdsfnlsdinfladifds"> 
+      <div className="card-content-container open"
+      onClick={(e) =>{alert("test")}}
+      // onClick={(e) => e.stopPropagation()}
+      >
+        <motion.div className="card-content" layoutId={`card-container-${id}`}
+        >
           <motion.div
             className="card-image-container"
             layoutId={`card-image-container-${id}`}
@@ -29,19 +37,17 @@ export function Item(id) {
           <motion.div
             className="title-container"
             layoutId={`title-container-${id}`}
+            
           >
             <span className="category">{category}</span>
             <h2>{title}</h2>
           </motion.div>
-          <motion.div className="content-container" animate>
-            {/* <LoremIpsum
-              p={6}
-              avgWordsPerSentence={6}
-              avgSentencesPerParagraph={4}
-            /> */}
-          </motion.div>
+          <motion.div className="content-container" animate 
+          />
         </motion.div>
       </div>
+      </div>
+      
     </>
   );
 }

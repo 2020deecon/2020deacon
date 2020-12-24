@@ -17,33 +17,33 @@ import User from '../../hooks/useUsers';
 function Header() {
 	const [params, setparams] = useState(window.location.pathname);
 	const history = useHistory();
-	const [id, setid] = useState(getuserToken());
+	const [id, setid] = useState<string | null>(getuserToken());
 	const [mobilenav, setmobilenav] = useState(false);
-
+	// const [betoekn, setbetoekn] = useState();
+	// const [notoekn, notbetoekn] = useState();
 	useEffect(() => {
 		setparams(window.location.pathname);
 		User().checkToken();
 	}, [window.location.pathname]);
-
-	setInterval(()=>{
-		// console.log("3s")
-		// User().checkToken();
-		// alert("time");
-	},300)
-
-	console.log(getuserToken());
-	
 	useEffect(() => {
-		setid(getuserToken());
-	},[getuserToken()])
-	// window.addEventListener('resize', function (event) {
-	// 	console.log(
-	// 		document.body.clientWidth +
-	// 			' wide by ' +
-	// 			document.body.clientHeight +
-	// 			' high',
-	// 	);
-	// });
+		if(id!==null)
+		{
+			clearInterval(checkuser)
+			console.log("stop");
+		}
+	},[]);
+
+	// console.log(window.history);
+	var checkuser=setInterval(()=>{
+		// alert(id);
+		if(id !== getuserToken() && id ===null && getuserToken()!==null){
+			setid(getuserToken());
+		}
+		if(id ===null && getuserToken()===null){
+			User().checkToken();
+		}
+	},5000)
+	
 	const beforelogin = () => toast.error('로그인 후 이용하세요!');
 
 	const Blogin = () => {
@@ -67,12 +67,12 @@ function Header() {
 	const Flogin = () => {
 		return (
 			<>
-				<UserName>{id != 'undefined' && id != null ? id + '님' : ''}</UserName>
+				<UserName>{ id !== null ? id + '님' : ''}</UserName>
 				<Button
 					onClick={() => {
 						// login.logout();
 						delToken();
-						setid("");
+						setid(null);
 						window.location.reload();
 					}}
 				>

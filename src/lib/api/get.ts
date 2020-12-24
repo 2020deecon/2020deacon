@@ -64,7 +64,7 @@ function Get() {
 
     const Getallcommunity = async () => {
         let data = await getClient().get('/sendPost').then(res => {
-            console.log(res);
+            // console.log(res);
             // alert("test");
             return res.data.data;
         }).catch(err => {

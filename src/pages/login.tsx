@@ -19,12 +19,6 @@ function Loginpage() {
 		User().Login(data);
 		history.replace("/");
 	}
-	// useEffect(() => {
-	// 	if(getToken()!=null){
-	// 		User().checkToken();
-			
-	// 	}
-	// },[getToken()])
 
 	return (
 		<>

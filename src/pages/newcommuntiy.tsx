@@ -5,15 +5,17 @@ import { Item } from '../components/communtiy/Item.jsx';
 import { List } from '../components/communtiy/List.jsx';
 import Layout from '../components/layout';
 import Input from '../components/UI/Input';
-import { Icon } from '../lib/images';
 import styled, { css } from 'styled-components';
 import viewport from "../constants/viewport";
 import colors from '../constants/colors';
+import { useHistory } from "react-router-dom";
+import { Icon } from "../lib/images";
+import { getuserToken } from '../lib/token';
 
 function Newcommuntiy({ match }: any) {
 	let { id } = match.params;
 	const imageHasLoaded = true;
-	console.log(id);
+	const history = useHistory();
 	const [Text, setText] = useState('');
 	const [gotop,setgotop] = useState(window.pageYOffset===0);
 	
@@ -23,6 +25,7 @@ function Newcommuntiy({ match }: any) {
 	return (
 		<Layout title="communtiy">
 			<Wrap>
+
 				<SearchBox>
 					<div>
 						<Input type="text" onChange={(e) => setText(e.target.value)} />
@@ -35,13 +38,20 @@ function Newcommuntiy({ match }: any) {
 				</SearchBox>
 
 				<AnimateSharedLayout type="crossfade">
-					<List selectedId={id} />
+					<List selectedId={id} selectedtext={Text}/>
+
 					<AnimatePresence>
 						{id && imageHasLoaded && <Item id={id} key="item" />}
 					</AnimatePresence>
+
 				</AnimateSharedLayout>
 				
-				<Navigation onoff={gotop}>
+				<Writebutton onoff={getuserToken()===null}>
+					<div onClick={() => history.replace("/makecommunity")} >
+						<img src={Icon.pen}/>
+					</div>
+				</Writebutton>
+				<Navigation onoff={gotop} onClick={()=>{window.scrollTo({top:0, left:0, behavior:"smooth"})}}>
 					<div>▲</div>
 				</Navigation>
 			</Wrap>
@@ -58,6 +68,19 @@ const Wrap = styled.div`
   width:100%;
   height: 100%;
 `;
+const Writebutton= styled.div<{onoff:boolean}>`
+width:50px;
+height:50px;
+border-radius:50px;
+background:${colors.gray};
+position: fixed;
+bottom: 15%;
+right:3%;
+display:${({onoff})=>onoff ? "none" : "flex"};
+justify-content: center;
+align-items: center;
+cursor: pointer;
+`;
 const Navigation= styled.div<{onoff:boolean}>`
 width:50px;
 height:50px;
@@ -69,6 +92,7 @@ right:3%;
 display:${({onoff})=>onoff ? "none" : "flex"};
 justify-content: center;
 align-items: center;
+cursor: pointer;
 &>div{
 	display:flex;
 	/* width:100%;

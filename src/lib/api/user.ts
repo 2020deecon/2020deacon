@@ -15,8 +15,9 @@ function User() {
     const Login = async ({ id, password }: Login) => {
         try {
             const data = await getClient().post('/auth', { id: id, pw: password });
-            console.log(data.data);
+            // console.log(data.data);
             if (data.data.access_token) {
+                // console.log("tokken"+data.data.access_token);
                 setToken(data.data.access_token)
                 // window.location.replace("/");
                 toast.success("로그인 성공");
@@ -42,24 +43,21 @@ function User() {
         try {
             const data = await getClient().get('/user');
             // alert("working");
+            console.log(data.data);
             if (data.data.code !== 200)
-            {
-                // window.location.replace("/");
                 delToken();
-            }
             else
             {
-                if(getuserToken()===null){
-                    alert("test");
-                    window.location.reload();
-                }
-                    
                 setuseToken(data.data.id);
+                if(getuserToken()===null){
+                    window.location.reload();
+                }   
             }
             return data.data;
         }
         catch (err) {
-            throw parseError(err);
+            // alert(err)
+            // throw parseError(err);
         }
     }
     return { Login, signUp, Userget };

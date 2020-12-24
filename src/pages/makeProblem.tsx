@@ -256,7 +256,8 @@ function MakeProblem() {
           <Button>완성</Button>
         </form>
 
-        <div>
+
+        <div className="preview">
           <Headding tag="h3" tagStyle="h4">
             {title || "문제명을 입력해 주세요."}
           </Headding>
@@ -281,7 +282,9 @@ function MakeProblem() {
             )}
           </AnswerWrap>
         </div>
-        
+        <MobiblePreview>
+          <Button>미리보기</Button>
+        </MobiblePreview>
       </Wrap>
     </Layout>
   );
@@ -304,7 +307,8 @@ const Wrap = styled.div`
   padding: 0px 40px;
   margin: 0px auto;
   height: calc(100vh - 76px);
-  & > form {
+ 
+    & > form {
     display: flex;
     flex-direction: column;
     justify-content:space-around;
@@ -312,19 +316,17 @@ const Wrap = styled.div`
     padding: 20px 40px;
     border-radius: 20px;
     transition:height 1.5s;
-    height:300px;
+    height:100%;
     width:100%;
     max-width:300px;
-    @media (min-height:600px){
-      height:500px;
-    }
-    
+    max-height:300px;
     & > button {
       border-radius: 50px;
     }
     max-height: 85%;
   }
-  & > div {
+
+  & > .preview {
     height: 85%;
     width: 100%;
     display: flex;
@@ -332,6 +334,21 @@ const Wrap = styled.div`
     align-items: center;
     justify-content:center;
     margin-left: 30px;
+  }
+  @media (max-width: ${viewport.mobile}){
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height:100%;
+    &>form{
+      width:100%;
+      height:100%;
+      max-width:none;
+      max-height:none;
+    }
+    & > .preview {
+      display:none;
+    }
   }
 `;
 const MultipleChoice = styled.div`
@@ -343,5 +360,17 @@ const MultipleChoice = styled.div`
     margin: 10px 0px;
     /* width: auto; */
   }
+`;
+const MobiblePreview= styled.div`
+    display:none;
+    @media (max-width: ${viewport.mobile}){
+      display:flex;
+      justify-content: center;
+      align-items: center;
+      &>button{
+        border-radius:10px;
+        
+      }
+    }
 `;
 export default MakeProblem;
