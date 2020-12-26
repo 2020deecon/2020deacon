@@ -287,9 +287,6 @@ const Goto = styled.div`
 	margin-top: 10px;
 	color: gray;
 	width: 50%;
-	@media (max-width: ${viewport.mobile}){
-
-	}
 	& > div {
 		display: flex;
 		flex-flow:row wrap;

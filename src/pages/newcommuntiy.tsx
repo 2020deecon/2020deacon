@@ -1,24 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { AnimateSharedLayout, AnimatePresence, motion } from 'framer-motion';
 import '../styles/test.css';
-import { Item } from '../components/communtiy/Item.jsx';
+import { Item } from '../components/communtiy/Item';
 import { List } from '../components/communtiy/List.jsx';
 import Layout from '../components/layout';
 import Input from '../components/UI/Input';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import viewport from "../constants/viewport";
 import colors from '../constants/colors';
 import { useHistory } from "react-router-dom";
 import { Icon } from "../lib/images";
 import { getuserToken } from '../lib/token';
-
+import Get from "../lib/api/get";
 function Newcommuntiy({ match }: any) {
 	let { id } = match.params;
 	const imageHasLoaded = true;
 	const history = useHistory();
 	const [Text, setText] = useState('');
 	const [gotop,setgotop] = useState(window.pageYOffset===0);
-	
+	const [contents, setcontents] = useState();
+	useEffect(()=>{
+		Get().Getsomeofcommunity(match.params).then(res => {
+			console.log(res);
+			setcontents(res);
+		  }).catch(err => console.log(err)
+		  );
+	},[match.params]);
+
 	window.onscroll = function () {
 		setgotop(window.pageYOffset===0);
 	}
@@ -41,7 +49,7 @@ function Newcommuntiy({ match }: any) {
 					<List selectedId={id} selectedtext={Text}/>
 
 					<AnimatePresence>
-						{id && imageHasLoaded && <Item id={id} key="item" />}
+						{id && imageHasLoaded && <Item id={id} {...contents} key="item" />}
 					</AnimatePresence>
 
 				</AnimateSharedLayout>

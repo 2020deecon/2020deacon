@@ -2,7 +2,7 @@ import React from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import { Helmet } from "react-helmet";
 import Header from "./Header";
-
+import viewport from "../../constants/viewport";
 interface Header {
   title?: string;
   children?: React.ReactNode;
@@ -78,6 +78,9 @@ const Wrap = styled.div`
   & > article {
     margin-top: 76px;
     height: calc(100vh - 76px);
+    @media (max-width: ${viewport.mobile}){
+      height:150vh;
+    }
   }
 `;
 export default index;

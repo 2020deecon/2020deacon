@@ -1,13 +1,23 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
 import { motion } from "framer-motion";
 // import { LoremIpsum } from "react-lorem-ipsum";
-import { Link } from "react-router-dom";
-import { items } from "./data";
 import {useHistory} from "react-router-dom";
 
-export function Item(id) {
+interface ItemProps{
+  id:string;
+  title:string;
+  image:string;
+  text:string;
+  comment:any[];
+  type:string;
+  write_id:string;
+}
+export function Item({id,title,image,text,comment,type,write_id}:ItemProps) {
   const history = useHistory();
-  const { category, title } = items.find(item => item.id === id.id);
+  console.log(title,image);
+    
+// alert(contents);
+  // const { category, title } = items.find(item => item.id === id.id);
   return (
     <>
       <motion.div
@@ -19,7 +29,6 @@ export function Item(id) {
         className="overlay" 
         onClick={()=>history.replace("/community")}
       >
-        {/* <Link to="/community" /> */}
       </motion.div>
       <div className="fakdsfnlsdinfladifds"> 
       <div className="card-content-container open"
@@ -32,14 +41,14 @@ export function Item(id) {
             className="card-image-container"
             layoutId={`card-image-container-${id}`}
           >
-            <img className="card-image" src={`images/${id}.jpg`} alt="" />
+            <img className="card-image" src={image} alt="" />
           </motion.div>
           <motion.div
             className="title-container"
             layoutId={`title-container-${id}`}
             
           >
-            <span className="category">{category}</span>
+            <span className="category">{text}</span>
             <h2>{title}</h2>
           </motion.div>
           <motion.div className="content-container" animate 
@@ -47,7 +56,7 @@ export function Item(id) {
         </motion.div>
       </div>
       </div>
-      
     </>
   );
+
 }

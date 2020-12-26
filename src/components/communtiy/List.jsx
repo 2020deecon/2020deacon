@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import Image from "../../lib/images";
 import Get from "../../lib/api/get";
 function Card({ id, title, category, theme,img,Written }) {
+  // alert(img);
   return (
     <li className={`card ${theme}`}>
       <div className="card-content-container">
@@ -32,16 +33,22 @@ function Card({ id, title, category, theme,img,Written }) {
 export function List(selectedId,selectedtext) {
   // alert("test")
   const [Items, setItems] = useState([]);
-  Get().Getallcommunity().then(res => {
-    console.log(res);
-    setItems(res);
-  }).catch(err => console.log(err));
-
+  useEffect(()=>{
+    Get().Getallcommunity().then(res => {
+      console.log(res);
+      setItems(res);
+    }).catch(err => console.log(err));
+  
+  },[])
+  
+ 
   return (
     <ul className="card-list">
-      {Items.map(card =>(
-        <Card key={card.id} title={card.title} category={card.text} isSelected={card.id===selectedId} img={card.img} Written={card.type}/>
-      ))}
+      {Items.map(card =>{
+        console.log(card);
+        return <Card key={card.id} id={card.id} title={card.title} category={card.text} isSelected={card.id===selectedId} img={card.image} Written={card.type}/>
+      }
+      )}
       {/* {items.map(card => (
         <Card key={card.id} {...card} isSelected={card.id === selectedId} img={Image.login}/>
       ))} */}

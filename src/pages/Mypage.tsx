@@ -216,7 +216,12 @@ const Wrap = styled.div`
   margin: 0px auto;
   display: flex;
   align-items: center;
-  height: calc(100vh - 76px);
+  height:100%;
+  @media (max-width: ${viewport.mobile}){
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+  }
   & > .select_form {
     max-width: 300px;
     width: 100%;

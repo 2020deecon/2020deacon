@@ -121,7 +121,7 @@ li {
 
 .open .card-content {
   height: auto;
-  /* max-width: 700px; */
+  max-width: 700px;
   overflow: hidden;
   pointer-events: none;
 }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../components/layout";
-import styled from "styled-components";
+import styled,{css} from "styled-components";
 import { useForm } from "react-hook-form";
 import Input, { WrapInput } from "../components/UI/Input";
 import Button from "../components/UI/Button";
@@ -27,6 +27,7 @@ function MakeProblem() {
     { id: 5, text: "" },
   ]);
 
+  const [mobile,setmobile]=useState(false);
   useEffect(() => {
     problemtype
       ? setanswers(
@@ -42,12 +43,12 @@ function MakeProblem() {
     if (!problemtype)
       Make().Makeproblem({ title, subtitle, img: img == "" ? Image.base : img, answer, problemtype, category: category });
     else {//객관식
-      // alert("객관식");
       Make().Makeproblem({ title, subtitle, img: img == "" ? Image.base : img, answer: answer, problemtype, category: category, view: answers.map(data => data.text) });
     }
     alert("문제 완성");
     history.replace("/");
   }
+
   function Setimg() {
     const image: HTMLInputElement = document.getElementById(
       "bin"
@@ -62,13 +63,6 @@ function MakeProblem() {
       reader.onload = function (e?: any) {
         image_section.src = e.target.result;
         setimg(e.target.result);//base64incoding
-
-        // alert("incodding");
-        // const a = btoa(e.target.result);
-        // console.log(e.target.result);
-        // console.log(a);
-        // console.log(atob(a));
-
       };
       reader.readAsDataURL(image.files![0]);
     }
@@ -76,7 +70,7 @@ function MakeProblem() {
 
   return (
     <Layout>
-      <Wrap>
+      <Wrap mobile={mobile}>
         <form onSubmit={handleSubmit(OnSubmit)}>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <WrapInput fieldName="과목" None>
@@ -281,9 +275,12 @@ function MakeProblem() {
                 )
             )}
           </AnswerWrap>
+          <MobiblePreview>
+            <Button onClick={()=>setmobile(false)}>닫기</Button>  
+          </MobiblePreview>
         </div>
         <MobiblePreview>
-          <Button>미리보기</Button>
+          <Button onClick={()=>setmobile(true)}>미리보기</Button>
         </MobiblePreview>
       </Wrap>
     </Layout>
@@ -300,14 +297,13 @@ const Answers = styled.div`
     font-weight: 600;
   }
 `;
-const Wrap = styled.div`
+const Wrap = styled.div<{mobile:boolean}>`
   display: flex;
   align-items: center;
   max-width: ${viewport.desktop};
   padding: 0px 40px;
   margin: 0px auto;
-  height: calc(100vh - 76px);
- 
+  height:100%;
     & > form {
     display: flex;
     flex-direction: column;
@@ -340,6 +336,7 @@ const Wrap = styled.div`
     align-items: center;
     flex-direction: column;
     height:100%;
+    padding:30px 40px;
     &>form{
       width:100%;
       height:100%;
@@ -347,7 +344,26 @@ const Wrap = styled.div`
       max-height:none;
     }
     & > .preview {
+      width:0px;
+      height:0px;
       display:none;
+      ${({mobile})=>mobile && css`
+          margin:0px;    
+          position: fixed;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          border-radius: 20px;
+          /* background:gray; */
+          background: #e7c9ff;
+          opacity: 0.8;
+          display:flex;
+          width:100%;
+          height:100%;
+          padding: 40px 0px;
+          max-height:500px;
+          z-index:100;  
+      `}
     }
   }
 `;
@@ -367,6 +383,7 @@ const MobiblePreview= styled.div`
       display:flex;
       justify-content: center;
       align-items: center;
+      margin-top:30px;
       &>button{
         border-radius:10px;
         
