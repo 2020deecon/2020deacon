@@ -128,7 +128,7 @@ function MakeProblem() {
                 })}
                 style={{ display: "none" }}
               />
-              <div style={{ background: colors.border, borderRadius: "50px", display: "flex", alignItems: "center", justifyContent: "center", height: "35px" }}>{!img ? "이미지 선택하기" : "이미지 선택완료"}</div>
+              <div style={{ background: colors.border, borderRadius: "50px", display: "flex", alignItems: "center", justifyContent: "center", height: "35px",cursor:"pointer" }}>{!img ? "이미지 선택하기" : "이미지 선택완료"}</div>
             </label>
           </WrapInput>
           <WrapInput fieldName="부제목" None>
@@ -269,7 +269,7 @@ function MakeProblem() {
           </Headding>
           <label htmlFor="bin">
             <img
-              style={{ maxWidth: "500px", maxHeight: "250px" }}
+              style={{ maxWidth: "500px", maxHeight: "250px",cursor:"pointer" }}
               id="image_section"
               src={img || Image.base}
             />

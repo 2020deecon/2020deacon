@@ -21,7 +21,13 @@ import myp3 from './myp3.png';
 
 import myp4_1 from './myp4-1.png';
 import myp4_2 from './myp4-2.png';
-export const mypage={};
+export const mypage={
+    myp1:myp1,
+    myp1_1:myp1_1,
+    myp2:myp2,
+    myp2_1:myp2_1,
+    myp2_2:myp2_2,
+};
 
 export const makeproblem={};
 

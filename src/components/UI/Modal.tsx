@@ -65,7 +65,7 @@ const Body = styled.div`
   border-radius: 10px;
   transition: background 0.5s;
 @media (max-width:${viewport.mobile}){
-  margin:30px 40px;
+  max-width: 520px;
 }
   &:focus {
     outline: 0;
@@ -80,5 +80,8 @@ const Body = styled.div`
 		right:0;
 	}
   }
+  /* &>.slick-slider>.slick-list>div>div>div{
+    width:100%;
+  } */
 `;
 export default Modal;

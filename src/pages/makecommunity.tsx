@@ -65,7 +65,7 @@ function Makecommunity() {
           <TitleWrap>
             <Title>게시판 등록</Title>
           </TitleWrap>
-          <TitleLine></TitleLine>
+          <TitleLine/>
           <Input
             type="text"
             name="title"
@@ -76,17 +76,11 @@ function Makecommunity() {
             })}
           />
 
-          <Input
-            type="text"
-            name="type"
-            placeholder="타입 ( quession, debate )"
-            style={{ margin: "21px 0px 7px 0px" }}
-            value={type}
-            onChange={(e) => setType(e.target.value)}
-            ref={register({
-              required: "타입을 정해주세요"
-            })}
-          />
+          <select onChange={(e) => setType(e.target.value)} value={type}>
+            <option value="quession">quession</option>
+            <option value="debate">debate</option>
+          </select>
+
           <div style={{ width: "100%", margin: "21px 0px 7px" }}>
             <label>
               <input
@@ -102,12 +96,12 @@ function Makecommunity() {
                 })}
                 style={{ display: "none" }}
               />
-              <div style={{ background: colors.border, borderRadius: "50px", display: "flex", alignItems: "center", justifyContent: "center", height: "35px" }}>{!img ? "이미지 선택하기" : "이미지 선택완료"}</div>
+              <div style={{ background: colors.border, borderRadius: "50px", display: "flex", alignItems: "center", justifyContent: "center", height: "35px",cursor:"pointer" }}>{!img ? "이미지 선택하기" : "이미지 선택완료"}</div>
             </label>
           </div>
           <label htmlFor="bin">
             <img
-              style={{ maxWidth: "500px", maxHeight: "250px" }}
+              style={{ maxWidth: "500px", maxHeight: "250px",cursor:"pointer" }}
               id="image_section"
               src={img || Image.base}
             />
@@ -121,7 +115,7 @@ function Makecommunity() {
               required: "내용을 작성해주세요!"
             })}
           />
-          <Button>등록</Button>
+          <Button onClick={() =>toast.success("커뮤니티 완성")}>등록</Button>
         </form>
       </Wrap>
     </Layout >

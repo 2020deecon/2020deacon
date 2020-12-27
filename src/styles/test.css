@@ -117,6 +117,11 @@ li {
   height: 100%;
   margin: 0 auto;
 }
+@media(max-width:800px){
+  .card-content {
+    height:auto;
+  }
+}
 
 .open .card-content {
   height: auto;

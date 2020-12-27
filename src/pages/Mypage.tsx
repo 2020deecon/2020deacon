@@ -52,22 +52,24 @@ function Mypage() {
 			Get()
 				.GetallWorkbooks()
 				.then((res) => {
-					setworkbookItems(res.filter((data:any)=> data.write_id===id));
 					console.log(res);
+					alert("f");
+					setworkbookItems(res.filter((data:any)=> data.write_id===id));
 				})
 				.catch((err) => {
 					console.log(err);
 				});
 		}
-		else if(what==="오답노트")
+		else if(what==="오답노트"){
 			Get().GetWrongNote().then((res)=>{
+				// alert(res);
 				console.log(res);
-				alert("오답노트");
-				setworkbookItems(res);
+				setproblemItems(res);
 			})
 			.catch((err)=>{
 				console.log(err);
-			})
+			});
+		}
 	}, [what]);
 
 	useEffect(() => {
@@ -85,6 +87,8 @@ function Mypage() {
 			Get()
 				.GetallWorkbooks()
 				.then((res) => {
+					
+					console.log(res);
 					setworkbookItems(res.filter((data:any)=> data.write_id!==id));
 				})
 				.catch((err) => {
@@ -223,19 +227,21 @@ function Results({ set, problemItems, workbookItems, Text }: ResultsType) {
 					: '문제가 없어요 문제를 만들어보세요!'}
 			</ResultWrap>
 		);
-	} else {
+	} else if(set==='나만의 문제집'){
 		return (
 			<ResultWrap workbook>
 				{workbookItems
 					? workbookItems.map((data) =>
 							data.title.includes(Text) ? (
 								<>
-									<div
-										onClick={() => clickWb(data.id)}
-										style={{ cursor: 'pointer' }}
-									>
-										<WData size="small" title={data.title} />
-									</div>
+									<Link to={`/popup/${data.image}`} target="_blank">
+										<PData
+											title={data.title}
+											size="medium"
+											estext
+											src={data.image}
+										/>
+									</Link>
 								</>
 							) : (
 								'문제집이 없어요 문제집을 만들어 보세요!'
@@ -244,6 +250,30 @@ function Results({ set, problemItems, workbookItems, Text }: ResultsType) {
 					: '문제집이 없어요 문제집을 만들어 보세요!'}
 			</ResultWrap>
 		);
+	}
+	else{ 
+		
+		return (<ResultWrap>
+			{problemItems ? problemItems.map(data=>data.title.includes(Text) ? (
+								<>
+									<div
+										onClick={() => clickPb(data.id)}
+										style={{ cursor: 'pointer' }}
+									>
+										<PData
+											title={data.title}
+											size="medium"
+											estext
+											src={data.image}
+										/>
+									</div>
+								</>
+							) : (
+								'그런 문제는 없습니다.'
+							),
+					  )
+					: '오답이 없어요 대단해요!'}
+		</ResultWrap>)
 	}
 }
 interface SearchResultsType {
@@ -407,7 +437,7 @@ const ResultWrap = styled.div<{ workbook?: boolean }>`
 		workbook &&
 		css`
 			flex-flow: column nowrap;
-			justify-content: none;
+			justify-content: start;
 		`}
 `;
 

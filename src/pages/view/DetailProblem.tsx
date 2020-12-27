@@ -86,7 +86,7 @@ function DetailProblem({match}:any) {
 
                         <Category>과목 : {state.category}</Category>
                         <Img src={state.image}></Img>
-                        {state.problem_type === "true" &&
+                        {state.problem_type &&
                             <View>
                                 <ViewItme>1. {state.view[0]}</ViewItme>
                                 <ViewItme>2. {state.view[1]}</ViewItme>

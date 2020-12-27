@@ -375,6 +375,7 @@ const SliderItem = styled.div`
 			flex-direction: column;
 		}
 		& > div {
+			padding-top:10px;
 			& > div {
 				max-width: 300px;
 				margin: 0 30px;

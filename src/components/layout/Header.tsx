@@ -241,6 +241,9 @@ const UserName = styled.div`
 	font-size: 20px;
 	margin-right: 20px;
 	width: 100%;
+	@media (max-width: ${viewport.mobile}) {
+		font-size:15px;
+	}
 `;
 const Title = styled.div`
 	color: ${colors.title};

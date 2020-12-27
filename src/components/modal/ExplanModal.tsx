@@ -6,7 +6,8 @@ import { useHistory } from 'react-router-dom';
 import Modal from '../UI/Modal';
 import useModal from '../../hooks/useModal';
 import Slider from 'react-slick';
-
+import {mypage} from '../../lib/images/Tutorial';
+import viewport from '../../constants/viewport';
 
 function ExplanModal() {
 	const [id, setid] = useState(window.location.pathname);
@@ -26,22 +27,35 @@ function ExplanModal() {
 		accessibility: true,
 		adaptiveHeight: true,
 		arrows: true,
+		mobileFirst: true,
 	};
 
 	const MakeProblem = () => (
 		<Modal title="문제만들기" modalname="explan">
 			<Slider {...settings}>
 				<SliderItem>
+					<div className="test">
+					<img src={mypage.myp1} alt=""/>
 					<div className="test">test1</div>
+					</div>
 				</SliderItem>
 				<SliderItem>
-					<div>test1</div>
+					<div>
+					<img src={mypage.myp1} alt=""/>
+					<div className="test">test1</div>
+					</div>
 				</SliderItem>
 				<SliderItem>
-					<div>test1</div>
+					<div>
+					<img src={mypage.myp1} alt=""/>
+					<div className="test">test1</div>
+					</div>
 				</SliderItem>
 				<SliderItem>
-					<div>test1</div>
+					<div>
+					<img src={mypage.myp1} alt=""/>
+					<div className="test">test1</div>
+					</div>
 				</SliderItem>
 			</Slider>
 		</Modal>
@@ -49,17 +63,29 @@ function ExplanModal() {
 	const MakeWorkbook = () => (
 		<Modal title="문제만들기" modalname="explan">
 			<Slider {...settings}>
-				<SliderItem>
-					<div>test2</div>
+			<SliderItem>
+					<div className="test">
+					<img src={mypage.myp1} alt=""/>
+					<div className="test">test1</div>
+					</div>
 				</SliderItem>
 				<SliderItem>
-					<div>test2</div>
+					<div>
+					<img src={mypage.myp1} alt=""/>
+					<div className="test">test1</div>
+					</div>
 				</SliderItem>
 				<SliderItem>
-					<div>test2</div>
+					<div>
+					<img src={mypage.myp1} alt=""/>
+					<div className="test">test1</div>
+					</div>
 				</SliderItem>
 				<SliderItem>
-					<div>test2</div>
+					<div>
+					<img src={mypage.myp1} alt=""/>
+					<div className="test">test1</div>
+					</div>
 				</SliderItem>
 			</Slider>
 		</Modal>
@@ -67,8 +93,29 @@ function ExplanModal() {
 	const MyPage = () => (
 		<Modal title="문제만들기" modalname="explan">
 			<Slider {...settings}>
+			<SliderItem>
+					<div className="test">
+					<img src={mypage.myp1} alt=""/>
+					<div className="test">test1</div>
+					</div>
+				</SliderItem>
 				<SliderItem>
-					<div>test3</div>
+					<div>
+					<img src={mypage.myp1} alt=""/>
+					<div className="test">test1</div>
+					</div>
+				</SliderItem>
+				<SliderItem>
+					<div>
+					<img src={mypage.myp1} alt=""/>
+					<div className="test">test1</div>
+					</div>
+				</SliderItem>
+				<SliderItem>
+					<div>
+					<img src={mypage.myp1} alt=""/>
+					<div className="test">test1</div>
+					</div>
 				</SliderItem>
 			</Slider>
 		</Modal>
@@ -76,17 +123,29 @@ function ExplanModal() {
 	const Community = () => (
 		<Modal title="문제만들기" modalname="explan">
 			<Slider {...settings}>
-				<SliderItem>
-					<div>test4</div>
+			<SliderItem>
+					<div className="test">
+					<img src={mypage.myp1} alt=""/>
+					<div className="test">test1</div>
+					</div>
 				</SliderItem>
 				<SliderItem>
-					<div>test3</div>
+					<div>
+					<img src={mypage.myp1} alt=""/>
+					<div className="test">test1</div>
+					</div>
 				</SliderItem>
 				<SliderItem>
-					<div>test3</div>
+					<div>
+					<img src={mypage.myp1} alt=""/>
+					<div className="test">test1</div>
+					</div>
 				</SliderItem>
 				<SliderItem>
-					<div>test3</div>
+					<div>
+					<img src={mypage.myp1} alt=""/>
+					<div className="test">test1</div>
+					</div>
 				</SliderItem>
 			</Slider>
 		</Modal>
@@ -94,17 +153,29 @@ function ExplanModal() {
 	const solving = () => (
 		<Modal title="문제만들기" modalname="explan">
 			<Slider {...settings}>
-				<SliderItem>
-					<div>test4</div>
+			<SliderItem>
+					<div className="test">
+					<img src={mypage.myp1} alt=""/>
+					<div className="test">test1</div>
+					</div>
 				</SliderItem>
 				<SliderItem>
-					<div>test3</div>
+					<div>
+					<img src={mypage.myp1} alt=""/>
+					<div className="test">test1</div>
+					</div>
 				</SliderItem>
 				<SliderItem>
-					<div>test3</div>
+					<div>
+					<img src={mypage.myp1} alt=""/>
+					<div className="test">test1</div>
+					</div>
 				</SliderItem>
 				<SliderItem>
-					<div>test3</div>
+					<div>
+					<img src={mypage.myp1} alt=""/>
+					<div className="test">test1</div>
+					</div>
 				</SliderItem>
 			</Slider>
 		</Modal>
@@ -125,13 +196,35 @@ function ExplanModal() {
 	return null;
 }
 const SliderItem = styled.div`
+/* position: relative; */
+width: 100%;
+	max-height: 300px;
+&>div{
+	/* position: absolute; */
+	margin-left:50px;
 	display: flex;
+	right:0;
+	bottom:50%;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	max-width: 300px;
-	width: 100%;
-	max-height: 300px;
-	height: 100%;
+	height:100%;
+	width:100%;
+	&>img{
+		max-width: 500px;
+		max-height: 450px;
+	}
+
+}
+	
+	height: 300px;
+	@media (max-width:${viewport.mobile}){
+		&>div{
+			margin-left:30px;
+			&>img{
+				max-width:400px;
+			}
+		}
+	}	
 `;
 export default ExplanModal;
