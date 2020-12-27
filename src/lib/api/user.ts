@@ -19,6 +19,7 @@ function User() {
             if (data.data.access_token) {
                 // console.log("tokken"+data.data.access_token);
                 setToken(data.data.access_token)
+                window.localStorage.setItem("token", data.data.access_token);
                 // window.location.replace("/");
                 toast.success("로그인 성공");
             }

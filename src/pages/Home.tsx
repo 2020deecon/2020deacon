@@ -52,7 +52,7 @@ function Home() {
 										src={Image.share}
 										title="다양한 문제,문제집을 풀어보세요!"
 										subtitle="문제,문제집 푸는 법 알아보기>"
-										linkto="/explan/workbook"
+										linkto="/explan/soving"
 										Open={Open}
 										reverse
 									/>

@@ -37,13 +37,13 @@ function Header() {
 	// console.log(window.history);
 	var checkuser=setInterval(()=>{
 		// alert(id);
-		if(id !== getuserToken() && id ===null && getuserToken()!==null){
-			setid(getuserToken());
+		if(id !== window.localStorage.getItem("usertoken") && id ===null && window.localStorage.getItem("usertoken")!==null){
+			setid(window.localStorage.getItem("usertoken"));
 		}
-		if(id ===null && getuserToken()===null){
+		if(id ===null && window.localStorage.getItem("usertoken")===null){
 			User().checkToken();
 		}
-	},5000)
+	},1000)
 	
 	const beforelogin = () => toast.error('로그인 후 이용하세요!');
 

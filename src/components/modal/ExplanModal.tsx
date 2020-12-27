@@ -180,7 +180,7 @@ function ExplanModal() {
 			return MakeProblem();
 		case '/explan/workbook':
 			return MakeWorkbook();
-		case '/explan/':
+		case '/explan/soving':
 			return solving();
 		case '/explan/mypage':
 			return MyPage();
