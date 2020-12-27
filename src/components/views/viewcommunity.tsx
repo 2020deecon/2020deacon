@@ -160,14 +160,5 @@ const CommentItem = styled.div`
         background:${color.gray};
         padding:8px 10px;
     }
-    
-    /* &::before {
-        
-        position: absolute;
-        left:0;
-        top:0;
-        font-weight:bold;
-        background:white;
-    } */
 `;
 export default viewcommunity;

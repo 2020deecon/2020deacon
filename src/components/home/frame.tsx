@@ -35,7 +35,7 @@ function Frame({
 				</Headding>
 				<SubTitle>
 					<Headding tag="h4" tagStyle="h5">
-						<Link to={linkto ? linkto : ''}>{subtitle}</Link>
+						<Link to={linkto ? linkto : ''} onClick={Open}>{subtitle}</Link>
 					</Headding>
 				</SubTitle>
 			</div>

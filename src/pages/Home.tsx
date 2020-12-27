@@ -9,8 +9,10 @@ import Frame from '../components/home/frame';
 
 import viewport from '../constants/viewport';
 import Image from '../lib/images';
+import useModal from '../hooks/useModal';
 
 function Home() {
+	const {Open}=useModal('explan');
 	return (
 		<Layout title="home">
 			<Wrap>
@@ -28,18 +30,30 @@ function Home() {
 							<ReactFullpage.Wrapper>
 								<div className="section">
 									<Frame
-										src={Image.academi}
-										title="자신에게 필요한 문제만을 골라서 문제집을 만들어 보세요!"
+										src={Image.makeproblem}
+										title="자신에게 필요한 문제를 직접 만들어보세요!"
 										subtitle="나만의 문제 만드는 법 알아보기>"
-										linkto="/makeproblem"
+										linkto="/explan/problems"
+										Open={Open}
 									/>
 								</div>
 								<div className="section">
 									<Frame
+										src={Image.academi}
+										title="자신에게 필요한 문제만을 골라서 문제집을 만들어 보세요!"
+										subtitle="나만의 문제집 만드는 법 알아보기>"
+										linkto="/explan/workbook"
+										Open={Open}
+									/>
+								</div>
+
+								<div className="section">
+									<Frame
 										src={Image.share}
-										title="다양한 문제,문제집을 만들어 사람들과 공유하세요!"
-										subtitle="문제,문제집 공유하는 법 알아보기>"
-										linkto="/makeworkbook"
+										title="다양한 문제,문제집을 풀어보세요!"
+										subtitle="문제,문제집 푸는 법 알아보기>"
+										linkto="/explan/workbook"
+										Open={Open}
 										reverse
 									/>
 								</div>
@@ -47,8 +61,9 @@ function Home() {
 									<Frame
 										src={Image.discussion}
 										title="다양한 문제에 대해서 이야기 해봐요!"
-										subtitle="커뮤니티 둘러보기>"
-										linkto="/community"
+										subtitle="커뮤니티 이용방법 알아보기>"
+										linkto="/explan/community"
+										Open={Open}
 									/>
 								</div>
 								<div className="section">
@@ -56,7 +71,8 @@ function Home() {
 										src={Image.questions}
 										title="다양한 사람들이 공유한 문제들도 풀어보세요!"
 										subtitle="내 패이지 이용방법 알아보기>"
-										linkto="/mypage"
+										linkto="/explan/mypage"
+										Open={Open}
 										reverse
 									/>
 								</div>

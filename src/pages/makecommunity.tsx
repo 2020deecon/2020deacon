@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import Layout from "../components/layout";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom"
@@ -9,8 +9,20 @@ import Make from "../lib/api/make";
 import colors from "../constants/colors";
 import Image from "../lib/images";
 
+import User from '../hooks/useUsers';
+import { getToken } from '../lib/token';
+import { toast } from 'react-toastify';
+
 function Makecommunity() {
   const history = useHistory()
+  const beforelogin = () => toast.error('로그인 후 이용하세요!');
+	useEffect(() => {
+		User().checkToken();
+		if (!getToken()) {
+			beforelogin();
+			history.replace('/');
+		}
+	}, []);
   const [type, setType] = useState("question");
   const [img, setimg] = useState("");
   function Upload(data: any) {

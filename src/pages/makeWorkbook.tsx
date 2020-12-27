@@ -17,6 +17,9 @@ import { Icon } from '../lib/images';
 import make from '../lib/api/make';
 import Get from '../lib/api/get';
 
+import User from '../hooks/useUsers';
+import { getToken } from '../lib/token';
+import { toast } from 'react-toastify';
 interface Workbooks {
 	pid: string;
 	title: string;
@@ -25,6 +28,22 @@ interface Workbooks {
 }
 
 function MakePWorkbook() {
+  const [workbook, setworkbook] = useState<Workbooks[]>([]);
+  const [category, setcategory] = useState('국어');
+  const [title, settitle] = useState('');
+  const [search, setSearch] = useState('');
+  const { handleSubmit, register } = useForm();
+  const [Maddproblem,setMaddproblem]=useState(false);
+  const history = useHistory();
+
+  const beforelogin = () => toast.error('로그인 후 이용하세요!');
+	useEffect(() => {
+		User().checkToken();
+		if (!getToken()) {
+			beforelogin();
+			history.replace('/');
+		}
+	}, []);
 	var settings = {
 		dots: true,
 		infinite: true,
@@ -35,13 +54,6 @@ function MakePWorkbook() {
 		prevArrow: <NextButton posistion={'pre'}></NextButton>,
 	};
 
-	const [workbook, setworkbook] = useState<Workbooks[]>([]);
-	const [category, setcategory] = useState('국어');
-	const [title, settitle] = useState('');
-	const [search, setSearch] = useState('');
-  const { handleSubmit, register } = useForm();
-  const [Maddproblem,setMaddproblem]=useState(false);
-	const history = useHistory();
 	function update({ pid, title, img }: Workbooks) {
 		Get()
 			.GetsomeofProblems({ id: pid })
@@ -62,14 +74,18 @@ function MakePWorkbook() {
 	// eslint-disable-next-line jsx-a11y/alt-text
 	const SearchIcon = <img src={Icon.search} width="24px" height="24px" />;
 
-	function OnSubmit(data: any) {
-		make().MakeWorkbook({
+	function OnSubmit() {
+		if(title!=="" && workbook.length>0)
+		{make().MakeWorkbook({
 			title,
 			problems: workbook.map((data) => data.pid),
 			category,
 		});
-		alert('문제집 생성이 완료 되었습니다.');
-		history.replace('/');
+		toast.success('문제집 생성이 완료 되었습니다.');
+		history.replace('/');}
+		else{
+			toast.error("제목또는 문제가 없습니다.");
+		}
 	}
 	return (
 		<Layout>
@@ -115,10 +131,10 @@ function MakePWorkbook() {
 						nowids={workbook.map((data) => data.pid)}
 						search={search}
 					/>
-					  <Button css={ButtonCss}>완성</Button>
-          <Mobiblenavgation>
-            <Button onClick={()=>setMaddproblem(false)}>닫기</Button>
-          </Mobiblenavgation>
+					  <Button css={ButtonCss} onClick={()=>OnSubmit()}>완성</Button>
+					<Mobiblenavgation>
+						<Button onClick={()=>setMaddproblem(false)}>닫기</Button>
+					</Mobiblenavgation>
 				</SearchWrap>
 
 				<SliderWrap>
@@ -198,23 +214,35 @@ interface buttonProps {
 }
 const NextButton = styled.button<buttonProps>`
 	/* background:red; */
-	display: flex;
 	background: ${colors.primary};
 	border-radius: 100%;
 	/* width:auto; */
 	/* min-width:10px; */
 	/* min-height:10px; */
+	&::before {
+		position: absolute;
+		top: 1px;
+		left: 0;
+		right:0;
+	}
 	${({ posistion }) => {
 		if (posistion === 'next')
 			return css`
 				right: 0%;
+				&::before {
+					content: '→';
+				}
 			`;
 		else
 			return css`
 				z-index: 100;
 				left: 0%;
+				&::before {
+					content: '←';
+				}
 			`;
 	}};
+	
 	/* height:auto; */
 `;
 const Wrap = styled.div`

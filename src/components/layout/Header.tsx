@@ -21,6 +21,7 @@ function Header() {
 	const [mobilenav, setmobilenav] = useState(false);
 	// const [betoekn, setbetoekn] = useState();
 	// const [notoekn, notbetoekn] = useState();
+	
 	useEffect(() => {
 		setparams(window.location.pathname);
 		User().checkToken();
@@ -229,6 +230,9 @@ const Wrap = styled.div`
 	background: ${colors.white};
 	@media (max-width: ${viewport.desktop}) {
 		padding: 10px 20px;
+	}
+	@media print {
+    display:none;
 	}
 `;
 const UserName = styled.div`

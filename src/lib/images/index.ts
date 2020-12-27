@@ -13,6 +13,7 @@ import clear from './clear.svg';
 import together from './together.svg';
 import signup from './signup.svg';
 import signin from './signin.svg';
+import makeproblem from './makeproblem.svg';
 
 import workbook from './workbook.svg';
 import user from './user.svg';
@@ -32,6 +33,7 @@ const Image = {
   signup:signup,
   email:email,
   signin:signin,
+  makeproblem:makeproblem
 };
 export const Icon = {
   search: search,

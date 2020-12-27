@@ -61,7 +61,7 @@ const WrapInputStyle = styled.div<{text: string}>`
 		position: absolute;
 		font-size:12px;
 		content:'${({text})=>text}';
-		top: 0;
+		top: -5px;
 		color:gray;   
 	}
 	label > span {

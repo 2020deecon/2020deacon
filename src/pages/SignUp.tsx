@@ -14,8 +14,9 @@ import User from '../hooks/useUsers';
 function SignUp() {
 	const isEnglish=/[A-Za-z0-9]/;
 	const iskorean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
-		const isNumber=/^[1-9]{10}$|^[1-4]{1}[0-9]{1}$|^50$/;
-		const isEmail=/^[-!#$%& amp;'*+./0-9=?A-Z^_a-z{|}~]+@[-!#$%&'*+/0-9=?A-Z^_a-z{|}~]+.[-!#$%& amp;'*+./0-9=?A-Z^_a-z{|}~]+$/;		
+	const isNumber=/^[1-9]{10}$|^[1-4]{1}[0-9]{1}$|^50$/;
+	const isEmail=/^[-!#$%& amp;'*+./0-9=?A-Z^_a-z{|}~]+@[-!#$%&'*+/0-9=?A-Z^_a-z{|}~]+.[-!#$%& amp;'*+./0-9=?A-Z^_a-z{|}~]+$/;		
+
 	const history = useHistory();
 	const [Submitdisable, setSubmitdisable]=useState(true);
 	const [id, setid]=useState({
@@ -80,13 +81,13 @@ function SignUp() {
 			};
 		
 		//navgation false	
-		var test2=document.getElementsByClassName("slick-dots");
-		var array=test2[0].children;
-		for(var i=0; i<2;i++){
-			// console.log(array[i].children[0]);
-			var t=array[i].children[0]as HTMLElement;
-			t.onclick=null;
-		}
+		// var test2=document.getElementsByClassName("slick-dots");
+		// var array=test2[0].children;
+		// for(var i=0; i<2;i++){
+		// 	// console.log(array[i].children[0]);
+		// 	var t=array[i].children[0]as HTMLElement;
+		// 	t.onclick=null;
+		// }
 	},[]);
 	
 	return (
@@ -326,7 +327,10 @@ const SliderWrap = styled.div`
 		width: 100%;
 		height: 80%;
 		& > .slick-list {
-			height: 100%;		
+			height: 100%;
+			&>div>div>div{
+				width:100%;
+			}		
 			}
 			&>button{
 				position: fixed;

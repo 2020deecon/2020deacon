@@ -1,6 +1,6 @@
 import getClient from "./client";
 import parseError from "./parseError";
-import { getToken, setToken, setuseToken,getuserToken,delToken } from "../token";
+import {  setToken, setuseToken,getuserToken,setidToken,delToken } from "../token";
 import {toast } from 'react-toastify';
 export interface Login {
     id: string;
@@ -48,7 +48,8 @@ function User() {
                 delToken();
             else
             {
-                setuseToken(data.data.id);
+                setidToken(data.data.id);
+                setuseToken(data.data.name);
                 if(getuserToken()===null){
                     window.location.reload();
                 }   

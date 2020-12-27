@@ -10,6 +10,10 @@ import colors from "../constants/colors";
 import Headding from "../components/UI/Headding";
 import Make from "../lib/api/make";
 import Image from "../lib/images";
+import User from '../hooks/useUsers';
+import { getToken } from '../lib/token';
+import { toast } from 'react-toastify';
+
 function MakeProblem() {
   const history = useHistory();
   const { register, handleSubmit } = useForm();
@@ -19,6 +23,7 @@ function MakeProblem() {
   const [img, setimg] = useState("");
   const [category, setcategory] = useState("국어");
   const [problemtype, setproblemtype] = useState(false);
+  const [mobile,setmobile]=useState(false);
   const [answers, setanswers] = useState([
     { id: 1, text: "" },
     { id: 2, text: "" },
@@ -26,8 +31,15 @@ function MakeProblem() {
     { id: 4, text: "" },
     { id: 5, text: "" },
   ]);
+  const beforelogin = () => toast.error('로그인 후 이용하세요!');
+  useEffect(() => {
+		User().checkToken();
+		if (!getToken()) {
+			beforelogin();
+			history.replace('/');
+		}
+	}, []);
 
-  const [mobile,setmobile]=useState(false);
   useEffect(() => {
     problemtype
       ? setanswers(
@@ -45,7 +57,7 @@ function MakeProblem() {
     else {//객관식
       Make().Makeproblem({ title, subtitle, img: img == "" ? Image.base : img, answer: answer, problemtype, category: category, view: answers.map(data => data.text) });
     }
-    alert("문제 완성");
+    toast.success("문제 완성");
     history.replace("/");
   }
 

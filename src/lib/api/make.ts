@@ -25,6 +25,9 @@ interface Comment {
     id: string;
     text: string;
 }
+interface WrongNote{
+    problem:any[];
+}
 function Make() {
     const Makeproblem = async ({ title, subtitle, img, answer, problemtype, category, view }: Problem) => {
         // alert(category);
@@ -38,6 +41,7 @@ function Make() {
     const MakeWorkbook = async ({ title, problems, category }: Workbook) => {
         await getClient().post('/workbookProblem', { title: title, problem_id: problems, category: category }).then(res => {
             console.log(res);
+            
             return res.data;
         }).catch(err => {
             throw parseError(err);
@@ -55,14 +59,40 @@ function Make() {
     }
     const MakeCommented = async ({ id, text }: Comment) => {
         await getClient().post('/makeComment', { project_id: id, comment: text }).then(res => {
-            console.log(res);
+            alert(res);
             return res.data;
         }).catch(err => {
+            alert(err);
+            throw parseError(err);
+        })
+    }
+    // /wrongNote
+    const MakeWrongNote=async ({problem}:WrongNote)=>{
+        // console.log(problem);
+        // alert(problem);
+        await getClient().post('/wrongNote', { problem : problem}).then(res => {
+            console.log(res);
+            alert(res);
+            return res.data;
+        }).catch(err => {
+            alert(err);
+            throw parseError(err);
+        })
+    }
+    const addWrongNote=async ({problem}:WrongNote)=>{
+        // console.log(problem);
+        // alert(problem);
+        await getClient().post('/addWrongNote', { problem : problem}).then(res => {
+            console.log(res);
+            alert(res);
+            return res.data;
+        }).catch(err => {
+            alert(err);
             throw parseError(err);
         })
     }
 
-    return { Makeproblem, MakeWorkbook, MakeCommunity, MakeCommented };
+    return { Makeproblem, MakeWorkbook, MakeCommunity, MakeCommented,MakeWrongNote,addWrongNote };
 }
 
 export default Make;
