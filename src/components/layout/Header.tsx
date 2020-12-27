@@ -17,7 +17,7 @@ import User from '../../hooks/useUsers';
 function Header() {
 	const [params, setparams] = useState(window.location.pathname);
 	const history = useHistory();
-	const [id, setid] = useState<string | null>(getuserToken());
+	const [id, setid] = useState<string | null>(window.localStorage.getItem("usertoken"));
 	const [mobilenav, setmobilenav] = useState(false);
 	// const [betoekn, setbetoekn] = useState();
 	// const [notoekn, notbetoekn] = useState();
@@ -29,6 +29,7 @@ function Header() {
 	useEffect(() => {
 		if(id!==null)
 		{
+			// alert("test");
 			clearInterval(checkuser)
 			console.log("stop");
 		}
@@ -43,7 +44,7 @@ function Header() {
 		if(id ===null && window.localStorage.getItem("usertoken")===null){
 			User().checkToken();
 		}
-	},1000)
+	},3000)
 	
 	const beforelogin = () => toast.error('로그인 후 이용하세요!');
 

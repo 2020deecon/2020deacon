@@ -61,10 +61,10 @@ function Make() {
     }
     const MakeCommented = async ({ id, text }: Comment) => {
         await getClient().post('/makeComment', { project_id: id, comment: text }).then(res => {
-            alert(res);
+            // alert(res);
             return res.data;
         }).catch(err => {
-            alert(err);
+            // alert(err);
             throw parseError(err);
         })
     }
@@ -74,10 +74,10 @@ function Make() {
         // alert(problem);
         await getClient().post('/wrongNote', { problem : problem}).then(res => {
             console.log(res);
-            alert(res);
+            // alert(res);
             return res.data;
         }).catch(err => {
-            alert(err);
+            // alert(err);
             throw parseError(err);
         })
     }
@@ -86,10 +86,10 @@ function Make() {
         // alert(problem);
         await getClient().post('/addWrongNote', { problem : problem}).then(res => {
             console.log(res);
-            alert(res);
+            // alert(res);
             return res.data;
         }).catch(err => {
-            alert(err);
+            // alert(err);
             throw parseError(err);
         })
     }

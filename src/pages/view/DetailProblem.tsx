@@ -105,14 +105,17 @@ function DetailProblem({match}:any) {
                                     if(window.confirm("오답노트에 추가할까요?")){
                                         // alert(workbo/ok);
                                         Make().addWrongNote({problem:[{Id}]});
+                                        window.location.replace('/');
                                     }
                                     else{
-                                        alert("error");
+                                        window.location.replace('/');
+                                        // alert("error");
                                     }
                                 },3000)
                             }
                             else{ 
                                 toast.success("성공 정답입니다!")
+                                window.location.replace('/');
                             }
                             setstate({...state, get_answer: false });
                             }}>정답확인</button> : <Answer>{state.answer}</Answer>}

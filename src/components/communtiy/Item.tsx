@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import Make from '../../lib/api/make';
 import colors from '../../constants/colors';
+import { getuserToken } from '../../lib/token';
 interface ItemProps {
 	id: string;
 	title: string;
@@ -53,7 +54,7 @@ export function Item({
 								objectFit: 'cover',
 							}}
 						>
-							<img className="card-image" src={image} alt="" onClick={()=>problem_id!=null && history.replace("/popup/"+problem_id)}/>
+							<img className="card-image" src={image} alt="" onClick={()=>problem_id!=null && history.replace("/popup/"+problem_id)} style={{maxHeight:"300px",maxWidth:"500px"}}/>
 							<h3>{text}</h3>
 						</motion.div>
 						<motion.div
@@ -67,7 +68,7 @@ export function Item({
 
 						<Comment>
 							<div className="addComment">
-								<input
+								{getuserToken() !== null && (<input
 									type="text"
 									placeholder="댓글"
 									name="text"
@@ -77,9 +78,13 @@ export function Item({
 									}}
 									onKeyDown={(e) =>{
 										if(e.key === 'Enter')
-										Make().MakeCommented({ id, text: commentaire });
+										{
+											Make().MakeCommented({ id, text: commentaire });
+											window.location.reload();
+										}
 									}}
-								/>
+								/>)}
+								
 							</div>
 							<div id="comments">
 								{comment?.map((data) => (
