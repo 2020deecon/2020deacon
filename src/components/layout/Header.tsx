@@ -136,7 +136,7 @@ function Header() {
 							}}
 						>
 							<b>
-								<Link to="/mypage">마이 페이지</Link>
+								<Link to="/mypage">마이 패이지</Link>
 							</b>
 						</Li>
 						<Li clicked={params === '/community'}>
@@ -192,7 +192,7 @@ function Header() {
 							>
 								<img src={Icon.user} alt="" />
 								<b>
-									<Link to="/mypage">마이 페이지</Link>
+									<Link to="/mypage">마이 패이지</Link>
 								</b>
 							</Li>
 							<Li clicked={params === '/community'}>

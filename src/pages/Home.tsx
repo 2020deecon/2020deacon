@@ -70,7 +70,7 @@ function Home() {
 									<Frame
 										src={Image.questions}
 										title="다양한 사람들이 공유한 문제들도 풀어보세요!"
-										subtitle="내 패이지 이용방법 알아보기>"
+										subtitle="마이 패이지 이용방법 알아보기>"
 										linkto="/explan/mypage"
 										Open={Open}
 										reverse

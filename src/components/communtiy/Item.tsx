@@ -11,7 +11,7 @@ interface ItemProps {
 	text: string;
 	comment: any[];
 	type: string;
-	write_id: string;
+	problem_id: string;
 }
 export function Item({
 	id,
@@ -20,13 +20,13 @@ export function Item({
 	text,
 	comment,
 	type,
-	write_id,
+	problem_id,
 }: ItemProps) {
 	const history = useHistory();
 	const [commentaire, setcommentaire] = useState('');
 
 	// alert("reset");
-	// alert(id);
+	// alert(problem_id);
 	return (
 		<>
 			<Wrap
@@ -53,7 +53,7 @@ export function Item({
 								objectFit: 'cover',
 							}}
 						>
-							<img className="card-image" src={image} alt="" />
+							<img className="card-image" src={image} alt="" onClick={()=>problem_id!=null && history.replace("/popup/"+problem_id)}/>
 							<h3>{text}</h3>
 						</motion.div>
 						<motion.div

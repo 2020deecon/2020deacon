@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import Slider from 'react-slick';
-
+import {toast} from 'react-toastify';
 import viewport from '../constants/viewport';
 import Image, { Icon } from '../lib/images';
 import color from '../constants/colors';
@@ -59,6 +59,7 @@ function SignUp() {
 	},[id,age,password,email,repassword,name])
 	const onSubmit=()=>{
 		User().SignUp({ id:id.text,age:age.text,password:password.text, name:name.text,email:email.text});
+		toast.success("회원가입 완료!");
 		history.replace('/');
 	}
 

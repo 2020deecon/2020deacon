@@ -129,7 +129,19 @@ function Get() {
 				throw parseError(err);
 			});
 		return data;
-    };
+	};
+	const GetSearchProblem= async (q:string)=>{
+		let data = await getClient()
+			.get('/searchProblem?q='+q)
+			.then((res) => {
+				console.log(res);
+				return res.data.data;
+			})
+			.catch((err) => {
+				throw parseError(err);
+			});
+		return data;
+	}
 	return {
 		GetmyProblems,
 		GetmyWorkbook,
@@ -140,7 +152,8 @@ function Get() {
 		Getallcommunity,
 		Getsomeofcommunity,
         GetCommunityComment,
-        GetWrongNote
+		GetWrongNote,
+		GetSearchProblem
 	};
 }
 

@@ -20,6 +20,7 @@ interface Community {
     image: string;
     text: string;
     type: string;
+    problemId?: string;
 }
 interface Comment {
     id: string;
@@ -48,9 +49,10 @@ function Make() {
         })
     }
 
-    const MakeCommunity = async ({ title, image, text, type }: Community) => {
-        console.log(title, image, text, type);
-        await getClient().post('/makePost', { title: title, image: image, text: text, type: type }).then(res => {
+    const MakeCommunity = async ({ title, image, text, type,problemId }: Community) => {
+        // alert(problemId);
+        // console.log(title, image, text, type);
+        await getClient().post('/makePost', { title: title, image: image, text: text, type: type,problem_id:problemId }).then(res => {
             console.log(res);
             return res.data;
         }).catch(err => {

@@ -36,19 +36,19 @@ function ExplanModal() {
 				<SliderItem>
 					<div className="test">
 					<img src={makeproblem.mkp1} alt=""/>
-					<div className="test">test1</div>
+					<div className="test">문제를 만들기에 들어가세요!</div>
 					</div>
 				</SliderItem>
 				<SliderItem>
 					<div>
 					<img src={makeproblem.mkp2} alt=""/>
-					<div className="test">test1</div>
+					<div className="test">문제를 정보를 입력하세요!</div>
 					</div>
 				</SliderItem>
 				<SliderItem>
 					<div>
 					<img src={makeproblem.mkp3} alt=""/>
-					<div className="test">test1</div>
+					<div className="test">등록 해주세요!</div>
 					</div>
 				</SliderItem>
 			</Slider>
@@ -60,19 +60,19 @@ function ExplanModal() {
 			<SliderItem>
 					<div className="test">
 					<img src={makeworkbook.mkw1} alt=""/>
-					<div className="test">test1</div>
+					<div className="test">문제를 검색하세요!</div>
 					</div>
 				</SliderItem>
 				<SliderItem>
 					<div>
 					<img src={makeworkbook.mkw2} alt=""/>
-					<div className="test">test1</div>
+					<div className="test">문제를 선택하세요!</div>
 					</div>
 				</SliderItem>
 				<SliderItem>
 					<div>
 					<img src={makeworkbook.mkw3} alt=""/>
-					<div className="test">test1</div>
+					<div className="test">완성 버튼을 눌러주세요!</div>
 					</div>
 				</SliderItem>
 			</Slider>
@@ -84,13 +84,13 @@ function ExplanModal() {
 			<SliderItem>
 					<div className="test">
 					<img src={Solving.sov1} alt=""/>
-					<div className="test">test1</div>
+					<div className="test">정답을 입력하고 확인해주세요!</div>
 					</div>
 				</SliderItem>
 				<SliderItem>
 					<div>
 					<img src={Solving.sov2} alt=""/>
-					<div className="test">test1</div>
+					<div className="test">틀리셨다면 오답노트에 저장!</div>
 					</div>
 				</SliderItem>
 			</Slider>
@@ -102,73 +102,73 @@ function ExplanModal() {
 			<SliderItem>
 					<div className="test">
 					<img src={Comment.cm1} alt=""/>
-					<div className="test">test1</div>
+					<div className="test">커뮤니티에 들어가세요!</div>
 					</div>
 				</SliderItem>
 				<SliderItem>
 					<div>
 					<img src={Comment.cm2} alt=""/>
-					<div className="test">test1</div>
+					<div className="test">클릭하시면 볼 수 있습니다!</div>
 					</div>
 				</SliderItem>
 				<SliderItem>
 					<div>
 					<img src={Comment.cm3} alt=""/>
-					<div className="test">test1</div>
+					<div className="test">등록도 할 수 있습니다!</div>
 					</div>
 				</SliderItem>
 			</Slider>
 		</Modal>
 	);
 	const MyPage = () => (
-		<Modal title="내 패이지" modalname="explan">
+		<Modal title="마이 패이지" modalname="explan">
 			<Slider {...settings}>
 			<SliderItem>
 					<div className="test">
 					<img src={mypage.myp1} alt=""/>
-					<div className="test">test1</div>
+					<div className="test">문제를 확인하세요!</div>
 					</div>
 				</SliderItem>
 				<SliderItem>
 					<div>
 					<img src={mypage.myp1_1} alt=""/>
-					<div className="test">test1</div>
+					<div className="test">문제를 클릭하면 문제를 볼 수 있습니다.</div>
 					</div>
 				</SliderItem>
 				<SliderItem>
 					<div>
 					<img src={mypage.myp2} alt=""/>
-					<div className="test">test1</div>
+					<div className="test">나만의 문제집도 있습니다!</div>
 					</div>
 				</SliderItem>
 				<SliderItem>
 					<div>
 					<img src={mypage.myp2_1} alt=""/>
-					<div className="test">test1</div>
+					<div className="test">문제집을 클리하면 문제들을 볼 수 있습니다.</div>
 					</div>
 				</SliderItem>
 				<SliderItem>
 					<div>
 					<img src={mypage.myp2_2} alt=""/>
-					<div className="test">test1</div>
+					<div className="test">답을 확인해보세요!</div>
 					</div>
 				</SliderItem>
 				<SliderItem>
 					<div>
 					<img src={mypage.myp3} alt=""/>
-					<div className="test">test1</div>
+					<div className="test">틀렸던 문제를 오답노트에서 확인해 보세요.</div>
 					</div>
 				</SliderItem>
 				<SliderItem>
 					<div>
 					<img src={mypage.myp4_1} alt=""/>
-					<div className="test">test1</div>
+					<div className="test">공유된 문제도 볼 수 있습니다.</div>
 					</div>
 				</SliderItem>
 				<SliderItem>
 					<div>
 					<img src={mypage.myp4_2} alt=""/>
-					<div className="test">test1</div>
+					<div className="test">공유된 문제집도 볼 수 있습니다.</div>
 					</div>
 				</SliderItem>
 			</Slider>
