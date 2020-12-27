@@ -54,12 +54,12 @@ function Loginpage() {
 						<Button css={buttoncss}>로그인</Button>
 
 						<Goto>
-							<div className="question">개정이 없으신가요?</div>
+							<div className="question">계정이 없으신가요?</div>
 							<div
 								className="gotosignup"
 								onClick={() => history.replace('/signup')}
 							>
-								새로운 개정 만들기
+								새로운 계정 만들기
 							</div>
 						</Goto>
 					</div>

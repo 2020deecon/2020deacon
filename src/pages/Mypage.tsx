@@ -53,7 +53,7 @@ function Mypage() {
 				.GetallWorkbooks()
 				.then((res) => {
 					console.log(res);
-					alert("f");
+					// alert("f");
 					setworkbookItems(res.filter((data:any)=> data.write_id===id));
 				})
 				.catch((err) => {
@@ -199,7 +199,7 @@ interface ResultsType {
 function Results({ set, problemItems, workbookItems, Text }: ResultsType) {
 	const history = useHistory();
 	function clickPb(title: string) {
-		history.replace('/viewproblem/' + title);
+		history.replace('/popup/' + title);
 	}
 	function clickWb(title: string) {
 		history.replace('/viewworkbook/' + title);
@@ -234,7 +234,7 @@ function Results({ set, problemItems, workbookItems, Text }: ResultsType) {
 					? workbookItems.map((data) =>
 							data.title.includes(Text) ? (
 								<>
-									<Link to={`/popup/${data.image}`} target="_blank">
+									<Link to={`/viewworkbook/${data.id}`} target="_blank">
 										<PData
 											title={data.title}
 											size="medium"
@@ -256,17 +256,17 @@ function Results({ set, problemItems, workbookItems, Text }: ResultsType) {
 		return (<ResultWrap>
 			{problemItems ? problemItems.map(data=>data.title.includes(Text) ? (
 								<>
-									<div
-										onClick={() => clickPb(data.id)}
-										style={{ cursor: 'pointer' }}
-									>
+
+										<Link to={`/popup/${data.id}`} target="_blank">
+
 										<PData
 											title={data.title}
 											size="medium"
 											estext
 											src={data.image}
-										/>
-									</div>
+											/>
+									
+											</Link>
 								</>
 							) : (
 								'그런 문제는 없습니다.'
